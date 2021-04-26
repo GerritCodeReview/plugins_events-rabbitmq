@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c13c18_bce04d36",
+        "filename": "project.config",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2021-04-26T07:05:19Z",
+      "side": 1,
+      "message": "The only existing stable-branch \"stable-3.1\" is merged into master so it\u0027s just a matter of creating a branch (from an existing commit) and project owners are allowed to create any branch.",
+      "parentUuid": "0365cf02_8d83e46f",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "6d1f5cf7d1e448dc454531ba59a14ad10130682e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d771092_98209f6f",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-04-24T00:36:33Z",
       "side": 1,
       "message": "What about forge-author and forge-committer?",
+      "revId": "6d1f5cf7d1e448dc454531ba59a14ad10130682e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c84b18e_f5659a70",
+        "filename": "project.config",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2021-04-26T07:05:19Z",
+      "side": 1,
+      "message": "force-push should override all other permissions.",
+      "parentUuid": "6d771092_98209f6f",
       "revId": "6d1f5cf7d1e448dc454531ba59a14ad10130682e",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
