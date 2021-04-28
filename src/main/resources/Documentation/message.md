@@ -3,7 +3,7 @@ Message Format
 
 This plugin publish message like the below format to RabbitMQ.
 
-*Italic* is key name in `rabbitmq.config`.
+*Italic* is key name in `@PLUGIN@.config`.
 
 **Bold** is literal.
 
