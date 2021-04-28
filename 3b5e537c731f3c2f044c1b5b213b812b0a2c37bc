@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8cc1d99_645c005d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2021-04-28T07:53:22Z",
+      "side": 1,
+      "message": "@Luca, you were absolutely right, --force doesn\u0027t overrule forge-committer|author.",
+      "revId": "3b5e537c731f3c2f044c1b5b213b812b0a2c37bc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
