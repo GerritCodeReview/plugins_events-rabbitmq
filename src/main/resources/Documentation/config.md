@@ -6,11 +6,11 @@ Some parameters can be configured using config file.
 Directory
 ---------------------
 
-You can locate config files to `$site_path/data/rabbitmq/site`.
+You can locate config files to `$site_path/data/@PLUGIN@/site`.
 File extension must be `.config`.
 Connection to RabbitMQ will be established for each files.
 
-If `rabbitmq.config` exists in `$site_path/data/rabbitmq`, it is loaded at first.
+If `@PLUGIN@.config` exists in `$site_path/data/@PLUGIN@`, it is loaded at first.
 It means that this is default for all config files.
 
 
