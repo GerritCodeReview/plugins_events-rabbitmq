@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbf7a57_161211fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-30T00:51:09Z",
+      "side": 1,
+      "message": "Adding also Marco as he is co-maintainer of this plugin.",
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
