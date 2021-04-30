@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a722c67a_f0ec5d83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-04-30T15:18:32Z",
+      "side": 1,
+      "message": "name:",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1fbf7a57_161211fa",
@@ -32,6 +55,93 @@
       "side": 1,
       "message": "I did not realize that Ericsson also uses the rabbitmq plugin. Good to know. 👍",
       "parentUuid": "1fbf7a57_161211fa",
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0da6d300_54c6030d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-04-30T15:18:32Z",
+      "side": 1,
+      "message": "In fact I am not but that\u0027s ok; see https://www.gerritcodereview.com/plugins.html",
+      "parentUuid": "b9335d67_ce48d056",
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da38c5ed_24e050dd",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-04-30T15:18:32Z",
+      "side": 1,
+      "message": "Maybe the packaging will also require the adaptation; could be follow-up material.",
+      "range": {
+        "startLine": 8,
+        "startChar": 48,
+        "endLine": 8,
+        "endChar": 64
+      },
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fadaec44_76b15c75",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-04-30T15:18:32Z",
+      "side": 1,
+      "message": "Assuming that this should not be the true (new) plugin name.",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a340430a_b46784bd",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-04-30T15:18:32Z",
+      "side": 1,
+      "message": "Is this accurate?",
+      "range": {
+        "startLine": 9,
+        "startChar": 56,
+        "endLine": 9,
+        "endChar": 61
+      },
       "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
