@@ -148,6 +148,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7bb5b17_de7d86d1",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-05-03T15:28:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48981eb2_36e2cb9c",
+      "range": {
+        "startLine": 8,
+        "startChar": 48,
+        "endLine": 8,
+        "endChar": 64
+      },
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fadaec44_76b15c75",
@@ -232,6 +256,30 @@
       "side": 1,
       "message": "Not quite sure what you are referring to.\nThe configuration has two parts: default (\"$site_path/data/events-rabbitmq/events-rabbitmq.config\") which is loaded first and more specific configurations from the $site_path/data/events-rabbitmq/site/ directory.\nSo you could f.i. route all events separately from the subset of events that can be read by a specified group of users.",
       "parentUuid": "a340430a_b46784bd",
+      "range": {
+        "startLine": 9,
+        "startChar": 56,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "cf3f51549f78aeedd3fd7ffd76c950feb5b3c532",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db5bdb5e_ab5b2894",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012732
+      },
+      "writtenOn": "2021-05-03T15:28:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb1a2aad_8f8d3e10",
       "range": {
         "startLine": 9,
         "startChar": 56,
