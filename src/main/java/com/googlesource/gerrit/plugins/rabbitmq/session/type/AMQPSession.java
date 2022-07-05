@@ -34,7 +34,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.codec.CharEncoding;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class AMQPSession implements Session {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();

@@ -14,7 +14,7 @@ gerrit_plugin(
         "@amqp_client//jar",
         "@commons-codec//jar:neverlink",
         "@commons-io//jar",
-        "@commons-lang//jar:neverlink",
+        "@commons-lang3//jar:neverlink",
         "@gson//jar:neverlink",
     ],
 )
