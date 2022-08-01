@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "036a76f0_ae20f425",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149438
+      },
+      "writtenOn": "2022-08-01T22:07:38Z",
+      "side": 1,
+      "message": "Mofygikacja",
+      "revId": "908a0a0fe382b556a446a573cad40b25a0d488cb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
