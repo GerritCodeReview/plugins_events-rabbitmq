@@ -71,7 +71,8 @@ File format
     * The priority of message. if not specified, defaults to 0.
 
 * `message.routingKey`
-    * The name of routingKey. This is stored to message property.
+    * The name of routingKey. This is stored to message property. If not specified, defaults to
+      the type of the Gerrit event (e.g. "patchset-created", "change-merged").
 
 * `gerrit.name`
     * The name of gerrit(not hostname). This is your given name to identify your gerrit.
@@ -116,7 +117,7 @@ You can change the below values by specifying them in config file.
 |exchange.name        | **gerrit.publish**
 |message.deliveryMode | 1
 |message.priority     | 0
-|message.routingKey   | *Empty*
+|message.routingKey   | **event.type**
 |gerrit.name          | *Empty*
 |gerrit.hostname      | *Empty*
 |gerrit.scheme        | **ssh**
