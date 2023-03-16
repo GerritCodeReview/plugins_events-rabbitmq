@@ -20,5 +20,5 @@ public interface Session {
 
   void disconnect();
 
-  boolean publish(String message);
+  boolean publish(String message, String eventType);
 }

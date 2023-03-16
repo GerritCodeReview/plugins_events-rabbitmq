@@ -160,18 +160,25 @@ public final class AMQPSession implements Session {
   }
 
   @Override
-  public boolean publish(String messageBody) {
+  public boolean publish(String messageBody, String eventType) {
     if (channel == null || !channel.isOpen()) {
       channel = getChannel();
     }
     if (channel != null && channel.isOpen()) {
+      String routingKey;
       Message message = properties.getSection(Message.class);
+      if (message.routingKey != null && !message.routingKey.isEmpty()) {
+        // Set routingKey from configuration.
+        routingKey = message.routingKey;
+      } else {
+        routingKey = eventType;
+      }
       Exchange exchange = properties.getSection(Exchange.class);
       try {
         logger.atFine().log("Sending message.");
         channel.basicPublish(
             exchange.name,
-            message.routingKey,
+            routingKey,
             properties.getAMQProperties().getBasicProperties(),
             messageBody.getBytes(CharEncoding.UTF_8));
         return true;
