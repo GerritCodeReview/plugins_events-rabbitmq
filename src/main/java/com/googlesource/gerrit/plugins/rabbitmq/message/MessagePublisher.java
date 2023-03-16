@@ -181,7 +181,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   }
 
   private boolean publishEvent(Event event) {
-    return session.publish(gson.toJson(event));
+    return session.publish(gson.toJson(event), event.type);
   }
 
   private void connect() {
