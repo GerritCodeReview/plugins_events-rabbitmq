@@ -114,7 +114,7 @@ public class Manager implements LifecycleListener {
         }
       }
     } catch (IOException ioe) {
-      logger.atWarning().log(ioe.getMessage());
+      logger.atWarning().withCause(ioe).log("Failed to load properties.");
     }
     if (propList.isEmpty()) {
       logger.atWarning().log("No site configs found. Using base config only!");
