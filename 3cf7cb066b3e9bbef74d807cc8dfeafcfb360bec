@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30745c11_e800d088",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-03-30T06:57:46Z",
+      "side": 0,
+      "message": "With this new rewrite this will not be printed anymore. Is that fine?",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "3cf7cb066b3e9bbef74d807cc8dfeafcfb360bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
