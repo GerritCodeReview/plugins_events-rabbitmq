@@ -22,6 +22,30 @@
       },
       "revId": "3cf7cb066b3e9bbef74d807cc8dfeafcfb360bec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "846f85b8_8d9aa38f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-03-30T09:46:35Z",
+      "side": 0,
+      "message": "It doesn\u0027t really add anything ([events-rabbitmq] in the example below):\n```\n[2023-03-18T12:15:21.552+01:00] [main] INFO  com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSession : [events-rabbitmq] Connect to amqps://rabbitmq.company.com:5671/%2F...\n[2023-03-18T12:15:21.760+01:00] [main] INFO  com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSession : [events-rabbitmq] Connection established.\n```\nI added the AMQP URL to the connection related log-messages instead.",
+      "parentUuid": "30745c11_e800d088",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 56
+      },
+      "revId": "3cf7cb066b3e9bbef74d807cc8dfeafcfb360bec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
