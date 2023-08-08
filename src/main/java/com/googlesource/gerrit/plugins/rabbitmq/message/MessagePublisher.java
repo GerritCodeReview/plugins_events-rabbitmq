@@ -28,11 +28,8 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
-import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,14 +39,12 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private static final int MAX_EVENTS = 16384;
-  private static final int MONITOR_FIRSTTIME_DELAY = 15000;
   private static final String END_OF_STREAM = "END-OF-STREAM_$F7;XTSUQ(Dv#N6]g+gd,,uzRp%G-P";
   private static final Event EOS = new Event(END_OF_STREAM) {};
 
   private final Session session;
   private final Properties properties;
   private final Gson gson;
-  private final Timer monitorTimer = new Timer();
   private final LinkedBlockingQueue<TopicEvent> queue = new LinkedBlockingQueue<>(MAX_EVENTS);
   private final Object sessionMon = new Object();
   private EventListener eventListener;
@@ -144,24 +139,11 @@ public class MessagePublisher implements Publisher, LifecycleListener {
     ensurePublisherThreadStarted();
     if (!isConnected()) {
       connect();
-      monitorTimer.schedule(
-          new TimerTask() {
-            @Override
-            public void run() {
-              if (!isConnected()) {
-                logger.atInfo().log("#start: try to reconnect");
-                connect();
-              }
-            }
-          },
-          MONITOR_FIRSTTIME_DELAY,
-          properties.getSection(Monitor.class).interval);
     }
   }
 
   @Override
   public void stop() {
-    monitorTimer.cancel();
     publisher.cancel();
     if (publisherThread != null) {
       try {
