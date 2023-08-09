@@ -27,5 +27,16 @@ public class Message implements Section {
   @Default("false")
   public Boolean publishConfirm;
 
+  @Default("true")
+  public Boolean durable;
+
+  @Default("false")
+  public Boolean exclusive;
+
+  @Default("false")
+  public Boolean autoDelete;
+
+  @Default public String queuePrefix;
+
   @Default public String routingKey;
 }
