@@ -216,7 +216,15 @@ public final class AMQPSession implements Session {
     if (makeSureChannelIsOpened()) {
       String exchangeName = properties.getSection(Exchange.class).name;
       try {
-        String queueName = channel.queueDeclare().getQueue();
+        String queueName;
+        Message message = properties.getSection(Message.class);
+        if (!message.queuePrefix.isEmpty()) {
+          queueName = message.queuePrefix + "." + topic;
+          channel.queueDeclare(
+              queueName, message.durable, message.exclusive, message.autoDelete, null);
+        } else {
+          queueName = channel.queueDeclare().getQueue();
+        }
         channel.queueBind(queueName, exchangeName, topic);
 
         channel.basicConsume(
