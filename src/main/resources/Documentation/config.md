@@ -21,7 +21,8 @@ Broker.config
 
 To make specific configurations for the events-broker API you do those in
 `$site_path/data/@PLUGIN@/broker/broker.config`. You can use the same configuration options as the
-other configs. The event-broker API use its own publisher that is separate from the previously
+other configs with the additions of queuePrefix, durable, exclusive and autoDelete that decides
+queue properties. The event-broker API use its own publisher that is separate from the previously
 mentioned publisher.
 
 Secure.config
@@ -68,6 +69,22 @@ File format
 
 * `amqp.password`
     * Password for RabbitMQ connection authentication.
+
+* `amqp.queuePrefix`
+    * If set the queues that store the messages of the the subscribed topics will be named
+    prefix + topic, otherwise the queues will get a random name decided by RabbitMQ. Only used in
+    broker.config.
+
+* `amqp.durable`
+    * Make queues persistant on disk. So they stick even after a restart of RabbitMQ. Only used in
+    broker.config
+
+* `amqp.exclusive`
+    * Make the queues only usable by their declaring connection. Only used in broker.config
+
+* `amqp.autoDelete`
+    * Make the queues automatically deleted when their last consummer stop subscribing. Only used
+    in broker.config
 
 * `exchange.name`
     * The name of exchange.
