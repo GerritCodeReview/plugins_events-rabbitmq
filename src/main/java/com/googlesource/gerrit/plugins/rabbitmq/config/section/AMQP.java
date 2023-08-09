@@ -26,4 +26,15 @@ public class AMQP implements Section {
 
   @Default("guest")
   public String password;
+
+  @Default("true")
+  public Boolean durable;
+
+  @Default("false")
+  public Boolean exclusive;
+
+  @Default("false")
+  public Boolean autoDelete;
+
+  @Default public String queuePrefix;
 }
