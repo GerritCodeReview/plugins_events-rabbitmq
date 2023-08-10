@@ -16,5 +16,6 @@ gerrit_plugin(
         "@commons-io//jar",
         "@commons-lang3//jar:neverlink",
         "@gson//jar:neverlink",
+        "@events-broker//jar",
     ],
 )

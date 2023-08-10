@@ -42,7 +42,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private static final String END_OF_STREAM = "END-OF-STREAM_$F7;XTSUQ(Dv#N6]g+gd,,uzRp%G-P";
   private static final Event EOS = new Event(END_OF_STREAM) {};
 
-  private final Properties properties;
+  protected final Properties properties;
   private final Session session;
   private final Gson gson;
   private final Timer monitorTimer = new Timer();
