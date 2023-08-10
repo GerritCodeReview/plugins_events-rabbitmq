@@ -22,7 +22,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.PropertiesFactory;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiPublisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiSubscriber;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
@@ -51,6 +54,8 @@ public class Manager implements LifecycleListener {
   private final PublisherFactory publisherFactory;
   private final PropertiesFactory propFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
+  private final BrokerApiPublisher rabbitMqApiPublisher;
+  private final BrokerApiSubscriber rabbitMqApiSubscriber;
 
   @Inject
   public Manager(
@@ -59,13 +64,17 @@ public class Manager implements LifecycleListener {
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
       final PublisherFactory publisherFactory,
-      final PropertiesFactory propFactory) {
+      final PropertiesFactory propFactory,
+      final BrokerApiPublisher rabbitMqApiPublisher,
+      final BrokerApiSubscriber rabbitMqApiSubscriber) {
     this.pluginName = pluginName;
     this.pluginDataDir = pluginData.toPath();
     this.defaultEventWorker = defaultEventWorker;
     this.userEventWorker = eventWorkerFactory.create();
     this.publisherFactory = publisherFactory;
     this.propFactory = propFactory;
+    this.rabbitMqApiPublisher = rabbitMqApiPublisher;
+    this.rabbitMqApiSubscriber = rabbitMqApiSubscriber;
   }
 
   @Override
@@ -86,6 +95,8 @@ public class Manager implements LifecycleListener {
 
   @Override
   public void stop() {
+    rabbitMqApiPublisher.stop();
+    rabbitMqApiSubscriber.stop();
     for (Publisher publisher : publisherList) {
       publisher.stop();
       String listenAs = publisher.getProperties().getSection(Gerrit.class).listenAs;
@@ -103,6 +114,10 @@ public class Manager implements LifecycleListener {
     // Load base
     Properties base = propFactory.create(pluginDataDir.resolve(pluginName + FILE_EXT));
     base.load();
+    if (!base.getSection(General.class).publishAllGerritEvents) {
+      logger.atFine().log("publishAllGerritEvents disabled");
+      return propList;
+    }
 
     // Load sites
     try (DirectoryStream<Path> ds =
