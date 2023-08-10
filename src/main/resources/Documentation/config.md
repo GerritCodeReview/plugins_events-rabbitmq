@@ -90,6 +90,9 @@ File format
     * The name of routingKey. This is stored to message property. If not specified, defaults to
       the type of the Gerrit event (e.g. "patchset-created", "change-merged").
 
+* `message.publishConfirm`
+    * Enable reliable publishing with acking when a event is published.
+
 * `gerrit.name`
     * The name of gerrit(not hostname). This is your given name to identify your gerrit.
       This can be used for message header only.
