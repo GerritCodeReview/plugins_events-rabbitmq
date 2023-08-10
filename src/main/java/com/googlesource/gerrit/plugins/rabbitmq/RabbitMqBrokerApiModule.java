@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.googlesource.gerrit.plugins.rabbitmq.message;
+package com.googlesource.gerrit.plugins.rabbitmq;
 
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.gerrit.server.events.Event;
-import com.google.gerrit.server.events.EventListener;
-import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
+import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.google.gerrit.extensions.registration.DynamicItem;
+import com.google.gerrit.lifecycle.LifecycleModule;
+import com.google.inject.Inject;
+import com.google.inject.Scopes;
+import com.google.inject.Singleton;
 
-public interface Publisher {
-  void start();
+@Singleton
+public class RabbitMqBrokerApiModule extends LifecycleModule {
 
-  void stop();
+  @Inject
+  public RabbitMqBrokerApiModule() {}
 
-  Properties getProperties();
-
-  String getName();
-
-  EventListener getEventListener();
-
-  ListenableFuture<Boolean> publish(String topic, Event message);
+  @Override
+  protected void configure() {
+    DynamicItem.bind(binder(), BrokerApi.class).to(RabbitMqBrokerApi.class).in(Scopes.SINGLETON);
+  }
 }
