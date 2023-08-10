@@ -13,6 +13,7 @@
 // limitations under the License.
 package com.googlesource.gerrit.plugins.rabbitmq.session;
 
+import com.rabbitmq.client.ConfirmCallback;
 import java.util.function.Consumer;
 
 public interface Session {
@@ -25,4 +26,8 @@ public interface Session {
   boolean publish(String messageBody, String routingKey);
 
   boolean subscribe(String topic, Consumer<String> messageBodyConsumer);
+
+  void addConfirmListener(ConfirmCallback ackConsumer, ConfirmCallback nackConsumer);
+
+  Long getNextPublishSeqNo();
 }

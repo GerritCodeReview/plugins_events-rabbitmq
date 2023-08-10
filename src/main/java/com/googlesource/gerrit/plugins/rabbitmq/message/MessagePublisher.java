@@ -32,6 +32,8 @@ import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MessagePublisher implements Publisher, LifecycleListener {
@@ -52,6 +54,8 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private EventListener eventListener;
   private GracefullyCancelableRunnable publisher;
   private Thread publisherThread;
+  private final ConcurrentMap<Long, TopicEvent> eventsToBeAcked = new ConcurrentHashMap<>();
+  private boolean publishConfirm;
   private int lostEventCount = 0;
 
   @Inject
@@ -61,6 +65,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
       Gson gson) {
     this.session = sessionFactoryProvider.get().create(properties);
     this.properties = properties;
+    this.publishConfirm = properties.getSection(Message.class).publishConfirm;
     this.gson = gson;
     this.eventListener =
         new EventListener() {
@@ -114,6 +119,23 @@ public class MessagePublisher implements Publisher, LifecycleListener {
                 + properties.getSection(AMQP.class).uri;
           }
         };
+    if (publishConfirm) {
+      session.addConfirmListener(
+          (seqNbr, multi) -> {
+            TopicEvent topicEvent = eventsToBeAcked.remove(seqNbr);
+            logger.atFine().log(
+                "Event with sequence number %d that was published to the topic %s was acked.",
+                seqNbr, topicEvent.topic);
+            topicEvent.published.set(true);
+          },
+          (seqNbr, multi) -> {
+            TopicEvent topicEvent = eventsToBeAcked.remove(seqNbr);
+            logger.atWarning().log(
+                "Event with sequence number %d that was published to the topic %s was not acked. Retrying publish of event",
+                seqNbr, topicEvent.topic);
+            publish(topicEvent);
+          });
+    }
   }
 
   @Override
@@ -206,9 +228,18 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   }
 
   private boolean publishEvent(TopicEvent topicEvent) {
-    boolean published = session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
-    topicEvent.published.set(published);
-    return published;
+    if (publishConfirm) {
+      Long seqNbr = session.getNextPublishSeqNo();
+      if (seqNbr == null) {
+        return false;
+      }
+      eventsToBeAcked.put(seqNbr, topicEvent);
+      return session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
+    } else {
+      boolean published = session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
+      topicEvent.published.set(published);
+      return published;
+    }
   }
 
   private void connect() {
