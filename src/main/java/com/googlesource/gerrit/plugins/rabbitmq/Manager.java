@@ -71,16 +71,21 @@ public class Manager implements LifecycleListener {
   @Override
   public void start() {
     List<Properties> propList = load();
-    for (Properties properties : propList) {
-      Publisher publisher = publisherFactory.create(properties);
-      publisher.start();
-      String listenAs = properties.getSection(Gerrit.class).listenAs;
-      if (!listenAs.isEmpty()) {
-        userEventWorker.addPublisher(pluginName, publisher, listenAs);
-      } else {
-        defaultEventWorker.addPublisher(publisher);
+    if (propList.isEmpty()) {
+      logger.atWarning().log(
+          "No site configs found. You need to setup at least one site config if you want to use the original publisher!");
+    } else {
+      for (Properties properties : propList) {
+        Publisher publisher = publisherFactory.create(properties);
+        publisher.start();
+        String listenAs = properties.getSection(Gerrit.class).listenAs;
+        if (!listenAs.isEmpty()) {
+          userEventWorker.addPublisher(pluginName, publisher, listenAs);
+        } else {
+          defaultEventWorker.addPublisher(publisher);
+        }
+        publisherList.add(publisher);
       }
-      publisherList.add(publisher);
     }
   }
 
@@ -115,10 +120,6 @@ public class Manager implements LifecycleListener {
       }
     } catch (IOException ioe) {
       logger.atWarning().withCause(ioe).log("Failed to load properties.");
-    }
-    if (propList.isEmpty()) {
-      logger.atWarning().log("No site configs found. Using base config only!");
-      propList.add(base);
     }
     return propList;
   }

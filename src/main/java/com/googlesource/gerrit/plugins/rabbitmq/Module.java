@@ -19,6 +19,7 @@ import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.server.events.EventListener;
 import com.google.gson.Gson;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.Multibinder;
@@ -43,6 +44,12 @@ import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.UserEventWorker;
 
 class Module extends AbstractModule {
+  private final RabbitMqApiModule rabbitMqBrokerModule;
+
+  @Inject
+  public Module(RabbitMqApiModule rabbitMqBrokerModule) {
+    this.rabbitMqBrokerModule = rabbitMqBrokerModule;
+  }
 
   @Override
   protected void configure() {
@@ -71,5 +78,7 @@ class Module extends AbstractModule {
 
     DynamicSet.bind(binder(), LifecycleListener.class).to(Manager.class);
     DynamicSet.bind(binder(), EventListener.class).to(DefaultEventWorker.class);
+
+    install(rabbitMqBrokerModule);
   }
 }
