@@ -6,6 +6,9 @@ Synopsis
 
 Publish gerrit stream events to a RabbitMQ queue.
 This plugin works with any version of Gerrit starting from v2.8.
+This plugin also implements most of the events-broker API, so RabbitMQ can be used as a
+message-broker in a multi-master setup. The one part that is missing is the implementation of the
+replayAllEvents method. However, this method is not needed by the multi-site plugin.
 
 Environments
 ---------------------
