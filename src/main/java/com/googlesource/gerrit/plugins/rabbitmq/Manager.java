@@ -20,8 +20,11 @@ import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BaseProperties;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiPublisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiSubscriber;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherPropertiesProvider;
@@ -41,6 +44,7 @@ public class Manager implements LifecycleListener {
   private final EventWorker userEventWorker;
   private final GerritEventPublisherFactory publisherFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
+  private final BrokerApiSubscriber subscriber;
   private final Properties baseProperties;
   private final PublisherPropertiesProvider publisherPropertiesProvider;
 
@@ -50,33 +54,41 @@ public class Manager implements LifecycleListener {
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
       final GerritEventPublisherFactory publisherFactory,
+      final BrokerApiPublisher publisher,
+      final BrokerApiSubscriber subscriber,
       final @BaseProperties Properties baseProperties,
       final PublisherPropertiesProvider publisherPropertiesProvider) {
     this.pluginName = pluginName;
     this.defaultEventWorker = defaultEventWorker;
     this.userEventWorker = eventWorkerFactory.create();
     this.publisherFactory = publisherFactory;
+    this.subscriber = subscriber;
     this.baseProperties = baseProperties;
     this.publisherPropertiesProvider = publisherPropertiesProvider;
+    publisherList.add(publisher);
   }
 
   @Override
   public void start() {
-    for (Properties properties : publisherPropertiesProvider.get()) {
-      Publisher publisher = publisherFactory.create(properties);
-      publisher.start();
-      String listenAs = properties.getSection(Gerrit.class).listenAs;
-      if (!listenAs.isEmpty()) {
-        userEventWorker.addPublisher(pluginName, publisher, listenAs);
-      } else {
-        defaultEventWorker.addPublisher(publisher);
+    if (baseProperties.getSection(General.class).publishAllGerritEvents) {
+      logger.atFine().log("publishAllGerritEvents enabled");
+      for (Properties properties : publisherPropertiesProvider.get()) {
+        Publisher publisher = publisherFactory.create(properties);
+        publisher.start();
+        String listenAs = properties.getSection(Gerrit.class).listenAs;
+        if (!listenAs.isEmpty()) {
+          userEventWorker.addPublisher(pluginName, publisher, listenAs);
+        } else {
+          defaultEventWorker.addPublisher(publisher);
+        }
+        publisherList.add(publisher);
       }
-      publisherList.add(publisher);
     }
   }
 
   @Override
   public void stop() {
+    subscriber.stop();
     for (Publisher publisher : publisherList) {
       publisher.stop();
     }
