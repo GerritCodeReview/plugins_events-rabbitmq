@@ -1,4 +1,4 @@
-// Copyright (C) 2015 The Android Open Source Project
+// Copyright (C) 2023 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,20 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.googlesource.gerrit.plugins.rabbitmq.session;
 
-import java.util.function.Consumer;
+package com.googlesource.gerrit.plugins.rabbitmq.message;
 
-public interface Session {
-  boolean isOpen();
+import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 
-  boolean connect();
+public interface Subscriber {
+  void stop();
 
-  void disconnect();
+  boolean subscribe(TopicSubscriber topicSubscriber);
 
-  boolean publish(String messageBody, String routingKey);
-
-  String subscribe(String topic, Consumer<String> messageBodyConsumer);
-
-  boolean removeSubscriber(String consumerTag);
+  boolean removeSubscriber(TopicSubscriber topicSubscriber);
 }
