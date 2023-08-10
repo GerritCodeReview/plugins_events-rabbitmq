@@ -1,18 +1,28 @@
 RabbitMQ Configuration
 ======================
 
-Some parameters can be configured using config file.
+Some parameters can be configured using config files.
 
 Directory
 ---------------------
 
-You can locate config files to `$site_path/data/@PLUGIN@/site`.
+To setup a publisher that just publish stream events to a specific exchange on a specifc RabbitMQ
+host you create a config file at `$site_path/data/@PLUGIN@/site`.
 File extension must be `.config`.
-Connection to RabbitMQ will be established for each files.
+Connection to RabbitMQ will be established for each files. If no config files are located in this
+directory no connection with this type of publisher will be established.
 
 If `@PLUGIN@.config` exists in `$site_path/data/@PLUGIN@`, it is loaded at first.
-It means that this is default for all config files.
+It means that this is default for all config files, including the events-broker API config file.
 
+
+Broker.config
+---------------------
+
+To make specific configurations for the events-broker API you do those in
+`$site_path/data/@PLUGIN@/broker/broker.config`. You can use the same configuration options as the
+other configs. The event-broker API use its own publisher that is separate from the previously
+mentioned publisher.
 
 Secure.config
 ---------------------
@@ -62,6 +72,12 @@ File format
 * `exchange.name`
     * The name of exchange.
 
+* `general.publishAllGerritEvents`
+    * Will publish gerrit stream events to configured exchange automatically if enabled.
+
+* `general.enableBrokerApi`
+    * Enable the RabbitMQ Broker API.
+
 * `message.deliveryMode`
     * The delivery mode. if not specified, defaults to 1.
         * 1 - non-persistent
@@ -92,7 +108,7 @@ File format
 
 * `gerrit.listenAs`
     * The user of gerrit who listen events.
-      If not specified, listen events as unrestricted user.
+      If not specified, listen events as unrestricted user. This is not applicable for the RabbitMQ broker API.
 
 * `monitor.interval`
     * The interval time in milliseconds for connection monitor.

@@ -22,9 +22,14 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.PropertiesFactory;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.message.MessagePublisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.MessageSubscriber;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherFactory;
+import com.googlesource.gerrit.plugins.rabbitmq.message.Subscriber;
+import com.googlesource.gerrit.plugins.rabbitmq.message.SubscriberFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
@@ -49,8 +54,11 @@ public class Manager implements LifecycleListener {
   private final EventWorker defaultEventWorker;
   private final EventWorker userEventWorker;
   private final PublisherFactory publisherFactory;
+  private final SubscriberFactory subscriberFactory;
   private final PropertiesFactory propFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
+  private MessagePublisher rabbitMqApiPublisher;
+  private MessageSubscriber rabbitMqApiSubscriber;
 
   @Inject
   public Manager(
@@ -59,12 +67,14 @@ public class Manager implements LifecycleListener {
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
       final PublisherFactory publisherFactory,
+      final SubscriberFactory subscriberFactory,
       final PropertiesFactory propFactory) {
     this.pluginName = pluginName;
     this.pluginDataDir = pluginData.toPath();
     this.defaultEventWorker = defaultEventWorker;
     this.userEventWorker = eventWorkerFactory.create();
     this.publisherFactory = publisherFactory;
+    this.subscriberFactory = subscriberFactory;
     this.propFactory = propFactory;
   }
 
@@ -86,6 +96,14 @@ public class Manager implements LifecycleListener {
 
   @Override
   public void stop() {
+    if (rabbitMqApiPublisher != null) {
+      rabbitMqApiPublisher.stop();
+      rabbitMqApiPublisher = null;
+    }
+    if (rabbitMqApiSubscriber != null) {
+      rabbitMqApiSubscriber.stop();
+      rabbitMqApiSubscriber = null;
+    }
     for (Publisher publisher : publisherList) {
       publisher.stop();
       String listenAs = publisher.getProperties().getSection(Gerrit.class).listenAs;
@@ -98,11 +116,42 @@ public class Manager implements LifecycleListener {
     publisherList.clear();
   }
 
+  public Publisher getRabbitMqApiPublisher(Properties properties) {
+    if (rabbitMqApiPublisher == null) {
+      rabbitMqApiPublisher = (MessagePublisher) publisherFactory.create(properties);
+      rabbitMqApiPublisher.start();
+    }
+    return rabbitMqApiPublisher;
+  }
+
+  public Subscriber getRabbitMqApiSubscriber(Properties properties) {
+    if (rabbitMqApiSubscriber == null) {
+      rabbitMqApiSubscriber = (MessageSubscriber) subscriberFactory.create(properties);
+      rabbitMqApiSubscriber.start();
+    }
+    return rabbitMqApiSubscriber;
+  }
+
+  public void closeRabbitMqApi() {
+    if (rabbitMqApiPublisher != null) {
+      rabbitMqApiPublisher.stop();
+      rabbitMqApiPublisher = null;
+    }
+    if (rabbitMqApiSubscriber != null) {
+      rabbitMqApiSubscriber.stop();
+      rabbitMqApiSubscriber = null;
+    }
+  }
+
   private List<Properties> load() {
     List<Properties> propList = new ArrayList<>();
     // Load base
     Properties base = propFactory.create(pluginDataDir.resolve(pluginName + FILE_EXT));
     base.load();
+    if (!base.getSection(General.class).publishAllGerritEvents) {
+      logger.atFine().log("publishAllGerritEvents disabled");
+      return propList;
+    }
 
     // Load sites
     try (DirectoryStream<Path> ds =

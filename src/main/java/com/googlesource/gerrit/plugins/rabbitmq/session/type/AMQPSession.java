@@ -19,7 +19,6 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Exchange;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
-import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.rabbitmq.client.AlreadyClosedException;
@@ -33,6 +32,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 
@@ -57,10 +57,23 @@ public final class AMQPSession implements Session {
     return false;
   }
 
-  private Channel getChannel() {
+  private boolean makeSureChannelIsOpened() {
+    if (channelIsOpen()) {
+      return true;
+    }
+    channel = createChannel();
+    return channelIsOpen();
+  }
+
+  private boolean channelIsOpen() {
+    return channel != null && channel.isOpen();
+  }
+
+  private Channel createChannel() {
     if (!isOpen()) {
       connect();
-    } else {
+    }
+    if (isOpen()) {
       AMQP amqp = properties.getSection(AMQP.class);
       try {
         Channel ch = connection.createChannel();
@@ -163,34 +176,48 @@ public final class AMQPSession implements Session {
   }
 
   @Override
-  public boolean publish(String messageBody, String eventType) {
-    if (channel == null || !channel.isOpen()) {
-      channel = getChannel();
-    }
-    if (channel != null && channel.isOpen()) {
-      String routingKey;
-      Message message = properties.getSection(Message.class);
-      if (message.routingKey != null && !message.routingKey.isEmpty()) {
-        // Set routingKey from configuration.
-        routingKey = message.routingKey;
-      } else {
-        routingKey = eventType;
-      }
-      Exchange exchange = properties.getSection(Exchange.class);
+  public boolean publish(String messageBody, String routingKey) {
+    if (makeSureChannelIsOpened()) {
+      String exchangeName = properties.getSection(Exchange.class).name;
       try {
-        logger.atFine().log("Sending message.");
         channel.basicPublish(
-            exchange.name,
+            exchangeName,
             routingKey,
             properties.getAMQProperties().getBasicProperties(),
             messageBody.getBytes(CharEncoding.UTF_8));
         return true;
       } catch (IOException ex) {
-        logger.atSevere().withCause(ex).log("Error when sending meessage.");
+        logger.atSevere().withCause(ex).log("Error when sending message.");
         return false;
       }
     }
-    logger.atSevere().log("Cannot open channel.");
+    logger.atSevere().log("Cannot open channel for publishing.");
+    return false;
+  }
+
+  @Override
+  public boolean subscribe(String topic, Consumer<String> messageBodyConsumer) {
+    if (makeSureChannelIsOpened()) {
+      String exchangeName = properties.getSection(Exchange.class).name;
+      try {
+        String queueName = channel.queueDeclare().getQueue();
+        channel.queueBind(queueName, exchangeName, topic);
+
+        channel.basicConsume(
+            queueName,
+            true,
+            (consumerTag, delivery) -> {
+              messageBodyConsumer.accept(new String(delivery.getBody(), "UTF-8"));
+            },
+            consumerTag -> {});
+        logger.atInfo().log("Subscribed to queue with name %s", queueName);
+        return true;
+      } catch (IOException ex) {
+        logger.atSevere().withCause(ex).log("Error when subscribing to topic.");
+        return false;
+      }
+    }
+    logger.atSevere().log("Cannot open channel for subscribing.");
     return false;
   }
 }

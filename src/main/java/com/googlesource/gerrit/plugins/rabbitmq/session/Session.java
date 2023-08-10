@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.googlesource.gerrit.plugins.rabbitmq.session;
 
+import java.util.function.Consumer;
+
 public interface Session {
   boolean isOpen();
 
@@ -20,5 +22,7 @@ public interface Session {
 
   void disconnect();
 
-  boolean publish(String message, String eventType);
+  boolean publish(String messageBody, String routingKey);
+
+  boolean subscribe(String topic, Consumer<String> messageBodyConsumer);
 }
