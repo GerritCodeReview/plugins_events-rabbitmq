@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.PropertiesFactory;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherFactory;
@@ -51,6 +52,7 @@ public class Manager implements LifecycleListener {
   private final PublisherFactory publisherFactory;
   private final PropertiesFactory propFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
+  private final RabbitMqBrokerApi rabbitMqBrokerApi;
 
   @Inject
   public Manager(
@@ -59,13 +61,15 @@ public class Manager implements LifecycleListener {
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
       final PublisherFactory publisherFactory,
-      final PropertiesFactory propFactory) {
+      final PropertiesFactory propFactory,
+      final RabbitMqBrokerApi rabbitMqBrokerApi) {
     this.pluginName = pluginName;
     this.pluginDataDir = pluginData.toPath();
     this.defaultEventWorker = defaultEventWorker;
     this.userEventWorker = eventWorkerFactory.create();
     this.publisherFactory = publisherFactory;
     this.propFactory = propFactory;
+    this.rabbitMqBrokerApi = rabbitMqBrokerApi;
   }
 
   @Override
@@ -86,6 +90,7 @@ public class Manager implements LifecycleListener {
 
   @Override
   public void stop() {
+    rabbitMqBrokerApi.disconnect();
     for (Publisher publisher : publisherList) {
       publisher.stop();
       String listenAs = publisher.getProperties().getSection(Gerrit.class).listenAs;
@@ -103,6 +108,10 @@ public class Manager implements LifecycleListener {
     // Load base
     Properties base = propFactory.create(pluginDataDir.resolve(pluginName + FILE_EXT));
     base.load();
+    if (!base.getSection(General.class).publishAllGerritEvents) {
+      logger.atFine().log("publishAllGerritEvents disabled");
+      return propList;
+    }
 
     // Load sites
     try (DirectoryStream<Path> ds =

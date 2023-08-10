@@ -15,8 +15,11 @@
 package com.googlesource.gerrit.plugins.rabbitmq.message;
 
 import com.google.common.flogger.FluentLogger;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.SettableFuture;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.server.events.Event;
+import com.google.gerrit.server.events.EventGson;
 import com.google.gerrit.server.events.EventListener;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -24,6 +27,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
@@ -40,58 +44,46 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private static final String END_OF_STREAM = "END-OF-STREAM_$F7;XTSUQ(Dv#N6]g+gd,,uzRp%G-P";
   private static final Event EOS = new Event(END_OF_STREAM) {};
 
+  protected final Properties properties;
   private final Session session;
-  private final Properties properties;
   private final Gson gson;
   private final Timer monitorTimer = new Timer();
-  private final LinkedBlockingQueue<Event> queue = new LinkedBlockingQueue<>(MAX_EVENTS);
+  private final LinkedBlockingQueue<TopicEvent> queue = new LinkedBlockingQueue<>(MAX_EVENTS);
   private final Object sessionMon = new Object();
   private EventListener eventListener;
   private GracefullyCancelableRunnable publisher;
   private Thread publisherThread;
+  private final Object lostEventCountLock = new Object();
+  private int lostEventCount = 0;
 
   @Inject
   public MessagePublisher(
       @Assisted final Properties properties,
       SessionFactoryProvider sessionFactoryProvider,
-      Gson gson) {
+      @EventGson Gson gson) {
     this.session = sessionFactoryProvider.get().create(properties);
     this.properties = properties;
     this.gson = gson;
     this.eventListener =
         new EventListener() {
-          private int lostEventCount = 0;
 
           @Override
           public void onEvent(Event event) {
-            if (!publisherThread.isAlive()) {
-              ensurePublisherThreadStarted();
-            }
-
-            if (queue.offer(event)) {
-              if (lostEventCount > 0) {
-                logger.atWarning().log(
-                    "Event queue is no longer full, %d events were lost", lostEventCount);
-                lostEventCount = 0;
-              }
-            } else {
-              if (lostEventCount++ % 10 == 0) {
-                logger.atSevere().log("Event queue is full, lost %d event(s)", lostEventCount);
-              }
-            }
+            publish(event);
           }
         };
     this.publisher =
         new GracefullyCancelableRunnable() {
 
-          volatile boolean canceled = false;
+          volatile boolean canceled;
 
           @Override
           public void run() {
+            canceled = false;
             while (!canceled) {
               try {
-                Event event = queue.take();
-                if (event.getType().equals(END_OF_STREAM)) {
+                TopicEvent topicEvent = queue.take();
+                if (topicEvent.event.getType().equals(END_OF_STREAM)) {
                   continue;
                 }
                 while (!isConnected() && !canceled) {
@@ -99,8 +91,8 @@ public class MessagePublisher implements Publisher, LifecycleListener {
                     sessionMon.wait(1000);
                   }
                 }
-                if (!publishEvent(event) && !queue.offer(event)) {
-                  logger.atSevere().log("Event lost: %s", gson.toJson(event));
+                if (!publishEvent(topicEvent) && !queue.offer(topicEvent)) {
+                  logger.atSevere().log("Event lost: %s", gson.toJson(topicEvent.event));
                 }
               } catch (InterruptedException e) {
                 logger.atWarning().withCause(e).log(
@@ -113,7 +105,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
           public void cancel() {
             canceled = true;
             if (queue.isEmpty()) {
-              queue.offer(EOS);
+              queue.offer(new TopicEvent(null, EOS, null));
             }
           }
 
@@ -176,12 +168,52 @@ public class MessagePublisher implements Publisher, LifecycleListener {
     return this.eventListener;
   }
 
+  @Override
+  public ListenableFuture<Boolean> publish(String topic, Event event) {
+    SettableFuture<Boolean> future = SettableFuture.create();
+    publish(new TopicEvent(topic, event, future));
+    return future;
+  }
+
+  private ListenableFuture<Boolean> publish(Event event) {
+    Message message = properties.getSection(Message.class);
+    if (message.routingKey != null && !message.routingKey.isEmpty()) {
+      // Set routingKey from configuration.
+      return publish(message.routingKey, event);
+    } else {
+      return publish(event.type, event);
+    }
+  }
+
+  private void publish(TopicEvent topicEvent) {
+    if (!publisherThread.isAlive()) {
+      ensurePublisherThreadStarted();
+    }
+    logger.atFine().log(
+        "Adding event %s for topic %s to publisher queue", topicEvent.event, topicEvent.topic);
+    synchronized (lostEventCountLock) {
+      if (queue.offer(topicEvent)) {
+        if (lostEventCount > 0) {
+          logger.atWarning().log(
+              "Event queue is no longer full, %d events were lost", lostEventCount);
+          lostEventCount = 0;
+        }
+      } else {
+        if (lostEventCount++ % 10 == 0) {
+          logger.atSevere().log("Event queue is full, lost %d event(s)", lostEventCount);
+        }
+      }
+    }
+  }
+
   private boolean isConnected() {
     return session != null && session.isOpen();
   }
 
-  private boolean publishEvent(Event event) {
-    return session.publish(gson.toJson(event), event.type);
+  private boolean publishEvent(TopicEvent topicEvent) {
+    boolean published = session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
+    topicEvent.published.set(published);
+    return published;
   }
 
   private void connect() {
@@ -204,5 +236,17 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private interface GracefullyCancelableRunnable extends Runnable {
     /** Gracefully cancels the Runnable after completing ongoing task. */
     public void cancel();
+  }
+
+  private class TopicEvent {
+    String topic;
+    Event event;
+    SettableFuture<Boolean> published;
+
+    TopicEvent(String topic, Event event, SettableFuture<Boolean> published) {
+      this.topic = topic;
+      this.event = event;
+      this.published = published;
+    }
   }
 }
