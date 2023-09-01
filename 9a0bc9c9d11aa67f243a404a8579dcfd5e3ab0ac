@@ -130,6 +130,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46179ed4_069b6f08",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-01T09:40:23Z",
+      "side": 1,
+      "message": "The MessagePublisher also implements the LifeCycleListener. So it will clean itself when the plugin unloads.\n\nHowever, the session used to subscribe does not clean itself. I create a new class for subscribing that can implement LifeCycleListener as well.",
+      "parentUuid": "70c431aa_15e16690",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "707338d9_7108eb50",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
         "patchSetId": 1
