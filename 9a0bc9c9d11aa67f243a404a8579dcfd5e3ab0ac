@@ -154,6 +154,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62abb345_d212cfa6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-09-01T10:11:46Z",
+      "side": 1,
+      "message": "MessagePublisher is not bound to LifecycleListener.class so it\u0027s methods aren\u0027t called when plugin loads/unloads. It is Manager.java that is bound to LifecycleListener and handles the lifecycle of all publishers.\nhttps://gerrit.googlesource.com/plugins/events-rabbitmq/+/9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac/src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java#80\n\nManager.java is the class that should handle lifecycle for all classes.\nDon\u0027t start the rabbitmq session in the constructor of RabbitMQBrokerAPI, instead expose the #start #stop method of the session and let Manager create the RabbitMQBrokerAPI instance and start and stop it when the plugin loads/unloads.",
+      "parentUuid": "46179ed4_069b6f08",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "707338d9_7108eb50",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
         "patchSetId": 1
