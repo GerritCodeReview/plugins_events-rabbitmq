@@ -36,6 +36,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c018aa1_34bce702",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-08T14:03:21Z",
+      "side": 1,
+      "message": "Added two new configuration options to control which part of the plugin is enabled. The default states of these options make it so the plugin behave in the same way as before this change.\nI also put these options in a new section called General.",
+      "parentUuid": "03c4eb4b_e47491ee",
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "756f2431_c57427be",
@@ -49,6 +67,30 @@
       "writtenOn": "2023-08-31T12:49:40Z",
       "side": 1,
       "message": "Which parts aren\u0027t implemented? This should probably be documented.",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a07e534_08bf0f87",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-08T14:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "756f2431_c57427be",
       "range": {
         "startLine": 9,
         "startChar": 28,
@@ -82,6 +124,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57281f5c_504be393",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-08T14:03:21Z",
+      "side": 1,
+      "message": "I rewrote the code to use flags in the configuration instead of requiring a site config. So this code is removed.",
+      "parentUuid": "c38ff1e6_1bcd0d34",
+      "range": {
+        "startLine": 76,
+        "startChar": 88,
+        "endLine": 76,
+        "endChar": 118
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0c8258c_2af4aad7",
@@ -95,6 +161,30 @@
       "writtenOn": "2023-08-31T12:49:40Z",
       "side": 1,
       "message": "If broker API is configured?\nIf you are only interested in publishing RabbitMQ messages from Gerrit\u0027s event-bus you don\u0027t want to inject this module that starts a Publisher which starts a publisherthread and creates an unused connection to RabbitMQ.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdd4fbd3_fa46256f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-08T14:03:21Z",
+      "side": 1,
+      "message": "I added code that prevent connections/threads from being created when the broker is disabled. However, this is done in the RabbitMqBrokerAPI. It is done there because it is a bit cumbersome to do it in the Module classes because the class instances that I need to check the configs are not injected yet.",
+      "parentUuid": "c0c8258c_2af4aad7",
       "range": {
         "startLine": 82,
         "startChar": 4,
@@ -200,6 +290,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b5f060d_f8d1f72c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-08T14:03:21Z",
+      "side": 1,
+      "message": "I created a new class Subscriber and made the Manager create a instance of the publisher and subscriber that the RabbitMQBrokerAPI can use. Now the manager will close those connections also if the plugin unloads.",
+      "parentUuid": "8619f941_01cb2138",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "707338d9_7108eb50",
@@ -213,6 +327,30 @@
       "writtenOn": "2023-08-31T12:49:40Z",
       "side": 1,
       "message": "What happens if this file doesn\u0027t exist?",
+      "range": {
+        "startLine": 56,
+        "startChar": 38,
+        "endLine": 56,
+        "endChar": 84
+      },
+      "revId": "9a0bc9c9d11aa67f243a404a8579dcfd5e3ab0ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8964366_0778e4e6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-08T14:03:21Z",
+      "side": 1,
+      "message": "It logs that the file is missing and just use the default values. I have rewritten this to use just the base config instead if the file is missing.",
+      "parentUuid": "707338d9_7108eb50",
       "range": {
         "startLine": 56,
         "startChar": 38,
