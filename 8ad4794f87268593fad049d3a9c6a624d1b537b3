@@ -16,6 +16,24 @@
       "message": "Why not just configure the Channel for confirms in Session (`channel.confirmSelect();`) and just wait for confirm in \"publish scope\".\n\n```\n  @Override\n  public boolean publish(String messageBody, String routingKey) {\n    if (makeSureChannelIsOpened()) {\n      String exchangeName \u003d properties.getSection(Exchange.class).name;\n      try {\n        channel.basicPublish(\n            exchangeName,\n            routingKey,\n            properties.getAMQProperties().getBasicProperties(),\n            messageBody.getBytes(CharEncoding.UTF_8));\n      } catch (IOException ex) {\n        logger.atSevere().withCause(ex).log(\"Error when sending message.\");\n        return false;\n      }\n\n      if (this.publishConfirm) {\n        try {\n          return channel.waitForConfirms(config.waitForConfirms());\n        } catch (TimeoutException te) {\n          logger.atWarning().withCause(te).log(\"Failed to confirm delivery\");\n          return false;\n        } catch (InterruptedException ie) {\n          logger.atWarning().log(\"Interrupted while waiting for confirms);\n          return false;\n        }\n      }\n      return true;\n    }\n    logger.atSevere().log(\"Cannot open channel for publishing.\");\n    return false;\n  }\n```",
       "revId": "8ad4794f87268593fad049d3a9c6a624d1b537b3",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa6f2b1a_28acb95e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-11T12:52:20Z",
+      "side": 1,
+      "message": "I want to retry nacked messages and I do not want to block the publisher thread by waiting.",
+      "parentUuid": "1183f22a_e3820d3e",
+      "revId": "8ad4794f87268593fad049d3a9c6a624d1b537b3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
