@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "783c0e22_5e33e61e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-09-14T06:14:52Z",
+      "side": 1,
+      "message": "I would:\n* Let RabbitMqBrokerApi Inject a Publisher and a Subscriber.\n* Create BrokerApi(Publisher|Subscriber)Provider that handles all loading of properties etc. and bind them to Publish|Subscriber (for clarity you could rename Subscriber BrokerApiSubscriber and create a BrokerApiPublisher interface that Implements Publisher.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f90215ea_8baac7e3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-09-14T06:14:52Z",
+      "side": 1,
+      "message": "This callback to the Manager seems spagettiish.\nWhy not call the stop() methods on the local Subscriber and Publisher?\nThe Manager doesn\u0027t need to get involved at all.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 33
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
