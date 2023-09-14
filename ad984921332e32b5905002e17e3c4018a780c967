@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aeac1b8_4bf14871",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-14T09:56:22Z",
+      "side": 1,
+      "message": "com.gerritforge.gerrit.eventbroker.EventDeserializer use this. We need this for serialization as well otherwise we fail to deserialize events like change-restored and change-abandoned.",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "ad984921332e32b5905002e17e3c4018a780c967",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
