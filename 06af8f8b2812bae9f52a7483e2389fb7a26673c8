@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4643b83a_b96f8d1c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-14T11:34:29Z",
+      "side": 1,
+      "message": "How do I handle closing down the connections if the Publisher and Subscriber is not part of the Manager? Bind the BrokerApiPublisher/Subscriber to the LifecycleListener?",
+      "parentUuid": "783c0e22_5e33e61e",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f90215ea_8baac7e3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2023-09-14T06:14:52Z",
       "side": 1,
       "message": "This callback to the Manager seems spagettiish.\nWhy not call the stop() methods on the local Subscriber and Publisher?\nThe Manager doesn\u0027t need to get involved at all.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 33
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a994e1fd_61daade1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-14T11:34:29Z",
+      "side": 1,
+      "message": "I did this to make the manager aware that the subscriber and publisher has been closed. So it could do the right thing when the plugin is unloaded(not closing the subscriber and publisher if they had already been closed).",
+      "parentUuid": "f90215ea_8baac7e3",
       "range": {
         "startLine": 103,
         "startChar": 6,
