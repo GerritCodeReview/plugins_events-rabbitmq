@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc0f4e04_dfa1777b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-09-15T06:51:40Z",
+      "side": 1,
+      "message": "But what if I do a reload or a remove like \"ssh -p 29418 \u003cgerrit-host\u003e gerrit plugin reload events-rabbitmq\"?",
+      "parentUuid": "2fa99100_0177dfbf",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f90215ea_8baac7e3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
         "patchSetId": 3
