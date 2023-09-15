@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2fa99100_0177dfbf",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-09-15T05:34:53Z",
+      "side": 1,
+      "message": "Like:\n```\n  @Override\n  public void disconnect() {\n      logger.atFine().log(\"RabbitMqBrokerApi disconnects connections\");\n      publisher.stop();\n      listener.stop();\n    }\n  }\n```",
+      "parentUuid": "4643b83a_b96f8d1c",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f90215ea_8baac7e3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
         "patchSetId": 3
@@ -90,6 +114,53 @@
         "startChar": 6,
         "endLine": 103,
         "endChar": 33
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0ae61df_d1c490df",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-09-15T05:34:53Z",
+      "side": 1,
+      "message": "I don\u0027t think Manager should be involved at all. Just let whoever injects a BrokerApi instance (multi-site, pull-replication, ...) take care of closing the resources.",
+      "parentUuid": "a994e1fd_61daade1",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 33
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ac33e6b_667a3ded",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessageSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-09-15T05:34:53Z",
+      "side": 1,
+      "message": "Instead let the Subscriber interface have a #stop() method.\nIt\u0027s not bound to a LifecycleListener, the #start() method is never used and that way you won\u0027t have to class-cast the Subscriber when you want to shut it down.",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 71
       },
       "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
