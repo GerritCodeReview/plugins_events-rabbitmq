@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6277ba6_05107147",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-10-10T14:13:47Z",
+      "side": 1,
+      "message": "We are currently encountering a problem where the rabbitMQ channel that handles the subscription/consummation goes down for unknown reasons. I will investigate this further to make sure it is not a problem with the plugin.",
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51fc6be8_4235898e",
@@ -65,6 +82,29 @@
         "startChar": 13,
         "endLine": 15,
         "endChar": 41
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de17bd6f_ba7e0719",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-10-10T14:13:47Z",
+      "side": 1,
+      "message": "Because this object is a singleton and several plugins may use the brokerApi at the same we should synchronize these and other variables that may be accessed at the same to prevent race conditions.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 26
       },
       "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
