@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51fc6be8_4235898e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-10-10T12:22:59Z",
+      "side": 1,
+      "message": "```suggestion\n      final BrokerApiPublisher brokerApiPublisher,\n```",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 68,
+        "endChar": 51
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "359349d2_a7e0b44d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-10-10T12:22:59Z",
+      "side": 1,
+      "message": "```suggestion\n      final BrokerApiSubscriber brokerApiSubscriber) {\n```",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69571ad3_49958429",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPropertiesRetriever.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-10-10T12:22:59Z",
+      "side": 1,
+      "message": "This is basically a provider, so you might as well make it as one and bind it to Properties annotated with @BrokerAPIProperties or similar.\n\n```\n  public BrokerApiPropertiesProvider implements Provider\u003cProperties\u003e {\n    ...\n    public Properties get() {\n    ...\n    }\n  }\n```\n```\n  @Retention(RUNTIME)\n  @BindingAnnotation\n  public @interface BrokerApiProperties {}\n```\n```\n bind(Properties.class)\n   .annotatedWith(BrokerApiProperties.class)\n   .toProvider(BrokerApiPropertiesProvider.class);\n```\n```\n  @Inject\n  public BrokerApiPublisher(\n      SessionFactoryProvider sessionFactoryProvider,\n      @EventGson Gson gson,\n      @BrokerApiProperties Properties props) {\n    super(props, sessionFactoryProvider, gson);\n    this.enabled \u003d props.getSection(General.class).enableBrokerApi;\n  }\n```",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}

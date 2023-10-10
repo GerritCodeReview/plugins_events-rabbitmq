@@ -144,6 +144,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7daaa2d1_fe195849",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-10-10T12:22:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6b3e778d_49479cea",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f90215ea_8baac7e3",
@@ -229,6 +253,30 @@
       "side": 1,
       "message": "Removed these methods. The Manager and RabbitMqBrokerApi can now close the resources directly with the references to the Singletons BrokerApiPublisher and BrokerApiSubscriber.",
       "parentUuid": "c0ae61df_d1c490df",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 33
+      },
+      "revId": "06af8f8b2812bae9f52a7483e2389fb7a26673c8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6105f356_c85389ff",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-10-10T12:22:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7e68e522_8d8d0608",
       "range": {
         "startLine": 103,
         "startChar": 6,
