@@ -1,4 +1,4 @@
-// Copyright (C) 2015 The Android Open Source Project
+// Copyright (C) 2023 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,12 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package com.googlesource.gerrit.plugins.rabbitmq.session;
 
-public interface Session {
-  boolean isOpen();
+import com.rabbitmq.client.ConfirmCallback;
 
-  boolean connect();
+public interface PublisherSession extends Session {
+  boolean publish(String messageBody, String routingKey);
 
-  void disconnect();
+  void addConfirmListener(ConfirmCallback ackConsumer, ConfirmCallback nackConsumer);
+
+  Long getNextPublishSeqNo();
 }
