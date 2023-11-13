@@ -108,6 +108,30 @@
       },
       "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0715e52d_53af6041",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-13T14:57:14Z",
+      "side": 1,
+      "message": "I removed the running variable and synchronized some methods and variables in the different files.",
+      "parentUuid": "de17bd6f_ba7e0719",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
