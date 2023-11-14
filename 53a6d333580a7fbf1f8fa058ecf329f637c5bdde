@@ -41,6 +41,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f58bb9b_2fb2d38a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-14T10:38:28Z",
+      "side": 1,
+      "message": "Replaced this with a reference directly to the RabbitMqBrokerApi instead.",
+      "parentUuid": "51fc6be8_4235898e",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 68,
+        "endChar": 51
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "359349d2_a7e0b44d",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-10-10T12:22:59Z",
       "side": 1,
       "message": "```suggestion\n      final BrokerApiSubscriber brokerApiSubscriber) {\n```",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "53a6d333580a7fbf1f8fa058ecf329f637c5bdde",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4039f105_8ddc4b2f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-14T10:38:28Z",
+      "side": 1,
+      "message": "Replaced this with a reference directly to the RabbitMqBrokerApi instead.",
+      "parentUuid": "359349d2_a7e0b44d",
       "range": {
         "startLine": 69,
         "startChar": 32,
