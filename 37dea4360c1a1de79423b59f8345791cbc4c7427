@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d95a673f_2778c0a6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T14:53:18Z",
+      "side": 1,
+      "message": "If the BrokerApi implementation is a singleton it doesn\u0027t make much sense to me to let one consumer disconnect the publisher/subscriber for all other consumers.\nIf you want to reuse the session you could have a number of BrokerApis share the same session and f.i. unload the event-consuumers that the BrokerApi instance have added but let the session live on.",
+      "parentUuid": "ec20400b_3e4abfac",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ae52b3b_0f7b2b14",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
         "patchSetId": 8
