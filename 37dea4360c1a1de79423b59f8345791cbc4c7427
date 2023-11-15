@@ -72,6 +72,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ed643ad_146af954",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T12:42:03Z",
+      "side": 1,
+      "message": "Something like this need to be done to be able to publish again after a call to RabbitMqBrokerApi::disconnect, otherwise you are not able to publish until you restart the plugin.",
+      "parentUuid": "e43ee823_71fc9245",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ae52b3b_0f7b2b14",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
         "patchSetId": 8
@@ -118,6 +142,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0f8f934_19641277",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T12:42:03Z",
+      "side": 1,
+      "message": "But why would you disable the broker API if you have a plugin that use publish? Should you not enable the broker API or disable the other plugin instead?",
+      "parentUuid": "b2dda561_4b41c13e",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 86
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c41f03_1f92e005",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
         "patchSetId": 8
@@ -129,6 +177,30 @@
       "writtenOn": "2023-11-15T10:09:14Z",
       "side": 1,
       "message": "Is this really the API for `EventDeserializer`? If unable to deserialize throw `NullpointerException`? If so that should be fixed in EventDeserializer and if it\u0027s just that it cannot handle events without type check for that here instead of catching NPE.\n\nOr does it return `null` and the NPE thrown by `eventConsumer.accept()`? If so the null-case should be handled instead of catching NPE.",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec798be6_65d993b7",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T12:42:03Z",
+      "side": 1,
+      "message": "The EventDeserializer assert that event.type is not null. If it is, it throws a NullPointerException. Earlier in the development of this plugin we got a event with event.type null and when that happened the plugin stopped working. That is why I added the catch. \nBut later I fixed it, so now I do not think we should get a event.type that is null unless something is very wrong. I think we can remove it. Do you agree?",
+      "parentUuid": "42c41f03_1f92e005",
       "range": {
         "startLine": 72,
         "startChar": 21,
