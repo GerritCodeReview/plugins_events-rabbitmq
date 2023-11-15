@@ -96,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb5ae8c5_e0206f0b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T13:14:10Z",
+      "side": 1,
+      "message": "Ok, but if BrokerApi.disconnect() is called (`/** Disconnect from broker and cancel all active consumers */`), doesn\u0027t that mean that \"I am done with this instance of BrokerApi, I don\u0027t need the resources anymore\"? If `publish` is called after that it seems to me to be a bug in the consumer of the API, if the consumer cancelled all active consumers and disconnected it cannot assume that you can still use it?\nWhat am I missing?",
+      "parentUuid": "4ed643ad_146af954",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ae52b3b_0f7b2b14",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
         "patchSetId": 8
@@ -166,6 +190,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f9f21926_c6b42e79",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T13:14:10Z",
+      "side": 1,
+      "message": "If those assumptions are correct we should never end up here and the log statement is moot, if they aren\u0027t you will write the same statement, as the one logged on #50, to the logs n amount of times which gives you no more information. Why would you need to inform the user again after logging on line 50?\n\nThe only way it would make sense to me is if `#stop()` set `enabled \u003d false` and this WARN message read `publish() called after BrokerApi was disconnected` to find bugs in consumers of the API.",
+      "parentUuid": "c0f8f934_19641277",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 86
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c41f03_1f92e005",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
         "patchSetId": 8
@@ -201,6 +249,30 @@
       "side": 1,
       "message": "The EventDeserializer assert that event.type is not null. If it is, it throws a NullPointerException. Earlier in the development of this plugin we got a event with event.type null and when that happened the plugin stopped working. That is why I added the catch. \nBut later I fixed it, so now I do not think we should get a event.type that is null unless something is very wrong. I think we can remove it. Do you agree?",
       "parentUuid": "42c41f03_1f92e005",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aad236a_c5de9bd1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T13:14:10Z",
+      "side": 1,
+      "message": "That\u0027s a strange behavior from the deserializer, NPEs shouldn\u0027t be used as an API.\n\nI would to skip the EventDeserializer and just use plain Gson as all the EventDeserializer does beyond using Gson is to do that null-check for type.",
+      "parentUuid": "ec798be6_65d993b7",
       "range": {
         "startLine": 72,
         "startChar": 21,
