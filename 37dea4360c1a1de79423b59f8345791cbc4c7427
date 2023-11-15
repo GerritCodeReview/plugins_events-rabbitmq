@@ -120,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec20400b_3e4abfac",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T14:41:06Z",
+      "side": 1,
+      "message": "The idea was that if one plugin decides to call disconnect the other plugins should still be able to publish. But I now realize that if we want it that way we should also recover the subscribers. This does not feel like the correct way.\n\nOn the other hand just letting one plugin disconnect and make the BrokerApi unusable for other plugins does not sound right either.\n\nI think I have failed to understand why you would ever call disconnect.",
+      "parentUuid": "bb5ae8c5_e0206f0b",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ae52b3b_0f7b2b14",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
         "patchSetId": 8
@@ -202,6 +226,30 @@
       "side": 1,
       "message": "If those assumptions are correct we should never end up here and the log statement is moot, if they aren\u0027t you will write the same statement, as the one logged on #50, to the logs n amount of times which gives you no more information. Why would you need to inform the user again after logging on line 50?\n\nThe only way it would make sense to me is if `#stop()` set `enabled \u003d false` and this WARN message read `publish() called after BrokerApi was disconnected` to find bugs in consumers of the API.",
       "parentUuid": "c0f8f934_19641277",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 86
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d0ba07e_6e657623",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T14:41:06Z",
+      "side": 1,
+      "message": "The use case is that someone want to use the rabbitMQBroker in there multi-site setup they do not read the documentation carefully enough and install the plugin without enabling the brokerApi(it is disabled by default). They realize something is wrong, check the log and more easily see that they should enable the brokerApi. \n\nEasier to find several log entries than one entry at the start of Gerrit. That is my thoughts. It just a small help and the user should be able to find the problem with just one log entry at the start eventually.",
+      "parentUuid": "f9f21926_c6b42e79",
       "range": {
         "startLine": 69,
         "startChar": 0,
@@ -320,6 +368,30 @@
       "writtenOn": "2023-11-15T14:15:14Z",
       "side": 1,
       "message": "I created a bug-report for the events-broker module:\nhttps://issues.gerritcodereview.com/issues/311007528",
+      "parentUuid": "692a875c_a37906dc",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac6e627b_3c11c805",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T14:41:06Z",
+      "side": 1,
+      "message": "I assumed that it was the recommended to use the EventDeserializer. What should the plugin do if an event.type that is null occurs. Should the consumers provided by the plugins(multi-site, websession-broker) that use the BrokerApi handle it themself?\n\nBTW, I still get 403 when trying to access the issue tracker.",
       "parentUuid": "692a875c_a37906dc",
       "range": {
         "startLine": 72,
