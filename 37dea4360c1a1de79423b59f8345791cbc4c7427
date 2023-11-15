@@ -453,6 +453,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "185abc9b_0f1ce0f3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-15T15:50:45Z",
+      "side": 1,
+      "message": "Ok, then I use @EventGson instead and print a log message if event.type is null without any Exceptions.",
+      "parentUuid": "c089d3c4_532d3be6",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cefe546d_5d7b6741",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
         "patchSetId": 8
