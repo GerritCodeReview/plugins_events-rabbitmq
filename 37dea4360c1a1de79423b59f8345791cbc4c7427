@@ -429,6 +429,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c089d3c4_532d3be6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T14:59:17Z",
+      "side": 1,
+      "message": "In my opinion that should be handled by the consumers of the BrokerApi. They know what they expect and how broken expectations should be handled. But that\u0027s a different story, the broker api implementation should at least have the opportunity to log and throw away faulty messages without catching an NPE.",
+      "parentUuid": "ac6e627b_3c11c805",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cefe546d_5d7b6741",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
         "patchSetId": 8
