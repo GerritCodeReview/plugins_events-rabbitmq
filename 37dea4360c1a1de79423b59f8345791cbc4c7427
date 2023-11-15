@@ -1,0 +1,400 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86964b25_db6331c1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "I think handling the conditional here rather than in the `load()` method makes the code a lot easier to read.\n\n\n```suggestion\n\n  @Override\n  public void start() {\n    Properties base \u003d getBaseProperties()\n    if (base.getSection(General.class).publishAllGerritEvents) {\n      logger.atFine().log(\"publishAllGerritEvents enabled\");\n      List\u003cProperties\u003e propList \u003d getPublisherProperties(base);\n      for (Properties properties : propList) {\n        Publisher publisher \u003d publisherFactory.create(properties);\n        publisher.start();\n        String listenAs \u003d properties.getSection(Gerrit.class).listenAs;\n        if (!listenAs.isEmpty()) {\n          userEventWorker.addPublisher(pluginName, publisher, listenAs);\n        } else {\n          defaultEventWorker.addPublisher(publisher);\n        }\n        publisherList.add(publisher);\n      }\n    }\n  }\n```",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25cb4445_a53ebda7",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "You could split this into two separate methods but I\u0027d prefer if you handled all properties the same so you\u0027d have a `BasePropertiesProvider implements Provider\u003cProperties\u003e` and a lazy loaded `PublisherProvider Implements Provider\u003cList\u003cProperties\u003e\u003e` that you inject instead, like you do for `BrokerApiPropertiesProvider`. This would also avoid duplication of code as the other Providers could Inject the BasePropertiesProvider.\n\n```suggestion\n\n  private List\u003cProperties\u003e getBaseProperties() {\n    List\u003cProperties\u003e propList \u003d new ArrayList\u003c\u003e();\n    // Load base\n    Properties base \u003d propFactory.create(pluginDataDir.resolve(pluginName + FILE_EXT));\n    base.load();\n    if (!base.getSection(General.class).publishAllGerritEvents) {\n      logger.atFine().log(\"publishAllGerritEvents disabled\");\n      return propList;\n    }\n  }\n\n\n  private List\u003cProperties\u003e getPublisherProperties(Properties baseProperties) {\n    // Load sites\n    try (DirectoryStream\u003cPath\u003e ds \u003d\n        Files.newDirectoryStream(pluginDataDir.resolve(SITE_DIR), \"*\" + FILE_EXT)) {\n      for (Path configFile : ds) {\n        Properties site \u003d propFactory.create(configFile);\n        if (site.load(base)) {\n          propList.add(site);\n        }\n      }\n    } catch (IOException ioe) {\n      logger.atWarning().withCause(ioe).log(\"Failed to load properties.\");\n    }\n    if (propList.isEmpty()) {\n      logger.atWarning().log(\"No site configs found. Using base config only!\");\n      propList.add(base);\n    }\n    return propList;\n  }\n```",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 3
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e43ee823_71fc9245",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "Why call `super.start()` again? It\u0027s already called in `start()`.",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ae52b3b_0f7b2b14",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "This is redundant information as the enclosing class will be specified in the log-event.\n\n```suggestion\n          \"Message sent with topic: %s and data: %s\", topic, event);\n```",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 92
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2dda561_4b41c13e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "This could potentially be a lot of messages if it\u0027s possible to configure the broker API as disabled but still call the `publish()` method. I believe warning for this once in `start()\u0027 is enough.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 86
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c41f03_1f92e005",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "Is this really the API for `EventDeserializer`? If unable to deserialize throw `NullpointerException`? If so that should be fixed in EventDeserializer and if it\u0027s just that it cannot handle events without type check for that here instead of catching NPE.\n\nOr does it return `null` and the NPE thrown by `eventConsumer.accept()`? If so the null-case should be handled instead of catching NPE.",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cefe546d_5d7b6741",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "Currently you have some logic and dependencies in this class that isn\u0027t used by the BrokerApiPublisher class.\nI\u0027d prefer if you extracted an abstract `TopicEventPublisher` class that both `BrokerApiPublisher` and `MessagePublisher` extends and move the child-class specific logic into those classes.",
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d6a447d_fe4df2a4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "`MessagePublisher`",
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df1ff255_cf8348a3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "`MessagePublisher`",
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc309ba9_3f17e294",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "`MessagePublisher`",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53e86481_f786e4ff",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "`MessagePublisher`",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 3
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee46177e_dfda03a7",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "`BrokerApiPublisher`",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 3
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeecd131_35d64ffe",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "`MessagePublisher`",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 3
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eac47c2b_33b5962b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "This would probably be the API of the TopicEventPublisher.\n```suggestion\n  private boolean publishEvent(TopicEvent topicEvent) {\n    boolean published \u003d session.publish(gson.toJson(topicEvent.event), topicEvent.topic);\n    topicEvent.published.ifPresent(f -\u003e f.set(published));\n    return published;\n  }\n```",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 3
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60ef793d_2de26692",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "```suggestion\n  protected class TopicEvent {\n```",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 9
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d0cb198_3bbd60d9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "```suggestion\n    Optional\u003cSettableFuture\u003cBoolean\u003e\u003e published;\n```",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 244,
+        "endChar": 27
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d249b9fc_2b556400",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "```suggestion\n    TopicEvent(String topic, Event event, @Nullable SettableFuture\u003cBoolean\u003e published) {\n```",
+      "range": {
+        "startLine": 246,
+        "startChar": 42,
+        "endLine": 246,
+        "endChar": 75
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03a1b037_773e42b9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-15T10:09:14Z",
+      "side": 1,
+      "message": "```suggestion\n      this.published \u003d Optional.ofNullable(published);\n```",
+      "range": {
+        "startLine": 249,
+        "startChar": 23,
+        "endLine": 249,
+        "endChar": 32
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
