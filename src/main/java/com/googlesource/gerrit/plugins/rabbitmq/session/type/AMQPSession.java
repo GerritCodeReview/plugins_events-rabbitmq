@@ -19,10 +19,12 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Exchange;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.rabbitmq.client.AlreadyClosedException;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.ConfirmCallback;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.ShutdownSignalException;
@@ -42,10 +44,15 @@ public final class AMQPSession implements Session {
   private final Properties properties;
   private volatile Connection connection;
   private volatile Channel channel;
+  private boolean publishConfirm;
+  private ConfirmCallback ackConsumer;
+  private ConfirmCallback nackConsumer;
+
   private final AtomicInteger failureCount = new AtomicInteger(0);
 
   public AMQPSession(Properties properties) {
     this.properties = properties;
+    this.publishConfirm = properties.getSection(Message.class).publishConfirm;
   }
 
   @Override
@@ -88,6 +95,17 @@ public final class AMQPSession implements Session {
             });
         failureCount.set(0);
         logger.atInfo().log("Channel #%d opened for %s.", channelId, amqp.uri);
+        if (publishConfirm) {
+          if (ackConsumer == null) {
+            logger.atWarning().log("No confirm listener for ack:s are set");
+          } else if (nackConsumer == null) {
+            logger.atWarning().log("No confirm listener for nack:s are set");
+          } else {
+            ch.confirmSelect();
+            logger.atInfo().log("Enabled publishConfirms on channel %d", channelId);
+            ch.addConfirmListener(ackConsumer, nackConsumer);
+          }
+        }
         return ch;
       } catch (IOException | AlreadyClosedException ex) {
         logger.atSevere().withCause(ex).log("Failed to open channel for %s.", amqp.uri);
@@ -246,5 +264,25 @@ public final class AMQPSession implements Session {
       logger.atSevere().withCause(ex).log("Error when removing subscriber");
       return false;
     }
+  }
+
+  @Override
+  public void addConfirmListener(ConfirmCallback ackConsumer, ConfirmCallback nackConsumer) {
+    if (publishConfirm) {
+      this.ackConsumer = ackConsumer;
+      this.nackConsumer = nackConsumer;
+    } else {
+      logger.atWarning().log(
+          "Publish Confirms are not enabled so you can not add a ConfirmListener");
+    }
+  }
+
+  @Override
+  public synchronized Long getNextPublishSeqNo() {
+    if (makeSureChannelIsOpened()) {
+      return channel.getNextPublishSeqNo();
+    }
+    logger.atSevere().log("Cannot open channel for getting sequence number.");
+    return null;
   }
 }
