@@ -14,6 +14,8 @@
 
 package com.googlesource.gerrit.plugins.rabbitmq.session.type;
 
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.flogger.FluentLogger;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
@@ -23,6 +25,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.rabbitmq.client.AlreadyClosedException;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.ConfirmListener;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.ShutdownSignalException;
@@ -42,6 +45,8 @@ public final class AMQPSession implements Session {
   private final Properties properties;
   private volatile Connection connection;
   private volatile Channel channel;
+  private ConfirmListener confirmListener;
+
   private final AtomicInteger failureCount = new AtomicInteger(0);
 
   public AMQPSession(Properties properties) {
@@ -88,6 +93,11 @@ public final class AMQPSession implements Session {
             });
         failureCount.set(0);
         logger.atInfo().log("Channel #%d opened for %s.", channelId, amqp.uri);
+        if (confirmListener != null) {
+          ch.confirmSelect();
+          logger.atInfo().log("Enabled publishConfirms on channel %d", channelId);
+          ch.addConfirmListener(confirmListener);
+        }
         return ch;
       } catch (IOException | AlreadyClosedException ex) {
         logger.atSevere().withCause(ex).log("Failed to open channel for %s.", amqp.uri);
@@ -246,5 +256,20 @@ public final class AMQPSession implements Session {
       logger.atSevere().withCause(ex).log("Error when removing subscriber");
       return false;
     }
+  }
+
+  @Override
+  public void setConfirmListener(ConfirmListener confirmListener) {
+    requireNonNull(confirmListener, "Confirm Listener is not allowed to be null");
+    this.confirmListener = confirmListener;
+  }
+
+  @Override
+  public synchronized Long getNextPublishSeqNo() {
+    if (makeSureChannelIsOpened()) {
+      return channel.getNextPublishSeqNo();
+    }
+    logger.atSevere().log("Cannot open channel for getting sequence number.");
+    return null;
   }
 }
