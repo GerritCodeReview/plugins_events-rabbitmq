@@ -17,14 +17,11 @@ package com.googlesource.gerrit.plugins.rabbitmq.session.type;
 import com.google.common.flogger.FluentLogger;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
-import com.googlesource.gerrit.plugins.rabbitmq.config.section.Exchange;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
-import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.rabbitmq.client.AlreadyClosedException;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ConfirmCallback;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.ShutdownSignalException;
@@ -34,25 +31,18 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
-import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 
-public final class AMQPSession implements Session {
+public class AMQPSession implements Session {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private final Properties properties;
   private volatile Connection connection;
-  private volatile Channel channel;
-  private boolean publishConfirm;
-  private ConfirmCallback ackConsumer;
-  private ConfirmCallback nackConsumer;
-
   private final AtomicInteger failureCount = new AtomicInteger(0);
+
+  protected final Properties properties;
 
   public AMQPSession(Properties properties) {
     this.properties = properties;
-    this.publishConfirm = properties.getSection(Message.class).publishConfirm;
   }
 
   @Override
@@ -63,19 +53,7 @@ public final class AMQPSession implements Session {
     return false;
   }
 
-  private boolean makeSureChannelIsOpened() {
-    if (channelIsOpen()) {
-      return true;
-    }
-    channel = createChannel();
-    return channelIsOpen();
-  }
-
-  private boolean channelIsOpen() {
-    return channel != null && channel.isOpen();
-  }
-
-  private Channel createChannel() {
+  protected Channel createChannel() {
     if (!isOpen()) {
       connect();
     }
@@ -95,17 +73,6 @@ public final class AMQPSession implements Session {
             });
         failureCount.set(0);
         logger.atInfo().log("Channel #%d opened for %s.", channelId, amqp.uri);
-        if (publishConfirm) {
-          if (ackConsumer == null) {
-            logger.atWarning().log("No confirm listener for ack:s are set");
-          } else if (nackConsumer == null) {
-            logger.atWarning().log("No confirm listener for nack:s are set");
-          } else {
-            ch.confirmSelect();
-            logger.atInfo().log("Enabled publishConfirms on channel %d", channelId);
-            ch.addConfirmListener(ackConsumer, nackConsumer);
-          }
-        }
         return ch;
       } catch (IOException | AlreadyClosedException ex) {
         logger.atSevere().withCause(ex).log("Failed to open channel for %s.", amqp.uri);
@@ -167,19 +134,7 @@ public final class AMQPSession implements Session {
   }
 
   @Override
-  public synchronized void disconnect() {
-    logger.atInfo().log("Disconnecting...");
-    try {
-      if (channel != null) {
-        logger.atInfo().log("Closing Channel #%d...", channel.getChannelNumber());
-        channel.close();
-      }
-    } catch (IOException | TimeoutException ex) {
-      logger.atSevere().withCause(ex).log("Error when closing channel.");
-    } finally {
-      channel = null;
-    }
-
+  public void disconnect() {
     try {
       if (connection != null) {
         logger.atInfo().log("Closing Connection...");
@@ -190,108 +145,5 @@ public final class AMQPSession implements Session {
     } finally {
       connection = null;
     }
-  }
-
-  @Override
-  public synchronized boolean publish(String messageBody, String routingKey) {
-    if (makeSureChannelIsOpened()) {
-      String exchangeName = properties.getSection(Exchange.class).name;
-      try {
-        channel.basicPublish(
-            exchangeName,
-            routingKey,
-            properties.getAMQProperties().getBasicProperties(),
-            messageBody.getBytes(CharEncoding.UTF_8));
-        return true;
-      } catch (IOException ex) {
-        logger.atSevere().withCause(ex).log("Error when sending message.");
-        return false;
-      }
-    }
-    logger.atSevere().log("Cannot open channel for publishing.");
-    return false;
-  }
-
-  @Override
-  public synchronized String subscribe(String topic, Consumer<String> messageBodyConsumer) {
-    if (makeSureChannelIsOpened()) {
-      String exchangeName = properties.getSection(Exchange.class).name;
-      try {
-        String queueName;
-        Message message = properties.getSection(Message.class);
-        if (!message.queuePrefix.isEmpty()) {
-          queueName = message.queuePrefix + "." + topic;
-          channel.queueDeclare(
-              queueName, message.durable, message.exclusive, message.autoDelete, null);
-        } else {
-          queueName = channel.queueDeclare().getQueue();
-        }
-        channel.queueBind(queueName, exchangeName, topic);
-
-        String consumerTag =
-            channel.basicConsume(
-                queueName,
-                true,
-                (ct, delivery) -> {
-                  messageBodyConsumer.accept(new String(delivery.getBody(), "UTF-8"));
-                },
-                (ct, sig) -> {
-                  if (sig.isInitiatedByApplication()) {
-                    logger.atInfo().withCause(sig).log(
-                        "Channel used by consumer on queue %s got shutdown signal due to an explicit application action. Will not try to subscribe on topic %s again",
-                        queueName, topic);
-                  } else if (!sig.isHardError()) {
-                    logger.atWarning().withCause(sig).log(
-                        "Channel used by consumer on queue %s got shutdown signal due to a channel error. Will try to subscribe on topic %s again",
-                        queueName, topic);
-                    if (subscribe(topic, messageBodyConsumer) == null) {
-                      logger.atSevere().log("Failed to resubscribe on topic %s", topic);
-                    }
-                  } else {
-                    logger.atInfo().withCause(sig).log(
-                        "Channel used by consumer on queue %s got shutdown signal due to a connection error. Will not try to subscribe on topic %s again because the client rabbitmq library should be able to recover from this by itself",
-                        queueName, topic);
-                  }
-                });
-        logger.atInfo().log("Subscribed to queue with name %s", queueName);
-        return consumerTag;
-      } catch (IOException ex) {
-        logger.atSevere().withCause(ex).log("Error when subscribing to topic.");
-        return null;
-      }
-    }
-    logger.atSevere().log("Cannot open channel for subscribing.");
-    return null;
-  }
-
-  @Override
-  public synchronized boolean removeSubscriber(String consumerTag) {
-    try {
-      channel.basicCancel(consumerTag);
-      return true;
-    } catch (IOException ex) {
-      logger.atSevere().withCause(ex).log("Error when removing subscriber");
-      return false;
-    }
-  }
-
-  @Override
-  public void addConfirmListener(ConfirmCallback ackConsumer, ConfirmCallback nackConsumer) {
-    if (publishConfirm) {
-      this.ackConsumer = ackConsumer;
-      this.nackConsumer = nackConsumer;
-    } else {
-      logger.atWarning().log(
-          "Publish Confirms are not enabled so you can not add a ConfirmListener");
-    }
-  }
-
-  @Override
-  public synchronized Long getNextPublishSeqNo() {
-    if (makeSureChannelIsOpened()) {
-      return channel.getNextPublishSeqNo();
-    }
-    logger.atSevere().log("Cannot open channel for getting sequence number.");
-    return null;
   }
 }

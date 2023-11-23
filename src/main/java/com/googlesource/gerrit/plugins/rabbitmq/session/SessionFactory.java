@@ -14,10 +14,15 @@
 package com.googlesource.gerrit.plugins.rabbitmq.session;
 
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
-import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
 
 public class SessionFactory {
-  public Session create(Properties properties) {
-    return new AMQPSession(properties);
+  public PublisherSession createPublisher(Properties properties) {
+    return new AMQPPublisherSession(properties);
+  }
+
+  public SubscriberSession createSubscriber(Properties properties) {
+    return new AMQPSubscriberSession(properties);
   }
 }
