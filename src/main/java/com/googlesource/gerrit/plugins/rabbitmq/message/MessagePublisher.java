@@ -26,11 +26,14 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MessagePublisher implements Publisher, LifecycleListener {
@@ -50,6 +53,8 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private final Object sessionMon = new Object();
   private GracefullyCancelableRunnable publisher;
   private Thread publisherThread;
+  private final Map<Long, TopicEvent> eventsToBeAcked = new ConcurrentHashMap<>();
+  private boolean publishConfirm;
   private final Object lostEventCountLock = new Object();
   private int lostEventCount = 0;
 
@@ -58,9 +63,39 @@ public class MessagePublisher implements Publisher, LifecycleListener {
       @Assisted final Properties properties,
       SessionFactoryProvider sessionFactoryProvider,
       @EventGson Gson gson) {
-    this.session = sessionFactoryProvider.get().create(properties);
     this.properties = properties;
+    this.publishConfirm = properties.getSection(Message.class).publishConfirm;
     this.gson = gson;
+    this.session = sessionFactoryProvider.get().create(properties);
+    if (publishConfirm) {
+      session.setConfirmListener(
+          (seqNbr, multi) -> {
+            TopicEvent topicEvent = eventsToBeAcked.remove(seqNbr);
+            if (topicEvent != null) {
+              logger.atFine().log(
+                  "Event with sequence number %d that was published to the topic %s was acked.",
+                  seqNbr, topicEvent.topic);
+              topicEvent.published.set(true);
+            } else {
+              logger.atWarning().log(
+                  "Event with sequence number %d that was about to be acked is unexpectedly missing",
+                  seqNbr);
+            }
+          },
+          (seqNbr, multi) -> {
+            TopicEvent topicEvent = eventsToBeAcked.remove(seqNbr);
+            if (topicEvent != null) {
+              logger.atWarning().log(
+                  "Event with sequence number %d that was published to the topic %s was not acked. Retrying publish of event",
+                  seqNbr, topicEvent.topic);
+              publish(topicEvent);
+            } else {
+              logger.atWarning().log(
+                  "Event with sequence number %d that was about to be nacked is unexpectedly missing",
+                  seqNbr);
+            }
+          });
+    }
     this.publisher =
         new GracefullyCancelableRunnable() {
 
@@ -175,6 +210,14 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   }
 
   private boolean publishEvent(TopicEvent topicEvent) {
+    if (publishConfirm) {
+      Long seqNbr = session.getNextPublishSeqNo();
+      if (seqNbr == null) {
+        return false;
+      }
+      eventsToBeAcked.put(seqNbr, topicEvent);
+      return session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
+    }
     boolean published = session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
     topicEvent.published.set(published);
     return published;
