@@ -16,6 +16,6 @@ package com.googlesource.gerrit.plugins.rabbitmq.message;
 
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 
-public interface PublisherFactory {
+public interface GerritEventPublisherFactory {
   Publisher create(Properties properties);
 }
