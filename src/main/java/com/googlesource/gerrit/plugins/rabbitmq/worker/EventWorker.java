@@ -1,13 +1,13 @@
 package com.googlesource.gerrit.plugins.rabbitmq.worker;
 
-import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.EventDrivenPublisher;
 
 public interface EventWorker {
-  void addPublisher(Publisher publisher);
+  void addPublisher(EventDrivenPublisher publisher);
 
-  void addPublisher(String pluginName, Publisher publisher, String userName);
+  void addPublisher(String pluginName, EventDrivenPublisher publisher, String userName);
 
-  void removePublisher(Publisher publisher);
+  void removePublisher(EventDrivenPublisher publisher);
 
   void clear();
 }

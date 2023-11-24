@@ -18,7 +18,7 @@ import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventListener;
 import com.google.inject.Singleton;
-import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.EventDrivenPublisher;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -27,20 +27,20 @@ public class DefaultEventWorker implements EventListener, EventWorker {
 
   private final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private final Set<Publisher> publishers = new CopyOnWriteArraySet<>();
+  private final Set<EventDrivenPublisher> publishers = new CopyOnWriteArraySet<>();
 
   @Override
-  public void addPublisher(Publisher publisher) {
+  public void addPublisher(EventDrivenPublisher publisher) {
     publishers.add(publisher);
   }
 
   @Override
-  public void addPublisher(String pluginName, Publisher publisher, String userName) {
+  public void addPublisher(String pluginName, EventDrivenPublisher publisher, String userName) {
     logger.atWarning().log("addPublisher() with username '%s' was called. No-op.", userName);
   }
 
   @Override
-  public void removePublisher(Publisher publisher) {
+  public void removePublisher(EventDrivenPublisher publisher) {
     publishers.remove(publisher);
   }
 
@@ -51,8 +51,8 @@ public class DefaultEventWorker implements EventListener, EventWorker {
 
   @Override
   public void onEvent(Event event) {
-    for (Publisher publisher : publishers) {
-      publisher.getEventListener().onEvent(event);
+    for (EventDrivenPublisher publisher : publishers) {
+      publisher.publish(event);
     }
   }
 }

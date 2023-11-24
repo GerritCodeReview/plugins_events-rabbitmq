@@ -23,8 +23,9 @@ import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.PropertiesFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.message.EventDrivenPublisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.EventDrivenPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
-import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
@@ -48,7 +49,7 @@ public class Manager implements LifecycleListener {
   private final Path pluginDataDir;
   private final EventWorker defaultEventWorker;
   private final EventWorker userEventWorker;
-  private final PublisherFactory publisherFactory;
+  private final EventDrivenPublisherFactory publisherFactory;
   private final PropertiesFactory propFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
 
@@ -58,7 +59,7 @@ public class Manager implements LifecycleListener {
       @PluginData final File pluginData,
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
-      final PublisherFactory publisherFactory,
+      final EventDrivenPublisherFactory publisherFactory,
       final PropertiesFactory propFactory) {
     this.pluginName = pluginName;
     this.pluginDataDir = pluginData.toPath();
@@ -72,7 +73,7 @@ public class Manager implements LifecycleListener {
   public void start() {
     List<Properties> propList = load();
     for (Properties properties : propList) {
-      Publisher publisher = publisherFactory.create(properties);
+      EventDrivenPublisher publisher = publisherFactory.create(properties);
       publisher.start();
       String listenAs = properties.getSection(Gerrit.class).listenAs;
       if (!listenAs.isEmpty()) {
@@ -88,13 +89,9 @@ public class Manager implements LifecycleListener {
   public void stop() {
     for (Publisher publisher : publisherList) {
       publisher.stop();
-      String listenAs = publisher.getProperties().getSection(Gerrit.class).listenAs;
-      if (!listenAs.isEmpty()) {
-        userEventWorker.removePublisher(publisher);
-      } else {
-        defaultEventWorker.removePublisher(publisher);
-      }
     }
+    defaultEventWorker.clear();
+    userEventWorker.clear();
     publisherList.clear();
   }
 

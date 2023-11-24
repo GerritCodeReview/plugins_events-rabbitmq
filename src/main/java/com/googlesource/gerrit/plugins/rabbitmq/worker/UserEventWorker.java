@@ -28,7 +28,7 @@ import com.google.gerrit.server.git.WorkQueue;
 import com.google.gerrit.server.util.RequestContext;
 import com.google.gerrit.server.util.ThreadLocalRequestContext;
 import com.google.inject.Inject;
-import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.EventDrivenPublisher;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class UserEventWorker implements EventWorker {
   private final AccountResolver accountResolver;
   private final ThreadLocalRequestContext threadLocalRequestContext;
   private final PluginUser pluginUser;
-  private final Map<Publisher, RegistrationHandle> eventListenerRegistrations;
+  private final Map<EventDrivenPublisher, RegistrationHandle> eventListenerRegistrations;
 
   @Inject
   public UserEventWorker(
@@ -61,13 +61,13 @@ public class UserEventWorker implements EventWorker {
   }
 
   @Override
-  public void addPublisher(final Publisher publisher) {
+  public void addPublisher(final EventDrivenPublisher publisher) {
     logger.atWarning().log("addPublisher() without username was called. No-op.");
   }
 
   @Override
   public void addPublisher(
-      final String pluginName, final Publisher publisher, final String userName) {
+      final String pluginName, final EventDrivenPublisher publisher, final String userName) {
     workQueue
         .getDefaultQueue()
         .submit(
@@ -92,7 +92,7 @@ public class UserEventWorker implements EventWorker {
                           new UserScopedEventListener() {
                             @Override
                             public void onEvent(Event event) {
-                              publisher.getEventListener().onEvent(event);
+                              publisher.publish(event);
                             }
 
                             @Override
@@ -115,7 +115,7 @@ public class UserEventWorker implements EventWorker {
   }
 
   @Override
-  public void removePublisher(final Publisher publisher) {
+  public void removePublisher(final EventDrivenPublisher publisher) {
     RegistrationHandle registration = eventListenerRegistrations.remove(publisher);
     if (registration != null) {
       registration.remove();
@@ -124,6 +124,13 @@ public class UserEventWorker implements EventWorker {
 
   @Override
   public void clear() {
-    // no op.
+    for (Map.Entry<EventDrivenPublisher, RegistrationHandle> entry :
+        eventListenerRegistrations.entrySet()) {
+      RegistrationHandle registration = entry.getValue();
+      if (registration != null) {
+        registration.remove();
+      }
+    }
+    eventListenerRegistrations.clear();
   }
 }
