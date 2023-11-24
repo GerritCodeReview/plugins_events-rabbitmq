@@ -52,7 +52,7 @@ public class DefaultEventWorker implements EventListener, EventWorker {
   @Override
   public void onEvent(Event event) {
     for (Publisher publisher : publishers) {
-      publisher.getEventListener().onEvent(event);
+      publisher.publish(event.type, event);
     }
   }
 }

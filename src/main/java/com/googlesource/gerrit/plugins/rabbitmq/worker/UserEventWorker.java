@@ -86,13 +86,13 @@ public class UserEventWorker implements EventWorker {
                         });
                 try {
                   final IdentifiedUser user = accountResolver.resolve(userName).asUniqueUser();
-                  RegistrationHandle registration =
+                  RegistrationHandle handle =
                       eventListeners.add(
                           pluginName,
                           new UserScopedEventListener() {
                             @Override
                             public void onEvent(Event event) {
-                              publisher.getEventListener().onEvent(event);
+                              publisher.publish(event.type, event);
                             }
 
                             @Override
@@ -100,7 +100,7 @@ public class UserEventWorker implements EventWorker {
                               return user;
                             }
                           });
-                  eventListenerRegistrations.put(publisher, registration);
+                  eventListenerRegistrations.put(publisher, handle);
                   logger.atInfo().log("Listen events as : %s", userName);
                 } catch (UnresolvableAccountException uae) {
                   logger.atSevere().withCause(uae).log(
@@ -116,14 +116,20 @@ public class UserEventWorker implements EventWorker {
 
   @Override
   public void removePublisher(final Publisher publisher) {
-    RegistrationHandle registration = eventListenerRegistrations.remove(publisher);
-    if (registration != null) {
-      registration.remove();
+    RegistrationHandle handle = eventListenerRegistrations.remove(publisher);
+    if (handle != null) {
+      handle.remove();
     }
   }
 
   @Override
   public void clear() {
-    // no op.
+    for (Map.Entry<Publisher, RegistrationHandle> entry : eventListenerRegistrations.entrySet()) {
+      RegistrationHandle handle = entry.getValue();
+      if (handle != null) {
+        handle.remove();
+      }
+    }
+    eventListenerRegistrations.clear();
   }
 }
