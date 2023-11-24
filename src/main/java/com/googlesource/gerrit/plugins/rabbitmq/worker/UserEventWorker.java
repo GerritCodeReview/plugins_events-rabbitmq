@@ -92,7 +92,7 @@ public class UserEventWorker implements EventWorker {
                           new UserScopedEventListener() {
                             @Override
                             public void onEvent(Event event) {
-                              publisher.getEventListener().onEvent(event);
+                              publisher.publish(event.type, event);
                             }
 
                             @Override
@@ -124,6 +124,12 @@ public class UserEventWorker implements EventWorker {
 
   @Override
   public void clear() {
-    // no op.
+    for (Map.Entry<Publisher, RegistrationHandle> entry : eventListenerRegistrations.entrySet()) {
+      RegistrationHandle registration = entry.getValue();
+      if (registration != null) {
+        registration.remove();
+      }
+    }
+    eventListenerRegistrations.clear();
   }
 }
