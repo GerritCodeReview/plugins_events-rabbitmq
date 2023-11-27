@@ -31,6 +31,8 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Section;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BaseProperties;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BasePropertiesProvider;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GsonProvider;
@@ -71,5 +73,9 @@ class Module extends AbstractModule {
 
     DynamicSet.bind(binder(), LifecycleListener.class).to(Manager.class);
     DynamicSet.bind(binder(), EventListener.class).to(DefaultEventWorker.class);
+
+    bind(Properties.class)
+        .annotatedWith(BaseProperties.class)
+        .toProvider(BasePropertiesProvider.class);
   }
 }
