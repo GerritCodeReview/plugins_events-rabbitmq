@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f198bd35_d2db075b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-27T10:40:56Z",
+      "side": 1,
+      "message": "This no longer makes sense as this instance is only injected here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dc3e79a_8f827620",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
         "patchSetId": 9
@@ -26,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9be6fdd7_35a7f267",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-27T10:40:56Z",
+      "side": 1,
+      "message": "No longer makes sense.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bae86c96_043e13cf",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
         "patchSetId": 9
@@ -42,6 +88,29 @@
         "startChar": 4,
         "endLine": 74,
         "endChar": 90
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7300aeee_a7f6ae98",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-27T10:40:56Z",
+      "side": 1,
+      "message": "Since this is the end of the lifecycle for the object, should this method also remove remaining subscribers from the session or is this done automatically when disconnecting the session?",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 18
       },
       "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
