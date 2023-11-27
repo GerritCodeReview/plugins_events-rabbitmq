@@ -25,17 +25,17 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
-import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
 import java.util.HashMap;
 import java.util.Map;
+import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 
 @Singleton
 public class BrokerApiSubscriber implements Subscriber {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private final Session session;
+  private final SubscriberSession session;
   private final Properties properties;
   private final Gson gson;
   private final boolean enabled;
@@ -47,7 +47,7 @@ public class BrokerApiSubscriber implements Subscriber {
       @EventGson Gson gson,
       @BrokerApiProperties Properties properties) {
     this.properties = properties;
-    this.session = sessionFactoryProvider.get().create(properties);
+    this.session = sessionFactoryProvider.get().createSubscriber(properties);
     this.gson = gson;
     this.enabled = properties.getSection(General.class).enableBrokerApi;
   }
