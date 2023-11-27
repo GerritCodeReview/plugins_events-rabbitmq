@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "da812961_11b25fd4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T11:17:26Z",
+      "side": 1,
+      "message": "It is also injected by the plugins that use this API. \nHowever, stopping the subscriber will indirectly close all the channels and not clearing the subscriber list that RabbitMqBrokerApi take care of should not matter since we are about to close down anyway. So I will remove this.",
+      "parentUuid": "f198bd35_d2db075b",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5dc3e79a_8f827620",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
         "patchSetId": 9
@@ -233,6 +257,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5bb2542d_6adb21fe",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T11:17:26Z",
+      "side": 1,
+      "message": "I guess it is pretty severe. However, we should be able to recover from it.\nI can change it to severe.",
+      "parentUuid": "a0d096b8_ec038b64",
+      "range": {
+        "startLine": 218,
+        "startChar": 29,
+        "endLine": 218,
+        "endChar": 36
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e98be50_d0aa86e7",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
         "patchSetId": 9
@@ -290,6 +338,30 @@
       "writtenOn": "2023-11-27T10:28:36Z",
       "side": 1,
       "message": "```suggestion\n                        \"Queue: %s, Topic: %s Channel closed due to connection error\",\n```",
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "894ff9fa_fd3016df",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T11:17:26Z",
+      "side": 1,
+      "message": "The automatic recovery should recover the subscriber/consumer as well. When manually closing the connection with the RabbitMQ web application, it was able to recover both the channels and the consumers.",
+      "parentUuid": "0df07a66_07c237c0",
+      "range": {
+        "startLine": 226,
+        "startChar": 109,
+        "endLine": 226,
+        "endChar": 236
+      },
       "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
