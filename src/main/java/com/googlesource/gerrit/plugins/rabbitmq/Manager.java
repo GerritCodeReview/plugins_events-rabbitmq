@@ -15,24 +15,19 @@
 package com.googlesource.gerrit.plugins.rabbitmq;
 
 import com.google.common.flogger.FluentLogger;
-import com.google.gerrit.extensions.annotations.PluginData;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
-import com.googlesource.gerrit.plugins.rabbitmq.config.PropertiesFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
+import com.googlesource.gerrit.plugins.rabbitmq.message.BaseProperties;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
+import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherPropertiesProvider;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,37 +36,33 @@ public class Manager implements LifecycleListener {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public static final String FILE_EXT = ".config";
-  public static final String SITE_DIR = "site";
-
   private final String pluginName;
-  private final Path pluginDataDir;
   private final EventWorker defaultEventWorker;
   private final EventWorker userEventWorker;
   private final GerritEventPublisherFactory publisherFactory;
-  private final PropertiesFactory propFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
+  private final Properties baseProperties;
+  private final PublisherPropertiesProvider publisherPropertiesProvider;
 
   @Inject
   public Manager(
       @PluginName final String pluginName,
-      @PluginData final File pluginData,
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
       final GerritEventPublisherFactory publisherFactory,
-      final PropertiesFactory propFactory) {
+      final @BaseProperties Properties baseProperties,
+      final PublisherPropertiesProvider publisherPropertiesProvider) {
     this.pluginName = pluginName;
-    this.pluginDataDir = pluginData.toPath();
     this.defaultEventWorker = defaultEventWorker;
     this.userEventWorker = eventWorkerFactory.create();
     this.publisherFactory = publisherFactory;
-    this.propFactory = propFactory;
+    this.baseProperties = baseProperties;
+    this.publisherPropertiesProvider = publisherPropertiesProvider;
   }
 
   @Override
   public void start() {
-    List<Properties> propList = load();
-    for (Properties properties : propList) {
+    for (Properties properties : publisherPropertiesProvider.get()) {
       Publisher publisher = publisherFactory.create(properties);
       publisher.start();
       String listenAs = properties.getSection(Gerrit.class).listenAs;
@@ -92,30 +83,5 @@ public class Manager implements LifecycleListener {
     defaultEventWorker.clear();
     userEventWorker.clear();
     publisherList.clear();
-  }
-
-  private List<Properties> load() {
-    List<Properties> propList = new ArrayList<>();
-    // Load base
-    Properties base = propFactory.create(pluginDataDir.resolve(pluginName + FILE_EXT));
-    base.load();
-
-    // Load sites
-    try (DirectoryStream<Path> ds =
-        Files.newDirectoryStream(pluginDataDir.resolve(SITE_DIR), "*" + FILE_EXT)) {
-      for (Path configFile : ds) {
-        Properties site = propFactory.create(configFile);
-        if (site.load(base)) {
-          propList.add(site);
-        }
-      }
-    } catch (IOException ioe) {
-      logger.atWarning().withCause(ioe).log("Failed to load properties.");
-    }
-    if (propList.isEmpty()) {
-      logger.atWarning().log("No site configs found. Using base config only!");
-      propList.add(base);
-    }
-    return propList;
   }
 }
