@@ -358,6 +358,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f4b1bbaf_f8620eae",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-27T10:28:36Z",
+      "side": 1,
+      "message": "I would opt for just the one log entry and assume that the user can use `grep` or whatever query language their logging system uses.",
+      "parentUuid": "5d0ba07e_6e657623",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 86
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c41f03_1f92e005",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
         "patchSetId": 8
