@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e4d7f24_1a5584f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:45:06Z",
+      "side": 1,
+      "message": "I feel that like these comment that are related to a Optional SettableFuture for TopicEvent is not that useful if we keep TopicEvent private. SettableFuture is set to null only when we want to stop publishing and in that case we do not even use SettableFuture. I resolved/rejected all these.",
+      "revId": "f42f313880430b84ed94fea0d45e8d8812533435",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
