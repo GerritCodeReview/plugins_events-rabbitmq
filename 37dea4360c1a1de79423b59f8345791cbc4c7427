@@ -214,6 +214,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c96d748_6851aef5",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "I made so RabbitMQBrokerApi is not a singleton anymore and added a method removeSubscriber. To make it possible for each instance of RabbitMQBrokerApi to take care of its own set of subscribers and just remove those when calling disconnect. This will make it possible for each plugin to have its own set of subscribers without having to worry about some other plugin disconnecting them.",
+      "parentUuid": "d95a673f_2778c0a6",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ae52b3b_0f7b2b14",
@@ -370,6 +394,30 @@
       "side": 1,
       "message": "I would opt for just the one log entry and assume that the user can use `grep` or whatever query language their logging system uses.",
       "parentUuid": "5d0ba07e_6e657623",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 86
+      },
+      "revId": "37dea4360c1a1de79423b59f8345791cbc4c7427",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0095ea53_630bbb97",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiPublisher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b1bbaf_f8620eae",
       "range": {
         "startLine": 69,
         "startChar": 0,

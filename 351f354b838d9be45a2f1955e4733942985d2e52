@@ -72,6 +72,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fd18db5_b8d8b1ab",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "That is also a very good point.\nDone",
+      "parentUuid": "6ed104e9_cea2c25e",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5dc3e79a_8f827620",
@@ -85,6 +109,30 @@
       "writtenOn": "2023-11-27T10:28:36Z",
       "side": 1,
       "message": "You don\u0027t need this, just add the BrokerApiPublisher to `publisherList`.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48d42894_44a0dcd4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc3e79a_8f827620",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -118,6 +166,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6cac45c_b88676cd",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be6fdd7_35a7f267",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bae86c96_043e13cf",
@@ -131,6 +203,30 @@
       "writtenOn": "2023-11-27T10:28:36Z",
       "side": 1,
       "message": "I think the right way would be to throw a [NotImplementedException](https://commons.apache.org/proper/commons-lang/javadocs/api-3.4/org/apache/commons/lang3/NotImplementedException.html).",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 90
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92d17bd2_debd13df",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae86c96_043e13cf",
       "range": {
         "startLine": 74,
         "startChar": 4,
@@ -164,6 +260,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee7a0037_e6ff03fb",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "It is done automatically when disconnecting the session.",
+      "parentUuid": "7300aeee_a7f6ae98",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5720204_144b996d",
@@ -177,6 +297,30 @@
       "writtenOn": "2023-11-27T10:28:36Z",
       "side": 1,
       "message": "```suggestion\n  boolean addSubscriber(TopicSubscriber topicSubscriber);\n```",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8850745d_bd27fad1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/Subscriber.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5720204_144b996d",
       "range": {
         "startLine": 22,
         "startChar": 10,
@@ -210,6 +354,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02d94cae_e18be5ed",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/Session.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9471443_c4393137",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef06f8a0_89b707a2",
@@ -233,6 +401,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f36ab14a_199b1830",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef06f8a0_89b707a2",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 38
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0de1afb9_9a990fa4",
@@ -246,6 +438,30 @@
       "writtenOn": "2023-11-27T10:28:36Z",
       "side": 1,
       "message": "```suggestion\n                        \"Queue: %s, Topic: %s Channel closed by application\",\n```",
+      "range": {
+        "startLine": 215,
+        "startChar": 25,
+        "endLine": 215,
+        "endChar": 164
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a2aed23_f80f8e7b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0de1afb9_9a990fa4",
       "range": {
         "startLine": 215,
         "startChar": 25,
@@ -350,6 +566,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc6ff99_b189c00a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e98be50_d0aa86e7",
+      "range": {
+        "startLine": 218,
+        "startChar": 58,
+        "endLine": 219,
+        "endChar": 147
+      },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0df07a66_07c237c0",
@@ -410,6 +650,24 @@
         "endLine": 226,
         "endChar": 236
       },
+      "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d14c5cf_7c645ab8",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-27T14:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac0e3b08_f8431b7b",
       "revId": "351f354b838d9be45a2f1955e4733942985d2e52",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
