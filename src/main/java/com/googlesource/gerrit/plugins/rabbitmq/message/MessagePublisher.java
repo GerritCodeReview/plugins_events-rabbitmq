@@ -27,7 +27,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
-import com.googlesource.gerrit.plugins.rabbitmq.session.Session;
+import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,7 +42,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private static final Event EOS = new Event(END_OF_STREAM) {};
 
   private final Properties properties;
-  private final Session session;
+  private final PublisherSession session;
   private final Gson gson;
   private final LinkedBlockingQueue<TopicEvent> queue = new LinkedBlockingQueue<>(MAX_EVENTS);
   private final Object sessionMon = new Object();
@@ -61,7 +61,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
     this.properties = properties;
     this.publishConfirm = properties.getSection(Message.class).publishConfirm;
     this.gson = gson;
-    this.session = sessionFactoryProvider.get().create(properties);
+    this.session = sessionFactoryProvider.get().createPublisher(properties);
     if (publishConfirm) {
       session.setConfirmListener(
           (seqNbr, multi) -> {
