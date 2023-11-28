@@ -95,6 +95,63 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98721394_92620624",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T16:11:17Z",
+      "side": 1,
+      "message": "```suggestion\n  private Optional\u003cString\u003e defaultTopic;\n\n  @Inject\n```",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "216c4946_df4b0699",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T16:11:17Z",
+      "side": 1,
+      "message": "```suggestion\n    super(properties, sessionFactoryProvider, gson);\n    this.defaultTopic \u003d   Optional.ofNullable(properties.getSection(Message.class).routingKey);\n\n```",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98048547_defdbf7f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T16:11:17Z",
+      "side": 1,
+      "message": "```suggestion\n  @Override\n  public ListenableFuture\u003cBoolean\u003e publish(String topic, Event event) {\n    return super.publish(defaultTopic.orElse(topic), event);\n  }\n```",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "649a66a1_0b4a415f",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisherFactory.java",
         "patchSetId": 1
@@ -222,6 +279,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "136fe753_7cbf5216",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/DefaultEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T16:11:17Z",
+      "side": 1,
+      "message": "```suggestion\n      publisher.publish(event.type, event);\n```",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b976e7cf_728253a7",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/EventWorker.java",
         "patchSetId": 1
@@ -268,6 +342,41 @@
       "side": 1,
       "message": "Only EventDrivenPublisher has the method publish(Event event). We can cast it to EventDrivenPublisher before calling that method instead if you think that is better. Or we can but publish(Event event) in the Publisher interface, move the publish(Event event) method from EventDrivenPublisher to TopicEventPublisher/MessagePublisher and remove EventDrivenPublisher altogether.",
       "parentUuid": "634a47d0_b660d060",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8531975_5793c876",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/UserEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T16:11:17Z",
+      "side": 1,
+      "message": "I would like to retire the \"Default routing key\" setting all together which would make it much easier. Perhaps we should deprecate it?\nUntil then:\nSee suggested edits in `EventDrivenPublisher` (which should be named\n`GerritEventPublisher`), `DefaultEventWorker` and `UserEventWorker`.",
+      "parentUuid": "8b81d602_7aaabe0c",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81da1911_8047569a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/UserEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T16:11:17Z",
+      "side": 1,
+      "message": "```suggestion\n                              publisher.publish(event.type, event);\n```",
       "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
