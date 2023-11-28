@@ -204,6 +204,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "785f289a_5dad670a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/DefaultEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-28T10:21:35Z",
+      "side": 1,
+      "message": "See reply on UserEventWorker comment.",
+      "parentUuid": "79cecd6b_03d2d79c",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b976e7cf_728253a7",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/EventWorker.java",
         "patchSetId": 1
@@ -232,6 +250,24 @@
       "writtenOn": "2023-11-28T08:37:01Z",
       "side": 1,
       "message": "Keep using the Publisher interface, no point in using the specific class.",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b81d602_7aaabe0c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/UserEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-28T10:21:35Z",
+      "side": 1,
+      "message": "Only EventDrivenPublisher has the method publish(Event event). We can cast it to EventDrivenPublisher before calling that method instead if you think that is better. Or we can but publish(Event event) in the Publisher interface, move the publish(Event event) method from EventDrivenPublisher to TopicEventPublisher/MessagePublisher and remove EventDrivenPublisher altogether.",
+      "parentUuid": "634a47d0_b660d060",
       "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
