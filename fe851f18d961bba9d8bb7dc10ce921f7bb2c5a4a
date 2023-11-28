@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4682030e_63d57673",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Manager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "Keep using the `Publisher` interface.\n```suggestion\n      Publisher publisher \u003d publisherFactory.create(properties);\n```",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23fc85f2_3ec79464",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\n            .implement(Publisher.class, GerritEventPublisher.class)\n```",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 60
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef4ee5d1_c587f15b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\n            .build(GerritEventPublisherFactory.class));\n```",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 30
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf74890_5d76947f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\npublic class GerritEventPublisher extends MessagePublisher {\n```",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "649a66a1_0b4a415f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisherFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\npublic interface GerritEventPublisherFactory {\n```",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9efd233f_6c76b24f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/EventDrivenPublisherFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\n  Publisher create(Properties properties);\n```",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35fd3e7b_a816bf7f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/TopicEventPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\npublic class MessagePublisher implements Publisher, LifecycleListener {\n```",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1cdbff1_24536fe1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/TopicEventPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "```suggestion\n  public MessagePublisher(\n```",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79cecd6b_03d2d79c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/DefaultEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "Keep using the Publisher interface, no point in using the specific class.",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b976e7cf_728253a7",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/EventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "Keep using the `Publisher` interface instead of the specific implementation.",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "634a47d0_b660d060",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/UserEventWorker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-28T08:37:01Z",
+      "side": 1,
+      "message": "Keep using the Publisher interface, no point in using the specific class.",
+      "revId": "fe851f18d961bba9d8bb7dc10ce921f7bb2c5a4a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
