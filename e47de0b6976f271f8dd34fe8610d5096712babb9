@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fb43040_9c008758",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T13:59:42Z",
+      "side": 1,
+      "message": "It is used by the BrokerApiPublisher in the BrokerApi change.",
+      "parentUuid": "e2fdba43_7d71cced",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "e47de0b6976f271f8dd34fe8610d5096712babb9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82d46c4c_05da2695",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-29T13:40:07Z",
       "side": 1,
       "message": "nit: handle",
+      "range": {
+        "startLine": 128,
+        "startChar": 25,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "e47de0b6976f271f8dd34fe8610d5096712babb9",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0e50e6f_fa0fcc9f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/worker/UserEventWorker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T13:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d46c4c_05da2695",
       "range": {
         "startLine": 128,
         "startChar": 25,
