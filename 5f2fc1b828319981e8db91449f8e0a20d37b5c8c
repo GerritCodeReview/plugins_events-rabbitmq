@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "834523c9_a624c23e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscriber.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c67d1c2d_4419b518",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 32
+      },
+      "revId": "5f2fc1b828319981e8db91449f8e0a20d37b5c8c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aea206bd_b1a7e2ba",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-11-29T13:59:07Z",
       "side": 1,
       "message": "This interface is never used. Just remove it?",
+      "revId": "5f2fc1b828319981e8db91449f8e0a20d37b5c8c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6bb6908_a31afe82",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/Subscriber.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T14:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea206bd_b1a7e2ba",
       "revId": "5f2fc1b828319981e8db91449f8e0a20d37b5c8c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
