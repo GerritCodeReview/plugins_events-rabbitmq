@@ -22,6 +22,30 @@
       },
       "revId": "1d584730230aae0db25176b4840738768659c378",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "205ed4fd_6e2e15b4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/Message.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:21:19Z",
+      "side": 1,
+      "message": "It is a confirm that the message arrived. So I feel like it fit in this section.",
+      "parentUuid": "e4c98805_4026df03",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "1d584730230aae0db25176b4840738768659c378",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
