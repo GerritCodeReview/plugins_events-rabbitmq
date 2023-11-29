@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "972ad3dc_ba6ea324",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d75e6881_88e220d9",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "add26ea1_f1d0ff81",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-29T14:58:52Z",
       "side": 1,
       "message": "Are we certain that topicEvent will never be `null`?\nSame below.",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 22
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b25978be_1473bda3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "MessagePublisher::publish(TopicEvent topicEvent) is private and we only call it with a fresh new TopicEvent or with a reused TopicEvent element from the queue. So it should never be null with this code. \nBut if someone change the code it could be in the future.",
+      "parentUuid": "add26ea1_f1d0ff81",
       "range": {
         "startLine": 122,
         "startChar": 12,
@@ -70,6 +118,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a0f2a0_2b1bcf77",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "I put it directly after session, but also moved down session a bit to not split the one line attribute assignments to much.",
+      "parentUuid": "8089d92c_f680c1cc",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 5
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08fd2490_707efacf",
@@ -89,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5f8707fe_98734c57",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "I already log a severe in AMQPSession when we fail to get the sequence number and the rabbitmq Channel::getNextPublishSeqNo() only returns long(so we can not tell if that method succeeded by checking the return value).",
+      "parentUuid": "08fd2490_707efacf",
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7f8f8c12_4ef73a57",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
         "patchSetId": 12
@@ -100,6 +190,30 @@
       "writtenOn": "2023-11-29T14:58:52Z",
       "side": 1,
       "message": "```suggestion\n  private ConfirmCallback ackConsumer;\n  private ConfirmCallback nackConsumer;\n```",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9038cafe_344ecc5d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8f8c12_4ef73a57",
       "range": {
         "startLine": 47,
         "startChar": 0,
@@ -133,6 +247,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "040a98ec_9265e986",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d9abc7d_10c41eda",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 78
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc1f1c17_30a2b6a8",
@@ -146,6 +284,30 @@
       "writtenOn": "2023-11-29T14:58:52Z",
       "side": 1,
       "message": "```suggestion\n        logger.atInfo().log(\"Channel #%d opened for %s.\", channelId, amqp.uri);\n        if (ackConsumer !\u003d null \u0026\u0026 nackConsumer !\u003d null) {\n          ch.confirmSelect();\n          logger.atInfo().log(\"Enabled publishConfirms on channel %d\", channelId);\n          ch.addConfirmListener(ackConsumer, nackConsumer);\n        }\n```",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 9
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "442c5740_3117c0a0",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1f1c17_30a2b6a8",
       "range": {
         "startLine": 97,
         "startChar": 0,
@@ -179,6 +341,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c415379c_f8bdae9c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dae86c0_ca47b5f6",
+      "range": {
+        "startLine": 270,
+        "startChar": 14,
+        "endLine": 270,
+        "endChar": 33
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d90ceebd_dec6b5e6",
@@ -192,6 +378,30 @@
       "writtenOn": "2023-11-29T14:58:52Z",
       "side": 1,
       "message": "```suggestion\n    this.ackConsumer \u003d ackConsumer;\n    this.nackConsumer \u003d nackConsumer;\n```\n\nPerhaps log a warning if one of them are null, or AssertNotNull() for both.",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 5
+      },
+      "revId": "5a645fe885efcc7e40624817e36acbdd8b2de393",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2769a1e_0c223f99",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-29T16:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90ceebd_dec6b5e6",
       "range": {
         "startLine": 271,
         "startChar": 0,
