@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a389c419_6cd6edc5",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BasePropertiesProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-11-29T13:46:26Z",
+      "side": 1,
+      "message": "```suggestion\n  private static Properties loadProperties(\n```",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "11afd07b6a45ea859e7f7c33e935450695066e09",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
