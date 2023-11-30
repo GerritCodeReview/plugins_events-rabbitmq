@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c31c9fc2_33200412",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a55615_ffe6c37f",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "fde87956f55cd03315339c4bcd97b2118057c5e0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6a32fb6_9a1ef08b",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-11-29T15:10:21Z",
       "side": 1,
       "message": "```suggestion\n  public RabbitMqBrokerApi(BrokerApiPublisher publisher, BrokerApiSubscribers subscribers) {\n```",
+      "range": {
+        "startLine": 40,
+        "startChar": 78,
+        "endLine": 40,
+        "endChar": 88
+      },
+      "revId": "fde87956f55cd03315339c4bcd97b2118057c5e0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d45050_735adf23",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a32fb6_9a1ef08b",
       "range": {
         "startLine": 40,
         "startChar": 78,
@@ -64,6 +112,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97a4a4fb_d2cd8b16",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854969ef_f3ee64da",
+      "revId": "fde87956f55cd03315339c4bcd97b2118057c5e0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89f400ec_d9682a2b",
@@ -81,6 +147,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f833484a_fd7d779b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f400ec_d9682a2b",
+      "revId": "fde87956f55cd03315339c4bcd97b2118057c5e0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "062c1764_8de15088",
@@ -94,6 +178,24 @@
       "writtenOn": "2023-11-29T15:10:21Z",
       "side": 1,
       "message": "```suggestion\n      subscribers.removeSubscriber(topicSubscriber);\n```",
+      "revId": "fde87956f55cd03315339c4bcd97b2118057c5e0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "720f562b_6086a007",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T09:11:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "062c1764_8de15088",
       "revId": "fde87956f55cd03315339c4bcd97b2118057c5e0",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
