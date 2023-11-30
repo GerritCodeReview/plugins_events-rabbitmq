@@ -46,6 +46,30 @@
       },
       "revId": "b85a2961ccb5c2b4aef89523b45cd65773b46a91",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74648b09_ed8f1bde",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T15:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b5b19a0_8dd18edb",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "b85a2961ccb5c2b4aef89523b45cd65773b46a91",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
