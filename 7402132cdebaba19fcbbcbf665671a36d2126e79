@@ -22,6 +22,30 @@
       },
       "revId": "7402132cdebaba19fcbbcbf665671a36d2126e79",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5668a118_c2c0f10a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-11-30T09:11:20Z",
+      "side": 1,
+      "message": "I do not see any duplication. I guess it disappeared when uploading a new PS with a new parent.",
+      "parentUuid": "e143cbdf_8ecae317",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "7402132cdebaba19fcbbcbf665671a36d2126e79",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
