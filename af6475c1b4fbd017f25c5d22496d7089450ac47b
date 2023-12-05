@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad0913e1_e2609fb7",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/SessionFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-05T07:58:43Z",
+      "side": 1,
+      "message": "**Not related to this change:**\n\nBut the whole SessionFactory SessionFactoryProvider construct doesn\u0027t seem to add any value to me.\nTo maintain testabillity it would make more sense to add a simple Factory interface to the classes and bind that instead.\n```\npublic final class AMQPPublisherSession extends AMQPSession implements PublisherSession {\n  private static final FluentLogger logger \u003d FluentLogger.forEnclosingClass();\n\n  public interface Factory {\n    PublisherSession create(Properties properties);\n  }\n  private volatile Channel channel;\n```\n\n```\nclass Module extends AbstractModule {\n  ...\n  @Override\n  protected void configure() {\n    ...\n    factory(AMQPPublisherSession.Factory);\n```\n\n```\n  @Inject\n  public MessagePublisher(\n      @Assisted final Properties properties,\n      AMPQPPublisherSession.Factory sessionFactory,\n      @EventGson Gson gson) {\n    this.properties \u003d properties;\n    this.publishConfirm \u003d properties.getSection(Message.class).publishConfirm;\n    this.gson \u003d gson;\n    this.session \u003d sessionFactory.create(properties);\n```",
+      "revId": "af6475c1b4fbd017f25c5d22496d7089450ac47b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "105ba3db_68e700fd",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-05T07:58:43Z",
+      "side": 1,
+      "message": "Move [channelIsOpen](https://gerrit-review.googlesource.com/c/plugins/events-rabbitmq/+/392676/12/src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPPublisherSession.java#48) to base class AMQPSession and reuse it here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "af6475c1b4fbd017f25c5d22496d7089450ac47b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
