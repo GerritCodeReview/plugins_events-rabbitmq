@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc61e091_792c055e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-05T15:38:03Z",
+      "side": 1,
+      "message": "No, it is the responsibility of the Gerrit admin to pick a unique prefix for the queues.",
+      "parentUuid": "245a1f07_45b24cf1",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 53
+      },
+      "revId": "36d4afafb00e391f9b7c0de9a09445996fecbc77",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad112f60_80517859",
@@ -47,6 +71,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48429ae8_e783eaf0",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-05T15:38:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad112f60_80517859",
+      "range": {
+        "startLine": 219,
+        "startChar": 9,
+        "endLine": 219,
+        "endChar": 56
+      },
+      "revId": "36d4afafb00e391f9b7c0de9a09445996fecbc77",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "323a3c90_51dea3ce",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-12-05T13:21:41Z",
       "side": 1,
       "message": "```suggestion\n    prefix + \u0027.\u0027 + topic, otherwise the queues will get a random name decided by RabbitMQ. Only used in\n```",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "36d4afafb00e391f9b7c0de9a09445996fecbc77",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91eb457_b7ebe76e",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-05T15:38:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "323a3c90_51dea3ce",
       "range": {
         "startLine": 75,
         "startChar": 4,
