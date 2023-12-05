@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a539eea5_cf5dd641",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-05T13:08:09Z",
+      "side": 1,
+      "message": "nit: Unnecessary `else`, I thought gjf was strict regarding this.",
+      "range": {
+        "startLine": 220,
+        "startChar": 5,
+        "endLine": 220,
+        "endChar": 12
+      },
+      "revId": "adf059fdf980becce8d737bd4cfe57a76c7ce704",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
