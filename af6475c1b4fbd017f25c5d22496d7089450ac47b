@@ -39,6 +39,30 @@
       },
       "revId": "af6475c1b4fbd017f25c5d22496d7089450ac47b",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33c8e0d9_0f78be0c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-05T13:05:45Z",
+      "side": 1,
+      "message": "AMQPSession does not have access to any channel so I can not just move channelIsOpen there. I can create a new static method AMQPSession::channelIsOpen(Channel channel) and use that. Do you think that will be better?",
+      "parentUuid": "105ba3db_68e700fd",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "af6475c1b4fbd017f25c5d22496d7089450ac47b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
