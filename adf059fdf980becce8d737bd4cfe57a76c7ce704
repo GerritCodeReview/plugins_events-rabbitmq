@@ -46,6 +46,30 @@
       },
       "revId": "adf059fdf980becce8d737bd4cfe57a76c7ce704",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62c60400_12de68bc",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-05T15:39:33Z",
+      "side": 1,
+      "message": "But gjf did not complain on this.",
+      "parentUuid": "64cea156_4f739d65",
+      "range": {
+        "startLine": 220,
+        "startChar": 5,
+        "endLine": 220,
+        "endChar": 12
+      },
+      "revId": "adf059fdf980becce8d737bd4cfe57a76c7ce704",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
