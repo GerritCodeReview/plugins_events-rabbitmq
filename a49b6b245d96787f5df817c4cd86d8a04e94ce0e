@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497c85dd_75055367",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 19
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-05T12:53:35Z",
+      "side": 1,
+      "message": "These should be amqp as well.",
+      "range": {
+        "startLine": 98,
+        "startChar": 3,
+        "endLine": 98,
+        "endChar": 10
+      },
+      "revId": "a49b6b245d96787f5df817c4cd86d8a04e94ce0e",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
