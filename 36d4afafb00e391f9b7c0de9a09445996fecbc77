@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "245a1f07_45b24cf1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-05T13:21:41Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this should be \"name-spaced\" further to make collisions with existing queues less probable.",
+      "range": {
+        "startLine": 216,
+        "startChar": 10,
+        "endLine": 216,
+        "endChar": 53
+      },
+      "revId": "36d4afafb00e391f9b7c0de9a09445996fecbc77",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad112f60_80517859",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSession.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-05T13:21:41Z",
+      "side": 1,
+      "message": "If it is intentional to disregard of the settings for `durable`, `exclusive` and `autoDelete` if `queuePrefix` isn\u0027t set it needs to be more clear in the documentation.",
+      "range": {
+        "startLine": 219,
+        "startChar": 9,
+        "endLine": 219,
+        "endChar": 56
+      },
+      "revId": "36d4afafb00e391f9b7c0de9a09445996fecbc77",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "323a3c90_51dea3ce",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-05T13:21:41Z",
+      "side": 1,
+      "message": "```suggestion\n    prefix + \u0027.\u0027 + topic, otherwise the queues will get a random name decided by RabbitMQ. Only used in\n```",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "36d4afafb00e391f9b7c0de9a09445996fecbc77",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
