@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93649195_8ff4c921",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2023-12-06T09:32:35Z",
+      "side": 1,
+      "message": "Personal preference but I think that anonymous lambda functions makes the code much harder to read and comprehend and would have opted for an anonymous class implementing [ConfirmListener](https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/ConfirmListener.html) or an internal class that implements [ConfirmListener](https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/ConfirmListener.html):\n```\npublic class MessagePublisher ... {\n  ...\n  session.setConfirmListener(new Listener());\n  ...\n  class Listener implements ConfirmListener{\n    public void handleAck(long deliveryTag, boolean multiple) throws IOException {\n      TopicEvent topicEvent \u003d eventsToBeAcked.remove(deliveryTag);\n      if (topicEvent !\u003d null) {\n        logger.atFine().log(\n          \"Event with sequence number %d that was published to the topic %s was acked.\",\n          deliveryTag, topicEvent.topic);\n        topicEvent.published.set(true);\n      } else {\n        logger.atWarning().log(\n          \"Event with sequence number %d that was about to be acked is unexpectedly missing\",\n          deliveryTag);\n      }\n    }\n\n    public void handleNack(long deliveryTag, boolean multiple) throws IOException {\n      TopicEvent topicEvent \u003d eventsToBeAcked.remove(deliveryTag);\n      if (topicEvent !\u003d null) {\n        logger.atWarning().log(\n          \"Event with sequence number %d that was published to the topic %s was not acked. Retrying publish of event\",\n          deliveryTag, topicEvent.topic);\n        publish(topicEvent);\n      } else {\n        logger.atWarning().log(\n          \"Event with sequence number %d that was about to be nacked is unexpectedly missing\",\n          deliveryTag);\n      }\n    }\n  }\n}\n```",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 13
+      },
+      "revId": "45cd0c67a582a9b65553686b1b4caa154b0d7819",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
