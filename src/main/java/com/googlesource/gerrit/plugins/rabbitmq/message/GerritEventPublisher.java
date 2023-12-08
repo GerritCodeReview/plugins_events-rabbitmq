@@ -22,7 +22,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
 import java.util.Optional;
 
 public class GerritEventPublisher extends MessagePublisher {
@@ -31,9 +31,9 @@ public class GerritEventPublisher extends MessagePublisher {
   @Inject
   public GerritEventPublisher(
       @Assisted final Properties properties,
-      SessionFactoryProvider sessionFactoryProvider,
+      AMQPPublisherSession.Factory sessionFactory,
       @EventGson Gson gson) {
-    super(properties, sessionFactoryProvider, gson);
+    super(properties, sessionFactory, gson);
     String routingKey = properties.getSection(Message.class).routingKey;
     this.defaultTopic =
         routingKey != null && !routingKey.isEmpty() ? Optional.of(routingKey) : Optional.empty();

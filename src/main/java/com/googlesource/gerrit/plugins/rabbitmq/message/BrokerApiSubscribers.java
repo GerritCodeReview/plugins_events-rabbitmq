@@ -25,10 +25,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
+import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
 import java.util.HashMap;
 import java.util.Map;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 
 @Singleton
 public class BrokerApiSubscribers {
@@ -43,11 +43,11 @@ public class BrokerApiSubscribers {
 
   @Inject
   public BrokerApiSubscribers(
-      SessionFactoryProvider sessionFactoryProvider,
+      AMQPSubscriberSession.Factory sessionFactory,
       @EventGson Gson gson,
       @BrokerApiProperties Properties properties) {
     this.properties = properties;
-    this.session = sessionFactoryProvider.get().createSubscriber(properties);
+    this.session = sessionFactory.create(properties);
     this.gson = gson;
     this.enabled = properties.getSection(General.class).enableBrokerApi;
   }

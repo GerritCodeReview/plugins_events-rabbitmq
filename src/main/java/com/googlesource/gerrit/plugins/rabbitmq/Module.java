@@ -39,8 +39,10 @@ import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GsonProvider;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactory;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
+import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
@@ -56,7 +58,6 @@ class Module extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(SessionFactory.class).toProvider(SessionFactoryProvider.class);
 
     Multibinder<Section> sectionBinder = Multibinder.newSetBinder(binder(), Section.class);
     sectionBinder.addBinding().to(AMQP.class);
@@ -66,6 +67,14 @@ class Module extends AbstractModule {
     sectionBinder.addBinding().to(Monitor.class);
     sectionBinder.addBinding().to(General.class);
 
+    install(
+        new FactoryModuleBuilder()
+            .implement(PublisherSession.class, AMQPPublisherSession.class)
+            .build(AMQPPublisherSession.Factory.class));
+    install(
+        new FactoryModuleBuilder()
+            .implement(SubscriberSession.class, AMQPSubscriberSession.class)
+            .build(AMQPSubscriberSession.Factory.class));
     install(
         new FactoryModuleBuilder()
             .implement(Publisher.class, GerritEventPublisher.class)
