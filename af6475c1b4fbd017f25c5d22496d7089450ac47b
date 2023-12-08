@@ -18,6 +18,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1384e0f3_06eeab00",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/SessionFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-08T12:00:33Z",
+      "side": 1,
+      "message": "I did this in a followup change.",
+      "parentUuid": "ad0913e1_e2609fb7",
+      "revId": "af6475c1b4fbd017f25c5d22496d7089450ac47b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "105ba3db_68e700fd",
