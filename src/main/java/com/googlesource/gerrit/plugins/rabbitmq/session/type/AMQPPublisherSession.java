@@ -17,6 +17,8 @@ package com.googlesource.gerrit.plugins.rabbitmq.session.type;
 import static java.util.Objects.requireNonNull;
 
 import com.google.common.flogger.FluentLogger;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Exchange;
 import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
@@ -29,10 +31,15 @@ import org.apache.commons.codec.CharEncoding;
 public final class AMQPPublisherSession extends AMQPSession implements PublisherSession {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
+  public interface Factory {
+    PublisherSession create(Properties properties);
+  }
+
   private volatile Channel channel;
   private ConfirmListener confirmListener;
 
-  public AMQPPublisherSession(Properties properties) {
+  @Inject
+  public AMQPPublisherSession(@Assisted Properties properties) {
     super(properties);
   }
 

@@ -15,6 +15,8 @@
 package com.googlesource.gerrit.plugins.rabbitmq.session.type;
 
 import com.google.common.flogger.FluentLogger;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Exchange;
@@ -36,9 +38,14 @@ import java.util.function.Consumer;
 public final class AMQPSubscriberSession extends AMQPSession implements SubscriberSession {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
+  public interface Factory {
+    SubscriberSession create(Properties properties);
+  }
+
   private volatile Map<String, Channel> channels = new ConcurrentHashMap<>();
 
-  public AMQPSubscriberSession(Properties properties) {
+  @Inject
+  public AMQPSubscriberSession(@Assisted Properties properties) {
     super(properties);
   }
 

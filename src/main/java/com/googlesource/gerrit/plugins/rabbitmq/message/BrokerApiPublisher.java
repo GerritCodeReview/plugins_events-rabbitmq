@@ -23,7 +23,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
 
 @Singleton
 public class BrokerApiPublisher extends MessagePublisher {
@@ -34,10 +34,10 @@ public class BrokerApiPublisher extends MessagePublisher {
 
   @Inject
   public BrokerApiPublisher(
-      SessionFactoryProvider sessionFactoryProvider,
+      AMQPPublisherSession.Factory sessionFactory,
       @EventGson Gson gson,
       @BrokerApiProperties Properties properties) {
-    super(properties, sessionFactoryProvider, gson);
+    super(properties, sessionFactory, gson);
     this.enabled = properties.getSection(General.class).enableBrokerApi;
   }
 

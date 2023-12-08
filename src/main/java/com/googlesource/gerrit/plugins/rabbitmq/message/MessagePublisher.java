@@ -28,7 +28,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.section.AMQP;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
-import com.googlesource.gerrit.plugins.rabbitmq.session.SessionFactoryProvider;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
 import com.rabbitmq.client.ConfirmListener;
 import java.io.IOException;
 import java.util.Map;
@@ -58,12 +58,12 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   @Inject
   public MessagePublisher(
       @Assisted final Properties properties,
-      SessionFactoryProvider sessionFactoryProvider,
+      AMQPPublisherSession.Factory sessionFactory,
       @EventGson Gson gson) {
     this.properties = properties;
     this.publishConfirm = properties.getSection(Message.class).publishConfirm;
     this.gson = gson;
-    this.session = sessionFactoryProvider.get().createPublisher(properties);
+    this.session = sessionFactory.create(properties);
     if (publishConfirm) {
       session.setConfirmListener(new Listener());
     }
