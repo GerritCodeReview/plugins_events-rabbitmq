@@ -11,11 +11,17 @@ gerrit_plugin(
     ],
     resources = glob(["src/main/resources/**/*"]),
     deps = [
+        ":events-broker-neverlink",
         "@amqp_client//jar",
         "@commons-codec//jar:neverlink",
         "@commons-io//jar",
         "@commons-lang3//jar:neverlink",
         "@gson//jar:neverlink",
-        "@events-broker//jar",
     ],
+)
+
+java_library(
+    name = "events-broker-neverlink",
+    neverlink = 1,
+    exports = ["//plugins/events-broker"],
 )
