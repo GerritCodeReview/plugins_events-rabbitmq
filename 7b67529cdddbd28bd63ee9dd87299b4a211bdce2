@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd24d6ae_91960348",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-21T16:02:20Z",
+      "side": 1,
+      "message": "After this has been enabled it publish all(or all that the user that has been configured with listenAs can see) gerrit stream event to the specified exchange from that point forward. There is no replay capability to publish old events.\nDoes that answer your question?",
+      "parentUuid": "006282df_c608f5c4",
+      "range": {
+        "startLine": 20,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "7b67529cdddbd28bd63ee9dd87299b4a211bdce2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "dadc51bd_5d2079e4",
@@ -64,6 +88,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c368fb5_e3f9d619",
+        "filename": "BUILD",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-21T16:02:20Z",
+      "side": 1,
+      "message": "Did this in the new change.",
+      "parentUuid": "4b9db819_bf273af0",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "7b67529cdddbd28bd63ee9dd87299b4a211bdce2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cce78719_3b4c4641",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-12-19T14:18:21Z",
       "side": 1,
       "message": "FYI, we recently changed all the current implementations of events-broker to consume from source rather than from maven.\n\nThis makes it easier to test for changes locally.\n\n[1] https://gerrit-review.googlesource.com/c/plugins/websession-broker/+/387016\n[2] https://gerrit-review.googlesource.com/c/plugins/events-aws-kinesis/+/386835\n[3] https://gerrit-review.googlesource.com/c/plugins/events-gcloud-pubsub/+/386836",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "7b67529cdddbd28bd63ee9dd87299b4a211bdce2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d618c8bc_17ee7df1",
+        "filename": "external_plugin_deps.bzl",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2023-12-21T16:02:20Z",
+      "side": 1,
+      "message": "I uploaded a change for this https://gerrit-review.googlesource.com/c/plugins/events-rabbitmq/+/399117/1",
+      "parentUuid": "cce78719_3b4c4641",
       "range": {
         "startLine": 10,
         "startChar": 0,
