@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d8e8035_7e419775",
+        "filename": "src/main/resources/Documentation/build.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2024-01-15T09:15:57Z",
+      "side": 1,
+      "message": "To me this is \"Deploy\" documentation. Many Gerrit administrators doesn\u0027t build their plugin from source and I would guess that they don\u0027t give much attention to the Build documentation.\nMove to `about.md` or any of `deploy.md`, `multi-master.md`, `broker-api.md`?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 68
+      },
+      "revId": "6f877331723b40970573cc1e4080ea4e00a2b897",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
