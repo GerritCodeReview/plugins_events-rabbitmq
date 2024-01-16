@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
-import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
 import java.util.HashMap;
@@ -32,13 +31,11 @@ import java.util.Map;
 
 @Singleton
 public class BrokerApiSubscribers {
-
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final SubscriberSession session;
   private final Properties properties;
   private final Gson gson;
-  private final boolean enabled;
   private final Map<TopicSubscriber, String> consumerTags = new HashMap<>();
 
   @Inject
@@ -49,7 +46,6 @@ public class BrokerApiSubscribers {
     this.properties = properties;
     this.session = sessionFactory.create(properties);
     this.gson = gson;
-    this.enabled = properties.getSection(General.class).enableBrokerApi;
   }
 
   public void stop() {
@@ -63,29 +59,24 @@ public class BrokerApiSubscribers {
 
   public boolean addSubscriber(TopicSubscriber topicSubscriber) {
     String topic = topicSubscriber.topic();
-    if (enabled) {
-      logger.atFine().log("RabbitMqBrokerApi used to set consumer to topic %s", topic);
-      String consumerTag =
-          session.addSubscriber(
-              topic,
-              messageBody -> {
-                logger.atFiner().log(
-                    "The RabbitMqBrokerApi consumed event from topic %s with data: %s",
-                    topic, messageBody);
-                Event event = gson.fromJson(messageBody, Event.class);
-                if (event.type != null) {
-                  topicSubscriber.consumer().accept(event);
-                } else {
-                  logger.atFine().log("Event does not have a type, ignoring Event");
-                }
-              });
-      if (consumerTag != null) {
-        consumerTags.put(topicSubscriber, consumerTag);
-        return true;
-      }
-    } else {
-      logger.atWarning().log(
-          "The RabbitMqBrokerApi is disabled, set enableBrokerApi to true to enable");
+    logger.atFine().log("RabbitMqBrokerApi used to set consumer to topic %s", topic);
+    String consumerTag =
+        session.addSubscriber(
+            topic,
+            messageBody -> {
+              logger.atFiner().log(
+                  "The RabbitMqBrokerApi consumed event from topic %s with data: %s",
+                  topic, messageBody);
+              Event event = gson.fromJson(messageBody, Event.class);
+              if (event.type != null) {
+                topicSubscriber.consumer().accept(event);
+              } else {
+                logger.atFine().log("Event does not have a type, ignoring Event");
+              }
+            });
+    if (consumerTag != null) {
+      consumerTags.put(topicSubscriber, consumerTag);
+      return true;
     }
     return false;
   }

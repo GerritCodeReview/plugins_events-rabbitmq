@@ -27,7 +27,6 @@ import java.nio.file.Path;
 
 @Singleton
 public class BasePropertiesProvider implements Provider<Properties> {
-
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public static final String FILE_EXT = ".config";

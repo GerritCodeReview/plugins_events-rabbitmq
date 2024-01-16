@@ -15,7 +15,9 @@
 package com.googlesource.gerrit.plugins.rabbitmq;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.registration.DynamicItem;
+import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.lifecycle.LifecycleModule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -31,6 +33,7 @@ public class RabbitMqBrokerApiModule extends LifecycleModule {
 
   @Override
   protected void configure() {
+    DynamicSet.bind(binder(), LifecycleListener.class).to(BrokerApiManager.class);
     bind(Properties.class)
         .annotatedWith(BrokerApiProperties.class)
         .toProvider(BrokerApiPropertiesProvider.class);
