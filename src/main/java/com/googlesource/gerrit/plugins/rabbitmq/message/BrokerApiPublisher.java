@@ -22,15 +22,11 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
-import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
 
 @Singleton
 public class BrokerApiPublisher extends MessagePublisher {
-
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
-
-  private final boolean enabled;
 
   @Inject
   public BrokerApiPublisher(
@@ -38,18 +34,12 @@ public class BrokerApiPublisher extends MessagePublisher {
       @EventGson Gson gson,
       @BrokerApiProperties Properties properties) {
     super(properties, sessionFactory, gson);
-    this.enabled = properties.getSection(General.class).enableBrokerApi;
   }
 
   @Override
   public void start() {
-    if (enabled) {
-      logger.atFine().log("BrokerApiPublisher is starting");
-      super.start();
-    } else {
-      logger.atWarning().log(
-          "The RabbitMqBrokerApi is disabled, set enableBrokerApi to true to enable");
-    }
+    logger.atFine().log("BrokerApiPublisher is starting");
+    super.start();
   }
 
   @Override
@@ -60,10 +50,7 @@ public class BrokerApiPublisher extends MessagePublisher {
 
   @Override
   public ListenableFuture<Boolean> publish(String topic, Event event) {
-    if (enabled) {
-      logger.atFine().log("Message sent to topic %s with data: %s", topic, event);
-      return super.publish(topic, event);
-    }
-    return null;
+    logger.atFine().log("Message sent to topic %s with data: %s", topic, event);
+    return super.publish(topic, event);
   }
 }

@@ -23,8 +23,6 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.General;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BaseProperties;
-import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiPublisher;
-import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiSubscribers;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.PublisherPropertiesProvider;
@@ -44,7 +42,6 @@ public class Manager implements LifecycleListener {
   private final EventWorker userEventWorker;
   private final GerritEventPublisherFactory publisherFactory;
   private final List<Publisher> publisherList = new ArrayList<>();
-  private final BrokerApiSubscribers subscribers;
   private final Properties baseProperties;
   private final PublisherPropertiesProvider publisherPropertiesProvider;
 
@@ -54,18 +51,14 @@ public class Manager implements LifecycleListener {
       final DefaultEventWorker defaultEventWorker,
       final EventWorkerFactory eventWorkerFactory,
       final GerritEventPublisherFactory publisherFactory,
-      final BrokerApiPublisher publisher,
-      final BrokerApiSubscribers subscribers,
       final @BaseProperties Properties baseProperties,
       final PublisherPropertiesProvider publisherPropertiesProvider) {
     this.pluginName = pluginName;
     this.defaultEventWorker = defaultEventWorker;
     this.userEventWorker = eventWorkerFactory.create();
     this.publisherFactory = publisherFactory;
-    this.subscribers = subscribers;
     this.baseProperties = baseProperties;
     this.publisherPropertiesProvider = publisherPropertiesProvider;
-    publisherList.add(publisher);
   }
 
   @Override
@@ -88,7 +81,6 @@ public class Manager implements LifecycleListener {
 
   @Override
   public void stop() {
-    subscribers.stop();
     for (Publisher publisher : publisherList) {
       publisher.stop();
     }

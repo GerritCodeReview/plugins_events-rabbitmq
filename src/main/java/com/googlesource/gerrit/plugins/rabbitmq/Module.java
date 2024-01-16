@@ -14,6 +14,9 @@
 
 package com.googlesource.gerrit.plugins.rabbitmq;
 
+import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.extensions.annotations.PluginData;
+import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.server.events.EventListener;
@@ -47,13 +50,26 @@ import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.UserEventWorker;
+import java.io.File;
+import java.io.IOException;
+import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
+import org.eclipse.jgit.util.FS;
 
 class Module extends AbstractModule {
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
   private final RabbitMqBrokerApiModule rabbitMqBrokerApiModule;
+  private final boolean brokerApiEnabled;
 
   @Inject
-  public Module(RabbitMqBrokerApiModule rabbitMqBrokerApiModule) {
+  public Module(
+      RabbitMqBrokerApiModule rabbitMqBrokerApiModule,
+      @PluginName final String pluginName,
+      @PluginData final File pluginData) {
     this.rabbitMqBrokerApiModule = rabbitMqBrokerApiModule;
+    this.brokerApiEnabled =
+        getBaseConfig(pluginName, pluginData).getBoolean("General", "enableBrokerApi", false);
   }
 
   @Override
@@ -96,6 +112,23 @@ class Module extends AbstractModule {
         .annotatedWith(BaseProperties.class)
         .toProvider(BasePropertiesProvider.class);
 
-    install(rabbitMqBrokerApiModule);
+    if (brokerApiEnabled) {
+      install(rabbitMqBrokerApiModule);
+    } else {
+      logger.atInfo().log(
+          "The RabbitMqBrokerApi is disabled, set enableBrokerApi to true if you want to enable it");
+    }
+  }
+
+  private FileBasedConfig getBaseConfig(String pluginName, File pluginData) {
+    File baseConfigFile =
+        pluginData.toPath().resolve(pluginName + BasePropertiesProvider.FILE_EXT).toFile();
+    FileBasedConfig config = new FileBasedConfig(baseConfigFile, FS.DETECTED);
+    try {
+      config.load();
+    } catch (IOException | ConfigInvalidException e) {
+      logger.atInfo().withCause(e).log("Unable to load %s", baseConfigFile.getAbsolutePath());
+    }
+    return config;
   }
 }
