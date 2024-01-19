@@ -76,7 +76,13 @@ public class BrokerApiSubscribers {
                   topic, messageBody);
               Event event = deserializeWithRetry(messageBody);
               if (event.type != null) {
-                topicSubscriber.consumer().accept(event);
+                try {
+                  topicSubscriber.consumer().accept(event);
+                } catch (Exception e) {
+                  logger.atWarning().withCause(e).log(
+                      "Consumer listening on topic %s threw an exception for data: %s",
+                      topic, messageBody);
+                }
               } else {
                 logger.atFine().log("Event does not have a type, ignoring Event");
               }
