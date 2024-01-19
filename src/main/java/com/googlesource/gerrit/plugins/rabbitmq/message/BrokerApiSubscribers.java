@@ -17,10 +17,15 @@ package com.googlesource.gerrit.plugins.rabbitmq.message;
 import static com.gerritforge.gerrit.eventbroker.TopicSubscriber.topicSubscriber;
 
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.github.rholder.retry.RetryException;
+import com.github.rholder.retry.Retryer;
+import com.github.rholder.retry.RetryerBuilder;
+import com.github.rholder.retry.WaitStrategies;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
@@ -28,6 +33,8 @@ import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 @Singleton
 public class BrokerApiSubscribers {
@@ -67,7 +74,7 @@ public class BrokerApiSubscribers {
               logger.atFiner().log(
                   "The RabbitMqBrokerApi consumed event from topic %s with data: %s",
                   topic, messageBody);
-              Event event = gson.fromJson(messageBody, Event.class);
+              Event event = deserializeWithRetry(messageBody);
               if (event.type != null) {
                 topicSubscriber.consumer().accept(event);
               } else {
@@ -79,6 +86,32 @@ public class BrokerApiSubscribers {
       return true;
     }
     return false;
+  }
+
+  private Event deserializeWithRetry(String messageBody) {
+    int timeout = 5;
+    Retryer<Event> retryer =
+        RetryerBuilder.<Event>newBuilder()
+            .retryIfException()
+            .withWaitStrategy(WaitStrategies.fixedWait(timeout, TimeUnit.SECONDS))
+            .build();
+    try {
+      return retryer.call(
+          () -> {
+            try {
+              // May fail if not all plugins have registered their event types yet
+              return gson.fromJson(messageBody, Event.class);
+            } catch (JsonParseException e) {
+              logger.atWarning().withCause(e).log(
+                  "Deserializing json failed. Will retry again after %d seconds", timeout);
+              throw e;
+            }
+          });
+    } catch (RetryException | ExecutionException e) {
+      // This should not happen
+      logger.atSevere().withCause(e).log("Deserializing json failed even after retries.");
+      return null;
+    }
   }
 
   public boolean removeSubscriber(TopicSubscriber topicSubscriber) {

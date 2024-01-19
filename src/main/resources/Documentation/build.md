@@ -36,15 +36,3 @@ Gerrit core in `tools/bzl/plugins.bzl`, and execute:
 ```
   ./tools/eclipse/project.py
 ```
-
-Use RabbitMQBroker Api with multi-site or another setup with custom Gerrit events
-------------------------------------------------------------------------------------
-
-To make events-rabbitmq able to deserialize events from the rabbitMQ queues, every event type needs
-to be registered before. This means that every plugin that needs to register its own event types
-needs to load before events-rabbimq. Gerrit load plugins lexicographically based on the names of
-the jars of the plugins. So in the case of multi-site you could rename replication.jar to
-0-replication.jar. Do not forget to re-point any symlinks.
-```
-  mv gerrit/plugins/replication.jar gerrit/plugins/0-replication.jar
-```
