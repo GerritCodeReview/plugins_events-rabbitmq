@@ -22,6 +22,30 @@
       },
       "revId": "50de00b4940e9c65e450aac9ba6feb6632bed6f1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36252ced_86a2e992",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-01-22T12:44:17Z",
+      "side": 1,
+      "message": "Not setting a StopStrategy is by design. The idea is that the Gerrit admin should fix this problem immediately if the retries does not work and it start to spam the log.",
+      "parentUuid": "db15fe88_a2b2105b",
+      "range": {
+        "startLine": 93,
+        "startChar": 3,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "50de00b4940e9c65e450aac9ba6feb6632bed6f1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
