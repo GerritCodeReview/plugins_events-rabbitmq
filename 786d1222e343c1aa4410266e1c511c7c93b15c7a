@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf5a480_4719423c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Module.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2024-01-22T09:45:00Z",
+      "side": 1,
+      "message": "```suggestion\n  private static FileBasedConfig getBaseConfig(String pluginName, File pluginData) {\n```",
+      "revId": "786d1222e343c1aa4410266e1c511c7c93b15c7a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
