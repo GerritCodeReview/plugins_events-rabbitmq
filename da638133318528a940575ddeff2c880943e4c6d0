@@ -16,6 +16,24 @@
       "message": "There is no files to review.",
       "revId": "da638133318528a940575ddeff2c880943e4c6d0",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6dc68e7_ca648a09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-01-25T09:12:05Z",
+      "side": 1,
+      "message": "not resolved",
+      "parentUuid": "5eb50a68_cb822ef8",
+      "revId": "da638133318528a940575ddeff2c880943e4c6d0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
