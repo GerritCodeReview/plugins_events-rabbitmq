@@ -21,6 +21,8 @@ import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import com.google.gerrit.server.config.GerritInstanceId;
+import com.google.inject.Inject;
 
 @Singleton
 public class DefaultEventWorker implements EventListener, EventWorker {
@@ -28,6 +30,12 @@ public class DefaultEventWorker implements EventListener, EventWorker {
   private final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final Set<Publisher> publishers = new CopyOnWriteArraySet<>();
+  private final String instanceId;
+
+  @Inject
+  public DefaultEventWorker(@GerritInstanceId String instanceId) {
+    this.instanceId = instanceId;
+  }
 
   @Override
   public void addPublisher(Publisher publisher) {
@@ -51,8 +59,10 @@ public class DefaultEventWorker implements EventListener, EventWorker {
 
   @Override
   public void onEvent(Event event) {
-    for (Publisher publisher : publishers) {
-      publisher.publish(event.type, event);
+    if (event.instanceId.equals(instanceId)) {
+      for (Publisher publisher : publishers) {
+        publisher.publish(event.type, event);
+      }
     }
   }
 }
