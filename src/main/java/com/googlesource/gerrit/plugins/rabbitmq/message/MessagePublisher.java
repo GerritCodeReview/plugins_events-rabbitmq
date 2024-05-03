@@ -31,8 +31,9 @@ import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
 import com.rabbitmq.client.ConfirmListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MessagePublisher implements Publisher, LifecycleListener {
@@ -50,7 +51,8 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private final Object sessionMon = new Object();
   private GracefullyCancelableRunnable publisher;
   private Thread publisherThread;
-  private final Map<Long, TopicEvent> eventsToBeAcked = new ConcurrentHashMap<>();
+  private final ConcurrentSkipListMap<Long, TopicEvent> eventsToBeAcked =
+      new ConcurrentSkipListMap<>();
   private boolean publishConfirm;
   private final Object lostEventCountLock = new Object();
   private int lostEventCount = 0;
@@ -77,6 +79,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
             canceled = false;
             while (!canceled) {
               try {
+                logger.atFine().log("In loop eventsToBeAcked: %d", eventsToBeAcked.size());
                 TopicEvent topicEvent = queue.take();
                 if (topicEvent.event.getType().equals(END_OF_STREAM)) {
                   continue;
@@ -86,7 +89,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
                     sessionMon.wait(1000);
                   }
                 }
-                if (!publishEvent(topicEvent) && !queue.offer(topicEvent)) {
+                if (!publishEvent(topicEvent) && !offerToQueue(topicEvent)) {
                   logger.atSevere().log("Event lost: %s", gson.toJson(topicEvent.event));
                 }
               } catch (InterruptedException e) {
@@ -100,7 +103,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
           public void cancel() {
             canceled = true;
             if (queue.isEmpty()) {
-              queue.offer(new TopicEvent(null, EOS, null));
+              offerToQueue(new TopicEvent(null, EOS, null));
             }
           }
 
@@ -149,7 +152,7 @@ public class MessagePublisher implements Publisher, LifecycleListener {
     logger.atFine().log(
         "Adding event %s for topic %s to publisher queue", topicEvent.event, topicEvent.topic);
     synchronized (lostEventCountLock) {
-      if (queue.offer(topicEvent)) {
+      if (offerToQueue(topicEvent)) {
         if (lostEventCount > 0) {
           logger.atWarning().log(
               "Event queue is no longer full, %d events were lost", lostEventCount);
@@ -163,6 +166,11 @@ public class MessagePublisher implements Publisher, LifecycleListener {
     }
   }
 
+  private boolean offerToQueue(TopicEvent topicEvent) {
+    logger.atFine().log("Event %s is offered to queue", topicEvent.event);
+    return queue.offer(topicEvent);
+  }
+
   private boolean isConnected() {
     return session != null && session.isOpen();
   }
@@ -174,7 +182,14 @@ public class MessagePublisher implements Publisher, LifecycleListener {
         return false;
       }
       eventsToBeAcked.put(seqNbr, topicEvent);
-      return session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
+      String event_in_json = gson.toJson(topicEvent.event);
+      boolean passed = session.publish(event_in_json, topicEvent.topic);
+      logger.atFine().log(
+          "eventsToBeAcked: %d with topic %s", eventsToBeAcked.size(), topicEvent.topic);
+      logger.atFine().log(
+          "With publishConfirm event %s and sequence number %d got %s from session.publish, full event %s",
+          topicEvent.event, seqNbr, passed, event_in_json);
+      return passed;
     }
     boolean published = session.publish(gson.toJson(topicEvent.event), topicEvent.topic);
     topicEvent.published.set(published);
@@ -217,31 +232,59 @@ public class MessagePublisher implements Publisher, LifecycleListener {
 
   private class Listener implements ConfirmListener {
     public void handleAck(long deliveryTag, boolean multiple) throws IOException {
-      TopicEvent topicEvent = eventsToBeAcked.remove(deliveryTag);
-      if (topicEvent != null) {
+      Map<Long, TopicEvent> ackedEvents = getEvents(deliveryTag, multiple);
+      if (ackedEvents.size() > 1) {
         logger.atFine().log(
-            "Event with sequence number %d that was published to the topic %s was acked.",
-            deliveryTag, topicEvent.topic);
-        topicEvent.published.set(true);
-      } else {
-        logger.atWarning().log(
-            "Event with sequence number %d that was about to be acked is unexpectedly missing",
-            deliveryTag);
+            "Multiple deliveries was acked at the same time, expected count: %d",
+            ackedEvents.size());
       }
+      ackedEvents.forEach(
+          (dt, topicEvent) -> {
+            if (topicEvent != null) {
+              logger.atFine().log(
+                  "Event with sequence number %d that was published to the topic %s was acked.",
+                  dt, topicEvent.topic);
+              topicEvent.published.set(true);
+            } else {
+              logger.atWarning().log(
+                  "Event with sequence number %d that was about to be acked is unexpectedly missing",
+                  dt);
+            }
+          });
     }
 
     public void handleNack(long deliveryTag, boolean multiple) throws IOException {
-      TopicEvent topicEvent = eventsToBeAcked.remove(deliveryTag);
-      if (topicEvent != null) {
-        logger.atWarning().log(
-            "Event with sequence number %d that was published to the topic %s was not acked. Retrying publish of event",
-            deliveryTag, topicEvent.topic);
-        publish(topicEvent);
-      } else {
-        logger.atWarning().log(
-            "Event with sequence number %d that was about to be nacked is unexpectedly missing",
-            deliveryTag);
+      Map<Long, TopicEvent> nackedEvents = getEvents(deliveryTag, multiple);
+      if (nackedEvents.size() > 1) {
+        logger.atFine().log(
+            "Multiple deliveries was nacked at the same time, expected count: %d",
+            nackedEvents.size());
       }
+      nackedEvents.forEach(
+          (dt, topicEvent) -> {
+            if (topicEvent != null) {
+              logger.atWarning().log(
+                  "Event with sequence number %d that was published to the topic %s was not acked. Retrying publish of event",
+                  dt, topicEvent.topic);
+              publish(topicEvent);
+            } else {
+              logger.atWarning().log(
+                  "Event with sequence number %d that was about to be nacked is unexpectedly missing",
+                  dt);
+            }
+          });
+    }
+
+    private Map<Long, TopicEvent> getEvents(long deliveryTag, boolean multiple) {
+      Map<Long, TopicEvent> events = new HashMap<>();
+      if (multiple) {
+        Map<Long, TopicEvent> map = eventsToBeAcked.headMap(deliveryTag, true);
+        events.putAll(map);
+        map.clear();
+      } else {
+        events.put(deliveryTag, eventsToBeAcked.remove(deliveryTag));
+      }
+      return events;
     }
   }
 }
