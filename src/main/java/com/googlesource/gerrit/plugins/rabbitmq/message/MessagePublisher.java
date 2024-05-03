@@ -31,8 +31,9 @@ import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
 import com.rabbitmq.client.ConfirmListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MessagePublisher implements Publisher, LifecycleListener {
@@ -50,7 +51,8 @@ public class MessagePublisher implements Publisher, LifecycleListener {
   private final Object sessionMon = new Object();
   private GracefullyCancelableRunnable publisher;
   private Thread publisherThread;
-  private final Map<Long, TopicEvent> eventsToBeAcked = new ConcurrentHashMap<>();
+  private final ConcurrentSkipListMap<Long, TopicEvent> eventsToBeAcked =
+      new ConcurrentSkipListMap<>();
   private boolean publishConfirm;
   private final Object lostEventCountLock = new Object();
   private int lostEventCount = 0;
@@ -217,31 +219,59 @@ public class MessagePublisher implements Publisher, LifecycleListener {
 
   private class Listener implements ConfirmListener {
     public void handleAck(long deliveryTag, boolean multiple) throws IOException {
-      TopicEvent topicEvent = eventsToBeAcked.remove(deliveryTag);
-      if (topicEvent != null) {
+      Map<Long, TopicEvent> ackedEvents = getEvents(deliveryTag, multiple);
+      if (ackedEvents.size() > 1) {
+        logger.atFine().log(
+            "Multiple deliveries was acked at the same time, expected count: %d",
+            ackedEvents.size());
+      }
+      ackedEvents.forEach(
+          (dt, topicEvent) -> {
+            if (topicEvent != null) {
         logger.atFine().log(
             "Event with sequence number %d that was published to the topic %s was acked.",
-            deliveryTag, topicEvent.topic);
+                  dt, topicEvent.topic);
         topicEvent.published.set(true);
       } else {
         logger.atWarning().log(
             "Event with sequence number %d that was about to be acked is unexpectedly missing",
-            deliveryTag);
+                  dt);
       }
+          });
     }
 
     public void handleNack(long deliveryTag, boolean multiple) throws IOException {
-      TopicEvent topicEvent = eventsToBeAcked.remove(deliveryTag);
+      Map<Long, TopicEvent> nackedEvents = getEvents(deliveryTag, multiple);
+      if (nackedEvents.size() > 1) {
+        logger.atFine().log(
+            "Multiple deliveries was nacked at the same time, expected count: %d",
+            nackedEvents.size());
+      }
+      nackedEvents.forEach(
+          (dt, topicEvent) -> {
       if (topicEvent != null) {
         logger.atWarning().log(
             "Event with sequence number %d that was published to the topic %s was not acked. Retrying publish of event",
-            deliveryTag, topicEvent.topic);
+                  dt, topicEvent.topic);
         publish(topicEvent);
       } else {
         logger.atWarning().log(
             "Event with sequence number %d that was about to be nacked is unexpectedly missing",
-            deliveryTag);
+                  dt);
+            }
+          });
+    }
+
+    private Map<Long, TopicEvent> getEvents(long deliveryTag, boolean multiple) {
+      Map<Long, TopicEvent> events = new HashMap<>();
+      if (multiple) {
+        Map<Long, TopicEvent> map = eventsToBeAcked.headMap(deliveryTag, true);
+        events.putAll(map);
+        map.clear();
+      } else {
+        events.put(deliveryTag, eventsToBeAcked.remove(deliveryTag));
       }
+      return events;
     }
   }
 }
