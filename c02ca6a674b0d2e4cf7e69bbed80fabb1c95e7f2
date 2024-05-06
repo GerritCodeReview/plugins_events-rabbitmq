@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92c80f76_8236b3a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-06T06:46:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aaa61c4_40b36afe",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "c02ca6a674b0d2e4cf7e69bbed80fabb1c95e7f2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf3268a9_3b3bf950",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e121b469_f8c0b8db",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-06T06:46:30Z",
+      "side": 1,
+      "message": "Yes, strange indentation indeed. It seems that the Gerrit view remove some indentation for some of the lines. If you check it out from your local editor it should look fine. It is gjf compliant.",
+      "parentUuid": "bf3268a9_3b3bf950",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 7
+      },
+      "revId": "c02ca6a674b0d2e4cf7e69bbed80fabb1c95e7f2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb470d85_2a0584ec",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2024-05-06T06:05:29Z",
       "side": 1,
       "message": "I don\u0027t get this, if the deliveryTag corresponds to multiple events these events are kept in `eventsToBeAcked` and only a shallow copy is taken with `.headmap(...)` whereas if it\u0027s a single event it is removed from `eventsToBeAcked` by calling `remove(...)`?\nShould there be a `eventsToBeAcked.keySet().removeAll(events.keySet())` step?",
+      "range": {
+        "startLine": 272,
+        "startChar": 31,
+        "endLine": 272,
+        "endChar": 67
+      },
+      "revId": "c02ca6a674b0d2e4cf7e69bbed80fabb1c95e7f2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81e65bd2_4e3f16ee",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-06T06:46:30Z",
+      "side": 1,
+      "message": "headmap does not return a shallow copy. It is backed by the bigger map: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentSkipListMap.html#headMap-K-boolean-",
+      "parentUuid": "bb470d85_2a0584ec",
       "range": {
         "startLine": 272,
         "startChar": 31,
