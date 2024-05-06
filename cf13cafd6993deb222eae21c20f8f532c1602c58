@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b80dedd5_4ee08d6b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-06T12:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8b11f6_1ff66ce6",
+      "range": {
+        "startLine": 184,
+        "startChar": 13,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "cf13cafd6993deb222eae21c20f8f532c1602c58",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76921dab_9035fc12",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-05-06T11:16:36Z",
       "side": 1,
       "message": "I looked up Fine vs Finest and I think logging the complete event at Fine is preferred over duplicating them at Finest.",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 51
+      },
+      "revId": "cf13cafd6993deb222eae21c20f8f532c1602c58",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c23b5bf1_b36951b2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-06T12:49:49Z",
+      "side": 1,
+      "message": "The reason I did this was to prevent the error log from being spammed with big json blobs. Fine will print at debug level but if you want to print finest you need to set level to trace. For most debugging purposes I do not think printing the whole json blob is needed.\nBut maybe I over-complicate things. When debugging these problems I usually filter with grep and in that case you avoid the spam anyway.",
+      "parentUuid": "76921dab_9035fc12",
       "range": {
         "startLine": 187,
         "startChar": 0,
