@@ -164,6 +164,30 @@
       },
       "revId": "c02ca6a674b0d2e4cf7e69bbed80fabb1c95e7f2",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfdeb601_f6be510c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2024-05-06T07:00:48Z",
+      "side": 1,
+      "message": "Does the `map.clear()` call remove the entries from the `eventsToBeAcked` map as well?",
+      "parentUuid": "81e65bd2_4e3f16ee",
+      "range": {
+        "startLine": 272,
+        "startChar": 31,
+        "endLine": 272,
+        "endChar": 67
+      },
+      "revId": "c02ca6a674b0d2e4cf7e69bbed80fabb1c95e7f2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
