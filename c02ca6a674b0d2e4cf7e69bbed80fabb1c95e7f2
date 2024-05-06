@@ -95,6 +95,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90a33b35_cf86496c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/MessagePublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-06T06:49:45Z",
+      "side": 1,
+      "message": "Nevermind, I probably forgot save in my editor. That is why I had a different view.\nDone.",
+      "parentUuid": "e121b469_f8c0b8db",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 7
+      },
+      "revId": "c02ca6a674b0d2e4cf7e69bbed80fabb1c95e7f2",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb470d85_2a0584ec",
