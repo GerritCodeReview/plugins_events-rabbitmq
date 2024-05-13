@@ -22,6 +22,30 @@
       },
       "revId": "0e3637a7ff7210d27e196d382946f583533ff486",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eb9c303_33fd6787",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-05-13T14:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14a333c0_6b132d2c",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "0e3637a7ff7210d27e196d382946f583533ff486",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
