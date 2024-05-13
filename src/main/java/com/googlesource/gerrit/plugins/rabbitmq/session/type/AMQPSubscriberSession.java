@@ -78,10 +78,11 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
         }
         channel.queueBind(queueName, exchangeName, topic);
 
+        boolean autoAck = false;
         String consumerTag =
             channel.basicConsume(
                 queueName,
-                true,
+                autoAck,
                 new MessageConsumer(channel, queueName, topic, messageBodyConsumer));
         logger.atInfo().log("Subscribed to queue with name %s", queueName);
         if (consumerTag != null) {
@@ -139,6 +140,13 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
         String consumerTag, Envelope envelope, BasicProperties properties, byte[] body)
         throws UnsupportedEncodingException {
       messageBodyConsumer.accept(new String(body, "UTF-8"));
+      long deliveryTag = envelope.getDeliveryTag();
+      try {
+        getChannel().basicAck(deliveryTag, false);
+      } catch (IOException ex) {
+        logger.atSevere().withCause(ex).log(
+            "Error when acknowledging message with sequence number %d", deliveryTag);
+      }
     }
 
     @Override
