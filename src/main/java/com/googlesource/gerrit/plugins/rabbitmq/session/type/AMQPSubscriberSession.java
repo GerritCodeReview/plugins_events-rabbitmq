@@ -146,14 +146,19 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
     public void handleDelivery(
         String consumerTag, Envelope envelope, BasicProperties properties, byte[] body)
         throws UnsupportedEncodingException {
-      messageBodyConsumer.accept(new String(body, "UTF-8"));
+      long start = System.currentTimeMillis();
       long deliveryTag = envelope.getDeliveryTag();
+      String data = new String(body, "UTF-8");
+      logger.atFine().log("Consumer with consumerTag %s start to process message with sequence number %d and data:\n %s", consumerTag, deliveryTag, data);
+      messageBodyConsumer.accept(data);
       try {
         getChannel().basicAck(deliveryTag, false);
       } catch (IOException ex) {
         logger.atSevere().withCause(ex).log(
             "Error when acknowledging message with sequence number %d", deliveryTag);
       }
+      long stop = System.currentTimeMillis();
+      logger.atFine().log("Consumer with consumerTag %s is finished in processing message with sequence number %d after %d ms and data:\n %s", consumerTag, deliveryTag, stop - start, data);
     }
 
     @Override
