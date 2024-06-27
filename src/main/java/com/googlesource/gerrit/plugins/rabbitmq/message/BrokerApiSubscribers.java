@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.ArrayList;
 
 @Singleton
 public class BrokerApiSubscribers {
@@ -44,7 +46,7 @@ public class BrokerApiSubscribers {
   private final SubscriberSession session;
   private final Properties properties;
   private final Gson gson;
-  private final Map<TopicSubscriber, String> consumerTags = new HashMap<>();
+  private final Map<TopicSubscriber, List<String>> subscriberConsumerTags = new HashMap<>();
 
   @Inject
   public BrokerApiSubscribers(
@@ -67,29 +69,37 @@ public class BrokerApiSubscribers {
 
   public boolean addSubscriber(TopicSubscriber topicSubscriber) {
     String topic = topicSubscriber.topic();
-    logger.atFine().log("RabbitMqBrokerApi used to set consumer to topic %s", topic);
-    String consumerTag =
-        session.addSubscriber(
-            topic,
-            messageBody -> {
-              logger.atFiner().log(
-                  "The RabbitMqBrokerApi consumed event from topic %s with data: %s",
-                  topic, messageBody);
-              Event event = deserializeWithRetry(messageBody);
-              if (event.type != null) {
-                try {
-                  topicSubscriber.consumer().accept(event);
-                } catch (Exception e) {
-                  logger.atWarning().withCause(e).log(
-                      "Consumer listening on topic %s threw an exception for data: %s",
-                      topic, messageBody);
+    List<String> consumerTags = new ArrayList<>();
+    for (int i = 0 ; i < 10; i++) {
+      logger.atFine().log("RabbitMqBrokerApi used to set consumer to topic %s", topic);
+      String consumerTag =
+          session.addSubscriber(
+              topic,
+              messageBody -> {
+                logger.atFiner().log(
+                    "The RabbitMqBrokerApi consumed event from topic %s with data: %s",
+                    topic, messageBody);
+                Event event = deserializeWithRetry(messageBody);
+                if (event.type != null) {
+                  try {
+                    topicSubscriber.consumer().accept(event);
+                  } catch (Exception e) {
+                    logger.atWarning().withCause(e).log(
+                        "Consumer listening on topic %s threw an exception for data: %s",
+                        topic, messageBody);
+                  }
+                } else {
+                  logger.atFine().log("Event does not have a type, ignoring Event");
                 }
-              } else {
-                logger.atFine().log("Event does not have a type, ignoring Event");
-              }
-            });
-    if (consumerTag != null) {
-      consumerTags.put(topicSubscriber, consumerTag);
+              });
+      if (consumerTag != null) {
+        consumerTags.add(consumerTag);
+      } else {
+        logger.atSevere().log("Failed to create subscriber for  topic %s in BrokerApiSubscribers", topic);
+      }
+    }
+    if (!consumerTags.isEmpty()) {
+      subscriberConsumerTags.put(topicSubscriber, consumerTags);
       return true;
     }
     return false;
@@ -129,11 +139,14 @@ public class BrokerApiSubscribers {
   }
 
   public boolean removeSubscriber(TopicSubscriber topicSubscriber) {
-    String consumerTag = consumerTags.remove(topicSubscriber);
-    if (consumerTag == null) {
+    List<String> consumerTags = subscriberConsumerTags.remove(topicSubscriber);
+    if (consumerTags == null) {
       logger.atWarning().log("Could not find consumerTag when trying to remove subscriber");
       return false;
     }
-    return session.removeSubscriber(consumerTag);
+    for (String consumerTag : consumerTags) {
+      session.removeSubscriber(consumerTag);
+    }
+    return true;
   }
 }
