@@ -65,6 +65,11 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
   @Override
   public String addSubscriber(String topic, Consumer<String> messageBodyConsumer) {
     Channel channel = createChannel();
+    try {
+      channel.basicQos(1000);
+    } catch(IOException ex) {
+      logger.atSevere().withCause(ex).log("Error when trying to set consumer prefetch");
+    }
     if (channel != null && channel.isOpen()) {
       String exchangeName = properties.getSection(Exchange.class).name;
       try {
@@ -139,14 +144,18 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
     public void handleDelivery(
         String consumerTag, Envelope envelope, BasicProperties properties, byte[] body)
         throws UnsupportedEncodingException {
-      messageBodyConsumer.accept(new String(body, "UTF-8"));
+      long start = System.currentTimeMillis();
       long deliveryTag = envelope.getDeliveryTag();
+      logger.atFine().log("Consumer with consumerTag %s start to process message with sequence number %d", consumerTag, deliveryTag);
+      messageBodyConsumer.accept(new String(body, "UTF-8"));
       try {
         getChannel().basicAck(deliveryTag, false);
       } catch (IOException ex) {
         logger.atSevere().withCause(ex).log(
             "Error when acknowledging message with sequence number %d", deliveryTag);
       }
+      long stop = System.currentTimeMillis();
+      logger.atFine().log("Consumer with consumerTag %s is finished in processing message with sequence number %d after %d ms", consumerTag, deliveryTag, stop - start);
     }
 
     @Override
