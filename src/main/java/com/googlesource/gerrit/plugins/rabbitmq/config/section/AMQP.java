@@ -37,4 +37,7 @@ public class AMQP implements Section {
   public Boolean autoDelete;
 
   @Default public String queuePrefix;
+
+  @Default("0")
+  public Integer consumerPrefetch;
 }

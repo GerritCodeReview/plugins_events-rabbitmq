@@ -65,11 +65,18 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
   @Override
   public String addSubscriber(String topic, Consumer<String> messageBodyConsumer) {
     Channel channel = createChannel();
+    AMQP amqp = properties.getSection(AMQP.class);
+
+    try {
+      channel.basicQos(amqp.consumerPrefetch > 0 ? amqp.consumerPrefetch : 0);
+    } catch(IOException ex) {
+      logger.atSevere().withCause(ex).log("Error when trying to set consumer prefetch");
+    }
+
     if (channel != null && channel.isOpen()) {
       String exchangeName = properties.getSection(Exchange.class).name;
       try {
         String queueName;
-        AMQP amqp = properties.getSection(AMQP.class);
         if (!amqp.queuePrefix.isEmpty()) {
           queueName = amqp.queuePrefix + "." + topic;
           channel.queueDeclare(queueName, amqp.durable, amqp.exclusive, amqp.autoDelete, null);
