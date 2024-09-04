@@ -22,8 +22,8 @@ Broker.config
 To make specific configurations for the events-broker API you do those in
 `$site_path/data/@PLUGIN@/broker/broker.config`. You can use the same configuration options as the
 other configs with the additions of queuePrefix, durable, exclusive and autoDelete that decides
-queue properties. The event-broker API use its own publisher that is separate from the previously
-mentioned publisher.
+queue properties and consumerPrefetch that is a channel property related to consumers. The
+event-broker API use its own publisher that is separate from the previously mentioned publisher.
 
 Secure.config
 ---------------------
@@ -86,6 +86,9 @@ File format
 * `amqp.autoDelete`
     * Make the queues automatically deleted when their last consummer stop subscribing. Only used
     in broker.config and is only used if `amqp.queuePrefix` is specified.
+
+* `amqp.consumerPrefetch`
+    * Decide how many events the client can queue for a consumer, defaults to 300.
 
 * `exchange.name`
     * The name of exchange.
