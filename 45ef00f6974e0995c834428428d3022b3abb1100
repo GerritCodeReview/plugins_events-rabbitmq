@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "838b94f5_06068762",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2024-09-13T12:13:37Z",
+      "side": 1,
+      "message": "We should probably create an issue with a problem statement that we are resolving at https://issues.gerritcodereview.com \n\nBug: issue XXX",
+      "revId": "45ef00f6974e0995c834428428d3022b3abb1100",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f6cb3a0_4f1ba080",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2024-09-13T12:13:37Z",
+      "side": 1,
+      "message": "https://www.rabbitmq.com/docs/confirms#channel-qos-prefetch-throughput\n\nWe could perhaps link to this and set the default for this to the upper bound (e.g. 300?)",
+      "revId": "45ef00f6974e0995c834428428d3022b3abb1100",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "45e09887_5f7dee79",
         "filename": "src/main/resources/Documentation/config.md",
         "patchSetId": 3
