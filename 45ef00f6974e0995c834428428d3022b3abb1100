@@ -56,6 +56,30 @@
       },
       "revId": "45ef00f6974e0995c834428428d3022b3abb1100",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a67c4778_9af863aa",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-09-13T12:23:09Z",
+      "side": 1,
+      "message": "Maybe. But the problem is that we do not know what users of this plugin will use the plugin for or how their rabbitmq setup looks. Maybe their clients process the events very slow/fast, maybe they have a very slow/fast rabbitmq setup or maybe they have configured rabbitmq with a very short or long timeout.\n\nThe rabbitmq docs says that 100-300 usually offer good throughput so maybe we should pick 200?: https://www.rabbitmq.com/docs/confirms#channel-qos-prefetch-throughput",
+      "parentUuid": "45e09887_5f7dee79",
+      "range": {
+        "startLine": 91,
+        "startChar": 78,
+        "endLine": 91,
+        "endChar": 79
+      },
+      "revId": "45ef00f6974e0995c834428428d3022b3abb1100",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
