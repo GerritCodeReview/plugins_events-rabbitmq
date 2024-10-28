@@ -16,9 +16,11 @@ package com.googlesource.gerrit.plugins.rabbitmq;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gerrit.common.Nullable;
 import com.google.gerrit.server.events.Event;
 import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiPublisher;
@@ -58,8 +60,18 @@ public class RabbitMqBrokerApi implements BrokerApi {
   }
 
   @Override
+  public void receiveAsync(String topic, String groupId, Consumer<Event> eventConsumer) {
+    throw new NotImplementedException("The RabbitMqBrokerApi does not support GroupId yet.");
+  }
+
+  @Override
   public Set<TopicSubscriber> topicSubscribers() {
     return ImmutableSet.copyOf(topicSubscribers);
+  }
+
+  @Override
+  public Set<TopicSubscriberWithGroupId> topicSubscribersWithGroupId() {
+    throw new NotImplementedException("The RabbitMqBrokerApi does not support GroupId yet.");
   }
 
   @Override
@@ -68,6 +80,11 @@ public class RabbitMqBrokerApi implements BrokerApi {
       subscribers.removeSubscriber(topicSubscriber);
     }
     topicSubscribers.clear();
+  }
+
+  @Override
+  public void disconnect(String topic, @Nullable String groupId) {
+    throw new NotImplementedException("The RabbitMqBrokerApi does not support GroupId yet.");
   }
 
   @Override
