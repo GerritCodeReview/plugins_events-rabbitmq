@@ -16,6 +16,7 @@ package com.googlesource.gerrit.plugins.rabbitmq;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -74,5 +75,23 @@ public class RabbitMqBrokerApi implements BrokerApi {
   public void replayAllEvents(String topic) {
     throw new NotImplementedException(
         "The RabbitMqBrokerApi does not support replayAllEvents yet.");
+  }
+
+  @Override
+  public void disconnect(String topic, String groupId) {
+    throw new NotImplementedException(
+        "The RabbitMqBrokerApi does not support TopicSubscribers with group ID yet.");
+  }
+
+  @Override
+  public void receiveAsync(String topic, String groupId, Consumer<Event> consumer) {
+    throw new NotImplementedException(
+        "The RabbitMqBrokerApi does not support TopicSubscribers with group ID yet.");
+  }
+
+  @Override
+  public Set<TopicSubscriberWithGroupId> topicSubscribersWithGroupId() {
+    throw new NotImplementedException(
+        "The RabbitMqBrokerApi does not support TopicSubscribers with group ID yet.");
   }
 }
