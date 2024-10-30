@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecc9ccf0_2caaa9a3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/Gerrit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2024-10-30T08:40:44Z",
+      "side": 0,
+      "message": "Fields annotated with MessageHeader is added to the header variable in AMQProperties.java",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "d5c8c30ee524d442a777d93d784116f76e87c70b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
