@@ -28,21 +28,6 @@ Reference
 [Configuration]: src/main/resources/Documentation/config.md
 [Message Format]: src/main/resources/Documentation/message.md
 
-Minimum Configuration
----------------------
-
-```
-  [amqp]
-    uri = amqp://localhost
-  [exchange]
-    name = exchange-for-gerrit-queue
-  [message]
-    routingKey = com.foobar.www.gerrit
-  [gerrit]
-    name = foobar-gerrit
-    hostname = www.foobar.com
-```
-
 History
 ---------------------
 

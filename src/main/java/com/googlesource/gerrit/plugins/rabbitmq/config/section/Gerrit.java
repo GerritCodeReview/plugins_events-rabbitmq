@@ -28,18 +28,6 @@ public class Gerrit implements Section {
   @MessageHeader("gerrit-name")
   public String name;
 
-  @Default
-  @MessageHeader("gerrit-host")
-  public String hostname;
-
-  @Default("ssh")
-  @MessageHeader("gerrit-scheme")
-  public String scheme;
-
-  @Default("29418")
-  @MessageHeader("gerrit-port")
-  public Integer port;
-
   @MessageHeader("gerrit-front-url")
   public String canonicalWebUrl;
 

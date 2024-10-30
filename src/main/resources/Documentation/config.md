@@ -52,9 +52,6 @@ File format
     routingKey = com.foobar.www.gerrit
   [gerrit]
     name = foobar-gerrit
-    hostname = www.foobar.com
-    scheme = ssh
-    port = 29418
     listenAs = gerrituser
   [monitor]
     interval = 15000
@@ -119,18 +116,6 @@ File format
     * The name of gerrit(not hostname). This is your given name to identify your gerrit.
       This can be used for message header only.
 
-* `gerrit.hostname`
-    * The hostname of gerrit for SCM connection.
-      This can be used for message header only.
-
-* `gerrit.scheme`
-    * The scheme of gerrit for SCM connection.
-      This can be used for message header only.
-
-* `gerrit.port`
-    * The port number of gerrit for SCM connection.
-      This can be used for message header only.
-
 * `gerrit.listenAs`
     * The user of gerrit who listen events.
       If not specified, listen events as unrestricted user. This is not applicable for the RabbitMQ broker API.
@@ -160,9 +145,6 @@ You can change the below values by specifying them in config file.
 |message.priority     | 0
 |message.routingKey   | **event.type**
 |gerrit.name          | *Empty*
-|gerrit.hostname      | *Empty*
-|gerrit.scheme        | **ssh**
-|gerrit.port          | 29418
 |gerrit.listenAs      | *Unrestricted user*
 |monitor.interval     | 15000
 |monitor.failureCount | 15

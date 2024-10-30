@@ -30,9 +30,6 @@ Headers are stored in property.headers.
 | name             | value
 |:-----------------|:------------------------------------------
 | gerrit-name      | *gerrit.name*
-| gerrit-host      | *gerrit.hostname*
-| gerrit-scheme    | *gerrit.scheme*
-| gerrit-port      | *gerrit.port*
 | gerrit-front-url | *gerrit.canonicalWebUrl* in `gerrit.config`
 | gerrit-version   | gerrit version
 
