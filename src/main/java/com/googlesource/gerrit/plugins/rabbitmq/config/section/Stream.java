@@ -1,4 +1,4 @@
-// Copyright (C) 2023 The Android Open Source Project
+// Copyright (C) 2025 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.googlesource.gerrit.plugins.rabbitmq.session;
+package com.googlesource.gerrit.plugins.rabbitmq.config.section;
 
-import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
-import java.util.function.Consumer;
+import com.googlesource.gerrit.plugins.rabbitmq.annotation.Default;
 
-public interface SubscriberSession extends Session {
-  public interface Factory {
-    SubscriberSession create(Properties properties);
-  }
+public class Stream implements Section {
 
-  String addSubscriber(String topic, Consumer<String> messageBodyConsumer);
+  @Default("false")
+  public Boolean enabled;
 
-  boolean removeSubscriber(String consumerTag);
+  @Default("rabbitmq-stream://localhost")
+  public String uri;
+
+  @Default public String streamPrefix;
+
+  @Default public String consumerPrefix;
+
+  @Default("500")
+  public Integer windowSize;
 }

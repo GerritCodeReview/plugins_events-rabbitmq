@@ -74,8 +74,11 @@ public class RabbitMqBrokerApi implements BrokerApi {
 
   @Override
   public void replayAllEvents(String topic) {
-    throw new NotImplementedException(
-        "The RabbitMqBrokerApi does not support replayAllEvents yet.");
+    for (TopicSubscriber topicSubscriber : topicSubscribers) {
+      if (topicSubscriber.topic().equals(topic)) {
+        subscribers.replay(topicSubscriber);
+      }
+    }
   }
 
   @Override
