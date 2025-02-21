@@ -24,6 +24,12 @@ To make specific configurations for the events-broker API you do those in
 other configs with the additions of queuePrefix, durable, exclusive and autoDelete that decides
 queue properties and consumerPrefetch that is a channel property related to consumers. The
 event-broker API use its own publisher that is separate from the previously mentioned publisher.
+You can use streams instead of queues if you enable it with stream.enabled. There is a separate
+set of configuration options for streams.
+Note: If you get certificate host verfication failures the problem may be that the RabbitMQ cluster
+advertise the hostname without the domain. You can verify this by running "rabbitmqctl eval 
+'rabbit_stream:tls_host().'" and it can be solved by setting stream.advertised_tls_host as the
+FQDN. For more info check the RabbitMQ documentation.
 
 Secure.config
 ---------------------
@@ -92,6 +98,30 @@ File format
 
 * `exchange.name`
     * The name of exchange.
+
+* `stream.enabled`
+    * Make the brokerApi subscribe on streams instead of queues, defaults to false. Only used in
+    broker.config.
+
+* `stream.uri`
+    * The URI of RabbitMQ server's endpoint that should be used to create a stream. This needs to
+    be set to use streams. Only used in broker.config.
+
+* `stream.streamPrefix`
+    * The streams that store the messages of the the subscribed topics will be named
+    prefix + '.' + topic. This needs to be set to use streams. Only used in
+    broker.config.
+
+* `stream.consumerPrefix`
+    * The consumers that consume from the streams will be named prefix + '.' + topic. The name is
+    used by the Rabbitmq stream library to retrieve the correct offset from the server. The prefix
+    needs to be unique for each Gerrit instance. This needs to be set to use streams. Only used in
+    broker.config.
+
+* `stream.windowSize`
+    * How many messages that needs to be consumed until we set a new offset. New offset will be
+    offset of the currently proccessed message subtracted by `windowSize`, defaults to 500. Only
+    used in broker.config.
 
 * `general.publishAllGerritEvents`
     * Will publish gerrit stream events to configured exchange automatically if enabled, defaults
