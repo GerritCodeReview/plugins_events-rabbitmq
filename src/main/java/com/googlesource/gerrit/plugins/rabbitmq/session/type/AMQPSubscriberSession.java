@@ -38,10 +38,6 @@ import java.util.function.Consumer;
 public final class AMQPSubscriberSession extends AMQPSession implements SubscriberSession {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public interface Factory {
-    SubscriberSession create(Properties properties);
-  }
-
   private volatile Map<String, Channel> channels = new ConcurrentHashMap<>();
 
   @Inject

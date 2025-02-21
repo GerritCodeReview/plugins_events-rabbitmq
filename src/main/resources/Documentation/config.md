@@ -98,6 +98,24 @@ File format
 * `exchange.name`
     * The name of exchange.
 
+* `stream.enabled`
+    * Make the brokerApi subscribe on streams instead of queues, defaults to false. Only used in
+    broker.config.
+
+* `stream.uri`
+    * The URI of RabbitMQ server's endpoint that should be used to create a stream. This needs to
+    be set to use streams. Only used in broker.config.
+
+* `stream.streamPrefix`
+    * The streams that store the messages of the the subscribed topics will be named
+    prefix + '.' + topic. This needs to be set to use streams. Only used in
+    broker.config.
+
+* `stream.windowSize`
+    * How many messages that needs to be consumed until we set a new offset. New offset will be
+    offset of the currently proccessed message subtracted by `windowSize`, defaults to 500. Only
+    used in broker.config.
+
 * `general.publishAllGerritEvents`
     * Will publish gerrit stream events to configured exchange automatically if enabled, defaults
       to true.

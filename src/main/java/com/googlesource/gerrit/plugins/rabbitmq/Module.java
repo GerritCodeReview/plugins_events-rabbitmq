@@ -36,6 +36,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.section.Gerrit;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Message;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Monitor;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Section;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.Stream;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BaseProperties;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BasePropertiesProvider;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisher;
@@ -45,7 +46,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
 import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
-import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.SubscriberSessionFactoryImpl;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.DefaultEventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorker;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
@@ -82,15 +83,12 @@ class Module extends AbstractModule {
     sectionBinder.addBinding().to(Message.class);
     sectionBinder.addBinding().to(Monitor.class);
     sectionBinder.addBinding().to(General.class);
+    sectionBinder.addBinding().to(Stream.class);
 
     install(
         new FactoryModuleBuilder()
             .implement(PublisherSession.class, AMQPPublisherSession.class)
             .build(AMQPPublisherSession.Factory.class));
-    install(
-        new FactoryModuleBuilder()
-            .implement(SubscriberSession.class, AMQPSubscriberSession.class)
-            .build(AMQPSubscriberSession.Factory.class));
     install(
         new FactoryModuleBuilder()
             .implement(Publisher.class, GerritEventPublisher.class)
@@ -103,6 +101,9 @@ class Module extends AbstractModule {
         new FactoryModuleBuilder()
             .implement(EventWorker.class, UserEventWorker.class)
             .build(EventWorkerFactory.class));
+    bind(SubscriberSession.Factory.class)
+        .to(SubscriberSessionFactoryImpl.class)
+        .in(Singleton.class);
     bind(Gson.class).toProvider(GsonProvider.class).in(Singleton.class);
 
     DynamicSet.bind(binder(), LifecycleListener.class).to(Manager.class);

@@ -13,6 +13,12 @@ gerrit_plugin(
     deps = [
         ":events-broker-neverlink",
         "@amqp_client//jar",
+        "@stream_client//jar",
+        "@io_netty//jar",
+        "@xerial_snappy//jar",
+        "@lz4//jar",
+        "@zstd_jni//jar",
+        "@proton_j//jar",
         "@commons-codec//jar:neverlink",
         "@commons-io//jar",
         "@commons-lang3//jar:neverlink",
