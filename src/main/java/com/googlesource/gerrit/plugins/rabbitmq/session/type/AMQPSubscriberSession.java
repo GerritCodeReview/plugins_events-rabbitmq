@@ -38,10 +38,6 @@ import java.util.function.Consumer;
 public final class AMQPSubscriberSession extends AMQPSession implements SubscriberSession {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public interface Factory {
-    SubscriberSession create(Properties properties);
-  }
-
   private volatile Map<String, Channel> channels = new ConcurrentHashMap<>();
 
   @Inject
@@ -69,7 +65,7 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
 
     try {
       channel.basicQos(amqp.consumerPrefetch > 0 ? amqp.consumerPrefetch : 0);
-    } catch(IOException ex) {
+    } catch (IOException ex) {
       logger.atSevere().withCause(ex).log("Error when trying to set consumer prefetch");
     }
 
