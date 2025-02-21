@@ -30,8 +30,9 @@ import com.google.gson.JsonParseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
+import com.googlesource.gerrit.plugins.rabbitmq.config.section.Stream;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
-import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPSubscriberSession;
+import com.googlesource.gerrit.plugins.rabbitmq.session.type.StreamSubscriberSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -48,7 +49,7 @@ public class BrokerApiSubscribers {
 
   @Inject
   public BrokerApiSubscribers(
-      AMQPSubscriberSession.Factory sessionFactory,
+      SubscriberSession.Factory sessionFactory,
       @EventGson Gson gson,
       @BrokerApiProperties Properties properties) {
     this.properties = properties;
@@ -135,5 +136,18 @@ public class BrokerApiSubscribers {
       return false;
     }
     return session.removeSubscriber(consumerTag);
+  }
+
+  public boolean replayAllEvents(TopicSubscriber topicSubscriber) {
+    if (properties.getSection(Stream.class).enabled) {
+      StreamSubscriberSession streamSession = (StreamSubscriberSession) session;
+      streamSession.resetOffset(consumerTags.get(topicSubscriber), 0);
+      removeSubscriber(topicSubscriber);
+      addSubscriber(topicSubscriber);
+      return true;
+    }
+    logger.atWarning().log(
+        "Only streams support the replay functionality, please enable stream support to use this");
+    return false;
   }
 }
