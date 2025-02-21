@@ -33,7 +33,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang3.StringUtils;
 
-public abstract class AMQPSession implements Session {
+public class AMQPSession implements Session {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private volatile Connection connection;
