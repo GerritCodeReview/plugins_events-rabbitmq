@@ -75,6 +75,11 @@ File format
     prefix + '.' + topic, otherwise the queues will get a random name decided by RabbitMQ. Only
     used in broker.config.
 
+* `amqp.queueType`
+    * Specify type of queue to be created. Either `quorum` or `classic`. If not set the queue will
+    get the type default for the RabbitMQ instance. Only used in broker.config and is only used if
+    `amqp.queuePrefix` is specified.
+
 * `amqp.durable`
     * Make queues persistant on disk. So they stick even after a restart of RabbitMQ. Only used in
     broker.config and is only used if `amqp.queuePrefix` is specified.
