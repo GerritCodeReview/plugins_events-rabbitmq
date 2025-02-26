@@ -69,7 +69,7 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
 
     try {
       channel.basicQos(amqp.consumerPrefetch > 0 ? amqp.consumerPrefetch : 0);
-    } catch(IOException ex) {
+    } catch (IOException ex) {
       logger.atSevere().withCause(ex).log("Error when trying to set consumer prefetch");
     }
 
@@ -79,7 +79,13 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
         String queueName;
         if (!amqp.queuePrefix.isEmpty()) {
           queueName = amqp.queuePrefix + "." + topic;
-          channel.queueDeclare(queueName, amqp.durable, amqp.exclusive, amqp.autoDelete, null);
+
+          channel.queueDeclare(
+              queueName,
+              amqp.durable,
+              amqp.exclusive,
+              amqp.autoDelete,
+              !amqp.queueType.isEmpty() ? Map.of("x-queue-type", amqp.queueType) : null);
         } else {
           queueName = channel.queueDeclare().getQueue();
         }

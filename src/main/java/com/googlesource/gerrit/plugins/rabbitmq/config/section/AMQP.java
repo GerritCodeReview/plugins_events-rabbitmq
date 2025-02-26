@@ -40,4 +40,6 @@ public class AMQP implements Section {
 
   @Default("300")
   public Integer consumerPrefetch;
+
+  @Default public String queueType;
 }
