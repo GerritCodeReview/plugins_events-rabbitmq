@@ -79,7 +79,12 @@ public final class AMQPSubscriberSession extends AMQPSession implements Subscrib
         String queueName;
         if (!amqp.queuePrefix.isEmpty()) {
           queueName = amqp.queuePrefix + "." + topic;
-          channel.queueDeclare(queueName, amqp.durable, amqp.exclusive, amqp.autoDelete, null);
+
+          Map<String, Object> arg = null;
+          if (!amqp.queueType.isEmpty()) {
+            arg = Map.of("x-queue-type", amqp.queueType);
+          }
+          channel.queueDeclare(queueName, amqp.durable, amqp.exclusive, amqp.autoDelete, arg);
         } else {
           queueName = channel.queueDeclare().getQueue();
         }
