@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15005a7b_0d9c84f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-03-04T06:45:56Z",
+      "side": 1,
+      "message": "nit: \"make it possible **to** set\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6fb240d_114afe3d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/AMQP.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-03-04T06:45:56Z",
+      "side": 1,
+      "message": "```suggestion\n\n  @Default public String queueType;\n  \n  default public Map\u003cString, Object\u003e queueProperties() {\n    if (queuetype.isEmpty()) {\n      return null;\n    }\n    return Map.of(\"x-queue-type\", amqp.queueType);\n  }\n```",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f29c74c_8064b5e9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-03-04T06:45:56Z",
+      "side": 1,
+      "message": "For readability it would make sense to instead expose the QueueProperties Map directly from `AMQP`.\n\n```suggestion\n          channel.queueDeclare(queueName, amqp.durable, amqp.exclusive, amqp.autoDelete, amqp.queueProperties());\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 94
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
