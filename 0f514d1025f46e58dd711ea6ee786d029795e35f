@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1335cb81_73249719",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-07T13:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15005a7b_0d9c84f5",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6fb240d_114afe3d",
@@ -60,6 +84,30 @@
       "writtenOn": "2025-03-04T06:45:56Z",
       "side": 1,
       "message": "For readability it would make sense to instead expose the QueueProperties Map directly from `AMQP`.\n\n```suggestion\n          channel.queueDeclare(queueName, amqp.durable, amqp.exclusive, amqp.autoDelete, amqp.queueProperties());\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 94
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d392fb9_c495422f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-07T13:07:19Z",
+      "side": 1,
+      "message": "If we filled the map with more values than \"x-queue-type\" or this logic was needed somewhere else I feel like your approach would be the better one, but in this case I think the current solution is the better one. \nIt is clear that the fifth argument of queueDeclare is for setting the queuetype without having to read a different file.",
+      "parentUuid": "0f29c74c_8064b5e9",
       "range": {
         "startLine": 82,
         "startChar": 0,
