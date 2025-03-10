@@ -116,6 +116,30 @@
       },
       "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab6d9ec2_a5786948",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-03-10T06:40:34Z",
+      "side": 1,
+      "message": "My argument is not mainly about reuse but about readability.\nI think creating the properties map in this class makes the logic less readable and creating it in the Properties class has no negative consequences.",
+      "parentUuid": "2d392fb9_c495422f",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 94
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
