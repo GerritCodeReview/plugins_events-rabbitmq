@@ -140,6 +140,30 @@
       },
       "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f27b0024_d91dddce",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-10T09:15:16Z",
+      "side": 1,
+      "message": "I think the readability is fine as it is. Creating it in the properties class has the disadvantage that I as a reader need to open a different file to see what queueProperties do/return, with the logic inline I can see that the \"x-queue-type\" value is set directly.\n```suggestion\n          Map\u003cString, Object\u003e arg \u003d\n              !amqp.queueType.isEmpty() ? Map.of(\"x-queue-type\", amqp.queueType) : null;\n\n```\nDo you think this suggestion is better?\nI prefer to keep the logic in AMQPSubscriberSession.",
+      "parentUuid": "ab6d9ec2_a5786948",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 94
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
