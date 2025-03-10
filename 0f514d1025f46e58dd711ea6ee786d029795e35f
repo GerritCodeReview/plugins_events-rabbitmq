@@ -212,6 +212,30 @@
       },
       "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd835e7a_f2a2eda5",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/AMQPSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-10T10:19:17Z",
+      "side": 1,
+      "message": "I was initially against it because it would make the queueDeclare line very long, but with GJF it does not look that bad.",
+      "parentUuid": "82227cc4_c35ce1bb",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 94
+      },
+      "revId": "0f514d1025f46e58dd711ea6ee786d029795e35f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
