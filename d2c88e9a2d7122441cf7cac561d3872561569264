@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a43838_09f0ab02",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T14:47:41Z",
+      "side": 1,
+      "message": "Have to tested the code of the current PS? Does AtFine really work?\n\nYou could merge this and the next logging line because nothing happens between them this and the next logging.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63c950a0_3eab56bf",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T14:47:41Z",
+      "side": 1,
+      "message": "You could move this before the forEach and merge it with the other 2 logg statements.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 98
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0fda1db_1048291b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T14:47:41Z",
+      "side": 1,
+      "message": "Is this information valuable? This will be the same for each entry.",
+      "range": {
+        "startLine": 61,
+        "startChar": 46,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29620cc7_09edc9f0",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T14:47:41Z",
+      "side": 1,
+      "message": "There is already a Fine in BrokerApi:addSubscriber, and a Info in AMQPSubscriberSession:addSubscriber for this, but maybe it is ok with the redundancy, we do not execute this method that often.",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 73
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "560b07fa_cd6d9511",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T14:47:41Z",
+      "side": 1,
+      "message": "Same with this, there is different log lines for different failures in AMQPSubscriberSession:addSubscriber, but maybe it is ok with some redundancy.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 83
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "031312ab_ed7dbed8",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T14:47:41Z",
+      "side": 1,
+      "message": "RabbitMqBrokerApiModule",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
