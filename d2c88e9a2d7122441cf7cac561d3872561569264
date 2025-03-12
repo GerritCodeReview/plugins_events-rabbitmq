@@ -95,6 +95,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9eb1a07_6a7122e2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T16:32:36Z",
+      "side": 1,
+      "message": "You right! I read it as the size of initial consumer list.",
+      "parentUuid": "f9b2cf72_7d955dd3",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 98
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0fda1db_1048291b",

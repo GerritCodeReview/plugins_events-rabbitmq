@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d1eb12f_e69fc9e4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-12T16:32:36Z",
+      "side": 1,
+      "message": "Api",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "d73c3ca6365a9c1beef1a9e2617d713321018e52",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
