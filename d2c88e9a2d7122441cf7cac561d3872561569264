@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7fbc8d3_7774edae",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-03-12T15:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a43838_09f0ab02",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63c950a0_3eab56bf",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-03-12T14:47:41Z",
       "side": 1,
       "message": "You could move this before the forEach and merge it with the other 2 logg statements.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 98
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9b2cf72_7d955dd3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-03-12T15:17:23Z",
+      "side": 1,
+      "message": "The forEach is what puts things in the topicSubscriber set, so I don\u0027t think so.",
+      "parentUuid": "63c950a0_3eab56bf",
       "range": {
         "startLine": 56,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "841e5fd6_3857d0cf",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/BrokerApiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-03-12T15:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0fda1db_1048291b",
+      "range": {
+        "startLine": 61,
+        "startChar": 46,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29620cc7_09edc9f0",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-03-12T14:47:41Z",
       "side": 1,
       "message": "There is already a Fine in BrokerApi:addSubscriber, and a Info in AMQPSubscriberSession:addSubscriber for this, but maybe it is ok with the redundancy, we do not execute this method that often.",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 73
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b151f2e_af1b0c24",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-03-12T15:17:23Z",
+      "side": 1,
+      "message": "Yes, this was actually just to make sure it was being called properly.\nI think it\u0027s redundant and perhaps unnecessary now on second look.",
+      "parentUuid": "29620cc7_09edc9f0",
       "range": {
         "startLine": 55,
         "startChar": 4,
@@ -116,6 +212,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa7122ff_752087b9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-03-12T15:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "560b07fa_cd6d9511",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 83
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "031312ab_ed7dbed8",
@@ -129,6 +249,30 @@
       "writtenOn": "2025-03-12T14:47:41Z",
       "side": 1,
       "message": "RabbitMqBrokerApiModule",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "d2c88e9a2d7122441cf7cac561d3872561569264",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0cbfd8_5332fee2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApiModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-03-12T15:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031312ab_ed7dbed8",
       "range": {
         "startLine": 40,
         "startChar": 25,
