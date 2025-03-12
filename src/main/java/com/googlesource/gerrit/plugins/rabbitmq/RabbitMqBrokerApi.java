@@ -18,6 +18,7 @@ import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.flogger.FluentLogger;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gerrit.server.events.Event;
 import com.google.inject.Inject;
@@ -30,12 +31,14 @@ import java.util.function.Consumer;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class RabbitMqBrokerApi implements BrokerApi {
+  private final FluentLogger logger = FluentLogger.forEnclosingClass();
   private final BrokerApiPublisher publisher;
   private final BrokerApiSubscribers subscribers;
   private final Set<TopicSubscriber> topicSubscribers;
 
   @Inject
   public RabbitMqBrokerApi(BrokerApiPublisher publisher, BrokerApiSubscribers subscribers) {
+    logger.atFine().log("Initializing RabbitMQBrokerApi");
     this.publisher = publisher;
     this.subscribers = subscribers;
     this.topicSubscribers = Collections.synchronizedSet(new HashSet<>());
@@ -62,6 +65,7 @@ public class RabbitMqBrokerApi implements BrokerApi {
 
   @Override
   public void disconnect() {
+    logger.atInfo().log("Disconnecting from broker and cancelling all consumers");
     for (TopicSubscriber topicSubscriber : topicSubscribers) {
       subscribers.removeSubscriber(topicSubscriber);
     }
