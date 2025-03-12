@@ -14,29 +14,57 @@
 
 package com.googlesource.gerrit.plugins.rabbitmq;
 
+import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiPublisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiSubscribers;
+import com.google.common.flogger.FluentLogger;
+import java.util.Set;
 
 @Singleton
 public class BrokerApiManager implements LifecycleListener {
 
+  private final FluentLogger logger = FluentLogger.forEnclosingClass();
   private final BrokerApiPublisher publisher;
   private final BrokerApiSubscribers subscribers;
+  private final Set<TopicSubscriber> consumers;
+  private final BrokerApi brokerApi;
 
   @Inject
-  public BrokerApiManager(BrokerApiPublisher publisher, BrokerApiSubscribers subscribers) {
+  public BrokerApiManager(
+      BrokerApiPublisher publisher,
+      BrokerApiSubscribers subscribers,
+      Set<TopicSubscriber> consumers,
+      BrokerApi brokerApi) {
+    logger.atFine().log("BrokerAPIManager Initialized");
     this.publisher = publisher;
     this.subscribers = subscribers;
+    this.consumers = consumers;
+    this.brokerApi = brokerApi;
   }
 
   @Override
-  public void start() {}
+  public void start() {
+    logger.AtFine().log("BrokerAPIManager Started");
+    logger.atInfo().log("Loading existing subscribers");
+    consumers.forEach(
+        topicSubscriber ->
+            brokerApi.receiveAsync(topicSubscriber.topic(), topicSubscriber.consumer()));
+    logger.atInfo().log(
+        "RabbitMQ broker started with %d topic subscribers", brokerApi.topicSubscribers().size());
+    // Log details about each subscriber we've registered
+    for (TopicSubscriber subscriber : brokerApi.topicSubscribers()) {
+      logger.atInfo().log(
+          "Active subscriber: %s (topic=%s)", subscriber.getClass().getName(), subscriber.topic());
+    }
+  }
 
   @Override
   public void stop() {
+    logger.atInfo().log("BrokerAPIManager Stopping");
     subscribers.stop();
     publisher.stop();
   }

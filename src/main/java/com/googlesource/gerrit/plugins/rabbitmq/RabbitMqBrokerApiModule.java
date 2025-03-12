@@ -15,29 +15,37 @@
 package com.googlesource.gerrit.plugins.rabbitmq;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.google.common.collect.Sets;
+import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.registration.DynamicItem;
 import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.lifecycle.LifecycleModule;
 import com.google.inject.Inject;
+import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiProperties;
 import com.googlesource.gerrit.plugins.rabbitmq.message.BrokerApiPropertiesProvider;
+import java.util.Set;
 
 @Singleton
 public class RabbitMqBrokerApiModule extends LifecycleModule {
+  private final FluentLogger logger = FluentLogger.forEnclosingClass();
+  private Set<TopicSubscriber> activeConsumers = Sets.newHashSet();
 
   @Inject
-  public RabbitMqBrokerApiModule() {}
+  public RabbitMqBrokerApiModule() {
+    logger.atFine().log("BrokerAPI Module loaded");
+  }
 
   @Override
   protected void configure() {
-    DynamicSet.bind(binder(), LifecycleListener.class).to(BrokerApiManager.class);
     bind(Properties.class)
         .annotatedWith(BrokerApiProperties.class)
         .toProvider(BrokerApiPropertiesProvider.class);
-
-    DynamicItem.bind(binder(), BrokerApi.class).to(RabbitMqBrokerApi.class);
+    DynamicItem.bind(binder(), BrokerApi.class).to(RabbitMqBrokerApi.class).in(Scopes.SINGLETON);
+    DynamicSet.bind(binder(), LifecycleListener.class).to(BrokerApiManager.class);
   }
 }

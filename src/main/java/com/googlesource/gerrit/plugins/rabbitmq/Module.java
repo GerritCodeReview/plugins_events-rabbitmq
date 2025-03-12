@@ -14,16 +14,21 @@
 
 package com.googlesource.gerrit.plugins.rabbitmq;
 
+import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.google.common.collect.Sets;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.extensions.annotations.PluginData;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.extensions.events.LifecycleListener;
+import com.google.gerrit.extensions.registration.DynamicItem;
 import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.server.events.EventListener;
 import com.google.gson.Gson;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.Multibinder;
 import com.googlesource.gerrit.plugins.rabbitmq.config.PluginProperties;
@@ -52,6 +57,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.worker.EventWorkerFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.worker.UserEventWorker;
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
@@ -61,6 +67,7 @@ class Module extends AbstractModule {
 
   private final RabbitMqBrokerApiModule rabbitMqBrokerApiModule;
   private final boolean brokerApiEnabled;
+  private Set<TopicSubscriber> activeConsumers = Sets.newHashSet();
 
   @Inject
   public Module(
@@ -70,6 +77,14 @@ class Module extends AbstractModule {
     this.rabbitMqBrokerApiModule = rabbitMqBrokerApiModule;
     this.brokerApiEnabled =
         getBaseConfig(pluginName, pluginData).getBoolean("General", "enableBrokerApi", false);
+  }
+
+  @Inject(optional = true)
+  public void setPreviousBrokerApi(DynamicItem<BrokerApi> previousBrokerApi) {
+    if (previousBrokerApi != null && previousBrokerApi.get() != null) {
+      BrokerApi api = previousBrokerApi.get();
+      this.activeConsumers = api.topicSubscribers();
+    }
   }
 
   @Override
@@ -111,7 +126,7 @@ class Module extends AbstractModule {
     bind(Properties.class)
         .annotatedWith(BaseProperties.class)
         .toProvider(BasePropertiesProvider.class);
-
+    bind(new TypeLiteral<Set<TopicSubscriber>>() {}).toInstance(activeConsumers);
     if (brokerApiEnabled) {
       install(rabbitMqBrokerApiModule);
     } else {
