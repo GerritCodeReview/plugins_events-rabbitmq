@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ffdd268_d58173ca",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/Module.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-03-13T10:10:46Z",
+      "side": 1,
+      "message": ".nit A empty line between this and the if statement would look nice.",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 81
+      },
+      "revId": "c959e5dac54cecca770aae60bac0d7079e836aa3",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
