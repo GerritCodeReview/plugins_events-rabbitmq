@@ -22,6 +22,30 @@
       },
       "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faeab387_95ad8ca9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-05-27T11:48:52Z",
+      "side": 1,
+      "message": "*up until the offset \u003d from the offset",
+      "parentUuid": "58752335_33cc76e3",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 5
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
