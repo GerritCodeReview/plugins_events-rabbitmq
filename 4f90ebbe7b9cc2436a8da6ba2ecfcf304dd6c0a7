@@ -46,6 +46,213 @@
       },
       "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ef377b_b81b96b8",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/Stream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand what this uri is pointing to.\nThis is more of a \"dev-mode\" default right? If so I fear it will cause more confusion than it is handy.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "505424d4_7edca4ec",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/Stream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "Since all these settings are mandatory, wouldn\u0027t it make sense to have a `validate` method that can be called before connecting?\n\n```\n  Optional\u003cString\u003e validate() {\n     List\u003cString\u003e missingSettings \u003d Lists.newArrayList(3);\n     if (uri \u003d\u003d null) missingSettings.add(\"uri\"); // although uri has a default and will never be missing...\n     if (streamPrefix \u003d\u003d null) missingSettings.add(\"streamPrefix\");\n     if (consumerPrefix \u003d\u003d null) missingSettings.add(\"consumerPrefix\");\n     if (!missingSettings.isEmpty()) {\n        return Optional.of(\"Missing mandatory Stream settings: \" + // turn missingSettings into something readable.)\n     return Optional.empty();\n   }\n  \n```",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e345c380_e7ae69a5",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "nit: This password isn\u0027t necessarily secure, it may be configured in `./etc/gerrit.config` as well which isn\u0027t secure...",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690a290c_07096259",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "How do we risk ending up with a URI without a domain?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec007113_4306cd6d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "nit: a",
+      "range": {
+        "startLine": 82,
+        "startChar": 51,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d4489d1_d7bb45e5",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "Would it make more sense to log something like:\n\"Streams is enabled but no stream-uri set.\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5d08396_9ec8347e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "Is this to bind the Stream (that is-a queue) to the exchange with a topic-key? If so perhaps throw in an inline comment to clarify.\n\n\n* `this` is-a `AMQPSession`.\n* Use try-with-resource.\n```suggestion\n    try (Channel channel \u003d createChannel()) {\n      /* Bind the Stream (a Stream is-a Queue) to the Exchange:Topic. */\n      channel.queueBind(streamName, exchangeName, topic);\n    } catch (IOException | TimeoutException ex) {\n      logger.atSevere().withCause(ex).log(\"Failed to bind stream to exchange or close channel\");\n    }\n```",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8114cef0_88bc2bab",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "Try-with-resource? Even if you\u0027re not creating the resource it could be a valid pattern\n```suggestion\n    try (com.rabbitmq.stream.Consumer consumer \u003d consumers.remove(consumerId)) {\n      if (consumer \u003d\u003d null) {\n        return false;\n      }\n      return true;\n    }\n```",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 16
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff442b55_c173b991",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-05-28T10:26:33Z",
+      "side": 1,
+      "message": "Not entirely true since it is set to \"rabbitmq-stream://localhost\" by default.",
+      "range": {
+        "startLine": 101,
+        "startChar": 83,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
