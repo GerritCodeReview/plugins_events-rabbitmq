@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac0417f6_b68e6392",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/RabbitMqBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "You are right. I have rewritten the code so it restarts from the beginning of the stream.",
+      "parentUuid": "faeab387_95ad8ca9",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 5
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52ef377b_b81b96b8",
@@ -71,6 +95,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9ae4474_e855da07",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/Stream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "Yes, for local deployment. Taken directly from the RabbitMQ documentation. I remove it. Users can explicitly set it instead if needed.",
+      "parentUuid": "52ef377b_b81b96b8",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "505424d4_7edca4ec",
@@ -84,6 +132,30 @@
       "writtenOn": "2025-05-28T10:26:33Z",
       "side": 1,
       "message": "Since all these settings are mandatory, wouldn\u0027t it make sense to have a `validate` method that can be called before connecting?\n\n```\n  Optional\u003cString\u003e validate() {\n     List\u003cString\u003e missingSettings \u003d Lists.newArrayList(3);\n     if (uri \u003d\u003d null) missingSettings.add(\"uri\"); // although uri has a default and will never be missing...\n     if (streamPrefix \u003d\u003d null) missingSettings.add(\"streamPrefix\");\n     if (consumerPrefix \u003d\u003d null) missingSettings.add(\"consumerPrefix\");\n     if (!missingSettings.isEmpty()) {\n        return Optional.of(\"Missing mandatory Stream settings: \" + // turn missingSettings into something readable.)\n     return Optional.empty();\n   }\n  \n```",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8626e645_8d5b037d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/config/section/Stream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "505424d4_7edca4ec",
       "range": {
         "startLine": 23,
         "startChar": 0,
@@ -234,6 +306,54 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "633bfe6c_d638802e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "Created a method that check mandatory options. So this log is not relevant anymore.",
+      "parentUuid": "6d4489d1_d7bb45e5",
+      "range": {
+        "startLine": 82,
+        "startChar": 9,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cda80300_161c9b15",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "Created a method that check mandatory options. So this log is not relevant anymore.",
+      "parentUuid": "ec007113_4306cd6d",
+      "range": {
+        "startLine": 82,
+        "startChar": 51,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5d08396_9ec8347e",
@@ -304,6 +424,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f062f59c_f47f55a4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "Not relevant after code rewrite.",
+      "parentUuid": "8114cef0_88bc2bab",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 16
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff442b55_c173b991",
@@ -317,6 +461,30 @@
       "writtenOn": "2025-05-28T10:26:33Z",
       "side": 1,
       "message": "Not entirely true since it is set to \"rabbitmq-stream://localhost\" by default.",
+      "range": {
+        "startLine": 101,
+        "startChar": 83,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cabac4d2_f2cdd9ea",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T14:23:06Z",
+      "side": 1,
+      "message": "I removed the default value.",
+      "parentUuid": "ff442b55_c173b991",
       "range": {
         "startLine": 101,
         "startChar": 83,
