@@ -211,6 +211,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84949da1_81192a13",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T11:07:47Z",
+      "side": 1,
+      "message": "Yes, StreamSubscriber is a AMQPSession. However, I do not think it should. If I remember correctly I made it inherit from AMQPSession to make use of createChannel. But I can not call createChannel directly because it will call isOpen and connect which we override in StreamSession, so I need to create a AMQPSession explicitly instead.",
+      "parentUuid": "b5d08396_9ec8347e",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8114cef0_88bc2bab",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 2
