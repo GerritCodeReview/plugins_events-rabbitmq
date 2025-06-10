@@ -119,6 +119,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d5b6b9d_525d2c71",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T11:59:06Z",
+      "side": 1,
+      "message": "I copied this from the AMPQSession which you added 9 years ago https://gerrit-review.googlesource.com/c/plugins/rabbitmq/+/78611 (;\nI rename both variables in a separate change.",
+      "parentUuid": "e345c380_e7ae69a5",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "690a290c_07096259",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
         "patchSetId": 2
@@ -130,6 +154,30 @@
       "writtenOn": "2025-05-28T10:26:33Z",
       "side": 1,
       "message": "How do we risk ending up with a URI without a domain?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c027db2_2f43496b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-10T11:59:06Z",
+      "side": 1,
+      "message": "This is a solution to one of the problems I mentioned on one of the standups. The stream client library remove the domain of the URI before verifying against the certificate which means that we fail to setup the TLS connection. The addressResolver run before the verfication step so we can make sure that the domain always is present with this approach.",
+      "parentUuid": "690a290c_07096259",
       "range": {
         "startLine": 64,
         "startChar": 0,
