@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24f9d4ea_f1316cb0",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-16T15:03:51Z",
+      "side": 1,
+      "message": "I am unsure if we can do this. By logging I have noticed that it tries to connect to not just the host specified in the config, but all our rabbitmq backend servers. With your approach we overwrite the hostname.",
+      "parentUuid": "298874ba_95bff241",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a30bb978_f632d749",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 3
