@@ -16,6 +16,75 @@
       "message": "In PS3 I also updated the stream-client library to the latest version.",
       "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0474367e_956e9418",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-16T14:09:13Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense to have the validation code in the `Stream` object and instead call:\n\n\n```suggestion\n\n    if (!stream.isValid()) {\n      return false;\n    }\n```",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "298874ba_95bff241",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-16T14:09:13Z",
+      "side": 1,
+      "message": "```suggestion\n      URI streamUri \u003d new URI(stream.uri);\n      builder.addressResolver(\n          address -\u003e {\n            return new Address(streamUri.getHost(), streamUri.getPort());\n          });\n```",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a30bb978_f632d749",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-16T14:09:13Z",
+      "side": 1,
+      "message": "Extract all the extra code for binding, due to the shortcomings of the lib, into a separate method for readability.\n\n```suggestion\n\n    bind(streamName, topic);\n\n    String consumerId \u003d UUID.randomUUID().toString();\n    com.rabbitmq.stream.Consumer consumer \u003d\n        environment.consumerBuilder().stream(streamName)\n            .offset(OffsetSpecification.first())\n            .name(consumerName)\n            .manualTrackingStrategy()\n            .builder()\n            .messageHandler(new Handler(topic, messageBodyConsumer, consumerId))\n            .build();\n    try {\n      logger.atInfo().log(\n          \"Consumer added for topic %s, consuming from stream-offset %d\",\n          topic, consumer.storedOffset());\n    } catch (NoOffsetException ex) {\n      logger.atInfo().withCause(ex).log(\n          \"No offset found for consumer that listens on topic %s, consuming from start of stream.\",\n          topic);\n    }\n\n    consumers.put(consumerId, consumer, false);\n    return consumerId;\n  }\n\n  /* Bind the stream to the exchange. */\n  private void bind(String streamName, String topic) {\n    String exchangeName \u003d properties.getSection(Exchange.class).name;\n    AMQPSession session \u003d new AMQPSession(properties);\n    try (Channel channel \u003d session.createChannel()) {\n      channel.queueBind(streamName, exchangeName, topic);\n    } catch (IOException | TimeoutException ex) {\n      logger.atSevere().withCause(ex).log(\"Failed to bind stream to exchange or close channel\");\n    } finally {\n      session.disconnect();\n    }\n  }\n\n```",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }

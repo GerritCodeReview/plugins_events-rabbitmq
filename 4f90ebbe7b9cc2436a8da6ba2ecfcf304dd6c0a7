@@ -213,6 +213,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b97a66a6_9905f67d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-16T14:09:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9d5b6b9d_525d2c71",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "690a290c_07096259",
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "This is a solution to one of the problems I mentioned on one of the standups. The stream client library remove the domain of the URI before verifying against the certificate which means that we fail to setup the TLS connection. The addressResolver run before the verfication step so we can make sure that the domain always is present with this approach.",
       "parentUuid": "690a290c_07096259",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbfd2918_2df75dcb",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-16T14:09:13Z",
+      "side": 1,
+      "message": "Sounds like a bug in the stream client library.",
+      "parentUuid": "0c027db2_2f43496b",
       "range": {
         "startLine": 64,
         "startChar": 0,
@@ -391,6 +439,30 @@
       "side": 1,
       "message": "Yes, StreamSubscriber is a AMQPSession. However, I do not think it should. If I remember correctly I made it inherit from AMQPSession to make use of createChannel. But I can not call createChannel directly because it will call isOpen and connect which we override in StreamSession, so I need to create a AMQPSession explicitly instead.",
       "parentUuid": "b5d08396_9ec8347e",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "4f90ebbe7b9cc2436a8da6ba2ecfcf304dd6c0a7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "679b57e1_d33cddd2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-16T14:09:13Z",
+      "side": 1,
+      "message": "It\u0027s too complicated to wrap my head around ATM.\nA general observation is that it seems like the plain java library for amqp is left behind in favor of the springframework one.",
+      "parentUuid": "84949da1_81192a13",
       "range": {
         "startLine": 87,
         "startChar": 0,
