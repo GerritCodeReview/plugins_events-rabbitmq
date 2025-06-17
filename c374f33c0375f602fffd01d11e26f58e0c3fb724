@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81ba34f2_8c75503c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-06-17T12:17:34Z",
+      "side": 1,
+      "message": "Is the \"domain\" missing from the other backend servers but not from the lb?\nI\u0027m guessing that the it gets the cluster-nodes from an lb or similar? If so it feels like that is a misconfiguration in our setup.\nNot knowing the limitation of RabbitMQ cluster nodes, it feels like you aren\u0027t guaranteed that all cluster-nodes have the same \"domain\" in the general case which would make this little hack an issue.",
+      "parentUuid": "24f9d4ea_f1316cb0",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a30bb978_f632d749",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 3
