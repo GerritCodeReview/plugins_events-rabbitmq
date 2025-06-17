@@ -162,6 +162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33176e29_95cadf2e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-06-17T13:34:24Z",
+      "side": 1,
+      "message": "\u003e Is the \"domain\" missing from the other backend servers but not from the lb?\n\n\nWhen starting Gerrit and loading the plugin the AddressResolver will be called 6 times, first with the hostname specified in the config(including domain), then 5 times without the domain included, for two of the servers it is called twice and for one server it is just called once.\n\n\u003e Not knowing the limitation of RabbitMQ cluster nodes, it feels like you \naren\u0027t guaranteed that all cluster-nodes have the same \"domain\" in the \ngeneral case which would make this little hack an issue.\n\nThat is a good point, however I do not know how to solve that. I only get information of the domain from the config.",
+      "parentUuid": "81ba34f2_8c75503c",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a30bb978_f632d749",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 3
