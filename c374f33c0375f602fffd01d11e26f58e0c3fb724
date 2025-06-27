@@ -210,6 +210,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97030213_1cd0846b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-06-27T14:25:31Z",
+      "side": 1,
+      "message": "I think we could probably use this workaround for now (as it is an improvement over nothing) and just document this as a known limitation in the configuration.\n\n\"Known Limitation: If the RabbitMQ cluster configuration does not include the full domain of all cluster nodes, each cluster node must be on the same domain as the primary stream address. Contributions welcome\".\n\nOr something like that, and create an issue for improving this in the future.",
+      "parentUuid": "556643b0_b35e7f75",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a30bb978_f632d749",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 3
