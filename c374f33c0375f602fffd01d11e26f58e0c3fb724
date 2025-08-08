@@ -256,6 +256,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce9b0208_55c9d29d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-08-08T11:28:53Z",
+      "side": 1,
+      "message": "Should be solved by setting: https://www.rabbitmq.com/docs/stream#advertised-host-port",
+      "parentUuid": "e9d7630b_5e72b22f",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "c374f33c0375f602fffd01d11e26f58e0c3fb724",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a30bb978_f632d749",
