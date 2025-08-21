@@ -104,9 +104,9 @@ public class AMQPSession implements Session {
           factory.setUsername(amqp.username);
         }
         Gerrit gerrit = properties.getSection(Gerrit.class);
-        String securePassword = gerrit.getAMQPUserPassword(amqp.username);
-        if (StringUtils.isNotEmpty(securePassword)) {
-          factory.setPassword(securePassword);
+        String password = gerrit.getAMQPUserPassword(amqp.username);
+        if (StringUtils.isNotEmpty(password)) {
+          factory.setPassword(password);
         } else if (StringUtils.isNotEmpty(amqp.password)) {
           factory.setPassword(amqp.password);
         }
