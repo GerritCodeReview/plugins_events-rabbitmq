@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebfe5647_d821a81a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-08-21T09:53:05Z",
+      "side": 1,
+      "message": "Is `Warning` the correct level here? Anyone who reads the log cannot do anything about it. If we set it at `Debug` it will show up and be useful to anyone who is investigating issues.\nPerhaps change message to something like\n\"Assuming session is open since Environment exists\".",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "e00871c755fd0b63be01131eded82a28cdd44fff",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
