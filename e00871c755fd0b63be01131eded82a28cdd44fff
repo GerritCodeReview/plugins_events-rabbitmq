@@ -22,6 +22,30 @@
       },
       "revId": "e00871c755fd0b63be01131eded82a28cdd44fff",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a955f559_38f54473",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-08-21T10:48:58Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "ebfe5647_d821a81a",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "e00871c755fd0b63be01131eded82a28cdd44fff",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
