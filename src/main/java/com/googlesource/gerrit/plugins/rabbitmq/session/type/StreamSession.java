@@ -58,9 +58,9 @@ public abstract class StreamSession implements Session {
       builder.username(amqp.username);
     }
     Gerrit gerrit = properties.getSection(Gerrit.class);
-    String securePassword = gerrit.getAMQPUserPassword(amqp.username);
-    if (StringUtils.isNotEmpty(securePassword)) {
-      builder.password(securePassword);
+    String password = gerrit.getAMQPUserPassword(amqp.username);
+    if (StringUtils.isNotEmpty(password)) {
+      builder.password(password);
     } else if (StringUtils.isNotEmpty(amqp.password)) {
       builder.password(amqp.password);
     }
