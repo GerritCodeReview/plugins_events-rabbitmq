@@ -150,4 +150,21 @@ public class BrokerApiSubscribers {
         "Only streams support the replay functionality, please enable stream support to use this");
     return false;
   }
+
+  public boolean replayAllEventsAt(String topic, long offset) {
+    if (properties.getSection(Stream.class).enabled) {
+      StreamSubscriberSession streamSession = (StreamSubscriberSession) session;
+      for (TopicSubscriber topicSubscriber : consumerTags.keySet()) {
+        if (topicSubscriber.topic().equals(topic)) {
+          streamSession.resetOffset(consumerTags.get(topicSubscriber), offset);
+          removeSubscriber(topicSubscriber);
+          addSubscriber(topicSubscriber);
+        }
+      }
+      return true;
+    }
+    logger.atWarning().log(
+        "Only streams support the replay functionality, please enable stream support to use this");
+    return false;
+  }
 }
