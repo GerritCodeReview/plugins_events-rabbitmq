@@ -63,6 +63,8 @@ import org.eclipse.jgit.errors.ConfigInvalidException;
 import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.util.FS;
 
+import com.googlesource.gerrit.plugins.rabbitmq.rest.RestModule;
+
 class Module extends AbstractModule {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -116,6 +118,7 @@ class Module extends AbstractModule {
         new FactoryModuleBuilder()
             .implement(EventWorker.class, UserEventWorker.class)
             .build(EventWorkerFactory.class));
+    install(new RestModule());
     bind(SubscriberSession.Factory.class)
         .to(SubscriberSessionFactoryImpl.class)
         .in(Singleton.class);

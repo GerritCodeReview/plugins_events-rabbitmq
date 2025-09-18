@@ -23,6 +23,8 @@ import com.github.rholder.retry.RetryerBuilder;
 import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.WaitStrategies;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.extensions.restapi.PreconditionFailedException;
+import com.google.gerrit.extensions.restapi.ResourceNotFoundException;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gson.Gson;
@@ -33,7 +35,9 @@ import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Stream;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.StreamSubscriberSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -149,5 +153,59 @@ public class BrokerApiSubscribers {
     logger.atWarning().log(
         "Only streams support the replay functionality, please enable stream support to use this");
     return false;
+  }
+
+  public void replayAllEventsAt(String topic, long offset) throws ResourceNotFoundException, PreconditionFailedException {
+    if (properties.getSection(Stream.class).enabled) {
+      boolean found = false;
+      StreamSubscriberSession streamSession = (StreamSubscriberSession) session;
+      
+      // Create a copy to avoid ConcurrentModificationException
+      Map<TopicSubscriber, String> consumerTagsCopy = new HashMap<>(consumerTags);
+      for (Map.Entry<TopicSubscriber, String> entry : consumerTagsCopy.entrySet()) {
+        TopicSubscriber topicSubscriber = entry.getKey();
+        String consumerTag = entry.getValue();
+        
+        if (topicSubscriber.topic().equals(topic)) {
+          streamSession.resetOffset(consumerTag, offset);
+          removeSubscriber(topicSubscriber);
+          addSubscriber(topicSubscriber);
+          found = true;
+        }
+      }
+      
+      if (!found) {
+        logger.atWarning().log("No subscriber found for topic %s", topic);
+        throw new ResourceNotFoundException("No subscriber found for topic " + topic);
+      }
+    } else {
+      logger.atWarning().log(
+          "Only streams support the replay functionality, please enable stream support to use this");
+      throw new PreconditionFailedException("Stream support must be enabled to use replay functionality");
+    }
+  }
+
+  public List<Long> getOffsetsForTopic(String topic) throws ResourceNotFoundException, PreconditionFailedException {
+    if (properties.getSection(Stream.class).enabled) {
+      List<Long> offsets = new ArrayList<>();
+      boolean found = false;
+      StreamSubscriberSession streamSession = (StreamSubscriberSession) session;
+      // No need for copying since we're only reading, not modifying
+      for (Map.Entry<TopicSubscriber, String> entry : consumerTags.entrySet()) {
+        if (entry.getKey().topic().equals(topic)) {
+          offsets.add(streamSession.getOffset(entry.getValue()));
+          found = true;
+        }
+      }
+      if (!found) {
+        logger.atWarning().log("No subscriber found for topic %s", topic);
+        throw new ResourceNotFoundException("No subscriber found for topic " + topic);
+      }
+      return offsets;
+    } else {
+      logger.atWarning().log(
+          "Only streams support the replay functionality, please enable stream support to use this");
+      throw new PreconditionFailedException("Stream support must be enabled to use replay functionality");
+    }
   }
 }
