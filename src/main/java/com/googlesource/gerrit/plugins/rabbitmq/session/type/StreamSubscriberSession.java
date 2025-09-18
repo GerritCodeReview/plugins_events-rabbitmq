@@ -20,6 +20,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlesource.gerrit.plugins.rabbitmq.config.Properties;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Exchange;
 import com.googlesource.gerrit.plugins.rabbitmq.config.section.Stream;
+import com.googlesource.gerrit.plugins.rabbitmq.session.OffsetInfo;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.stream.Message;
@@ -34,6 +35,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
 public final class StreamSubscriberSession extends StreamSession implements SubscriberSession {
@@ -72,13 +74,14 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
     bindStreamToExchange(streamName, topic);
 
     String consumerId = UUID.randomUUID().toString();
+    Handler handler = new Handler(topic, messageBodyConsumer, consumerId);
     com.rabbitmq.stream.Consumer consumer =
         environment.consumerBuilder().stream(streamName)
             .offset(OffsetSpecification.first())
             .name(consumerName)
             .manualTrackingStrategy()
             .builder()
-            .messageHandler(new Handler(topic, messageBodyConsumer, consumerId))
+            .messageHandler(handler)
             .build();
     try {
       logger.atInfo().log(
@@ -91,6 +94,7 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
     }
 
     consumers.put(consumerId, consumer, false);
+    handler.start();
     return consumerId;
   }
 
@@ -114,11 +118,15 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
     consumers.reset(consumerId, offset);
   }
 
+  public OffsetInfo getCurrentOffsetInfo(String consumerId) {
+    return consumers.getCurrentOffsetInfo(consumerId);
+  }
+
   private class Consumers {
-    private volatile Map<String, ConsumerPair> consumersMap = new ConcurrentHashMap<>();
+    private volatile Map<String, ConsumerState> consumersMap = new ConcurrentHashMap<>();
 
     void put(String consumerId, com.rabbitmq.stream.Consumer consumer, boolean resetOffset) {
-      consumersMap.put(consumerId, new ConsumerPair(consumer, resetOffset));
+      consumersMap.put(consumerId, new ConsumerState(consumer, resetOffset));
     }
 
     boolean isReset(String consumerId) {
@@ -135,18 +143,37 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
       }
     }
 
+    void updateCurrentOffset(String consumerId, long offset) {
+      ConsumerState state = consumersMap.get(consumerId);
+      if (state != null) {
+        logger.atFinest().log("Update current offset to %d for consumer %s", offset, consumerId);
+        state.currentOffset.set(offset);
+        state.lastOffsetUpdateTime.set(System.currentTimeMillis());
+      } else {
+        logger.atSevere().log("Failed to update current offset, consumer: %s does not exist", consumerId);
+      }
+    }
+
+    OffsetInfo getCurrentOffsetInfo(String consumerId) {
+      ConsumerState state = consumersMap.get(consumerId);
+      if (state != null) {
+        return new OffsetInfo(state.currentOffset.get(), state.lastOffsetUpdateTime.get());
+      }
+      return new OffsetInfo(-1L, -1L);
+    }
+
     boolean closeConsumer(String consumerId) {
-      ConsumerPair pair = consumersMap.remove(consumerId);
-      if (pair == null) {
+      ConsumerState state = consumersMap.remove(consumerId);
+      if (state == null) {
         return false;
       }
-      pair.consumer.close();
+      state.consumer.close();
       return true;
     }
 
     void close() {
       synchronized (consumersMap) {
-        Iterator<Entry<String, ConsumerPair>> it = consumersMap.entrySet().iterator();
+        Iterator<Entry<String, ConsumerState>> it = consumersMap.entrySet().iterator();
         while (it.hasNext()) {
           it.next().getValue().consumer.close();
           it.remove();
@@ -154,13 +181,24 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
       }
     }
 
-    private class ConsumerPair {
+    private class ConsumerState {
       com.rabbitmq.stream.Consumer consumer;
       boolean resetOffset;
+      AtomicLong currentOffset;
+      AtomicLong lastOffsetUpdateTime;
 
-      ConsumerPair(com.rabbitmq.stream.Consumer consumer, boolean resetOffset) {
+      ConsumerState(com.rabbitmq.stream.Consumer consumer, boolean resetOffset) {
         this.consumer = consumer;
         this.resetOffset = resetOffset;
+        // Initialize currentOffset with the consumer's stored offset if available
+        long initialOffset = -1L;
+        try {
+          initialOffset = consumer.storedOffset();
+        } catch (Exception e) {
+          logger.atFine().withCause(e).log("Could not get initial stored offset, using -1");
+        }
+        this.currentOffset = new AtomicLong(initialOffset);
+        this.lastOffsetUpdateTime = new AtomicLong(System.currentTimeMillis());
       }
     }
   }
@@ -170,6 +208,7 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
     private String topic;
     private Consumer<String> messageBodyConsumer;
     private String consumerId;
+    private volatile boolean run = false;
 
     Handler(String topic, Consumer<String> messageBodyConsumer, String consumerId) {
       messageConsumed = new AtomicInteger(0);
@@ -180,10 +219,15 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
 
     @Override
     public void handle(MessageHandler.Context context, Message message) {
+      while (!run)
+        ;
+
       Stream prop = properties.getSection(Stream.class);
       try {
         logger.atFiner().log(
             "Consume message from topic %s with offset %d", topic, context.offset());
+
+        consumers.updateCurrentOffset(consumerId, context.offset());
         messageBodyConsumer.accept(new String(message.getBodyAsBinary(), "UTF-8"));
         if (messageConsumed.incrementAndGet() % prop.windowSize == 0) {
           com.rabbitmq.stream.Consumer consumer = context.consumer();
@@ -199,6 +243,10 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
         logger.atSevere().withCause(ex).log(
             "Error handling stream message with id %d", message.getPublishingId());
       }
+    }
+
+    void start() {
+      run = true;
     }
   }
 }
