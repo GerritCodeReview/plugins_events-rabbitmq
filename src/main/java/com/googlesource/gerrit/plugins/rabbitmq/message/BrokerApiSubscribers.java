@@ -23,6 +23,8 @@ import com.github.rholder.retry.RetryerBuilder;
 import com.github.rholder.retry.StopStrategies;
 import com.github.rholder.retry.WaitStrategies;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.extensions.restapi.PreconditionFailedException;
+import com.google.gerrit.extensions.restapi.ResourceNotFoundException;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gson.Gson;
@@ -149,5 +151,50 @@ public class BrokerApiSubscribers {
     logger.atWarning().log(
         "Only streams support the replay functionality, please enable stream support to use this");
     return false;
+  }
+
+  public void replayAllEventsAt(String topic, long offset) throws ResourceNotFoundException, PreconditionFailedException {
+    if (properties.getSection(Stream.class).enabled) {
+      boolean found = false;
+      StreamSubscriberSession streamSession = (StreamSubscriberSession) session;
+      for (TopicSubscriber topicSubscriber : consumerTags.keySet()) {
+        if (topicSubscriber.topic().equals(topic)) {
+          streamSession.resetOffset(consumerTags.get(topicSubscriber), offset);
+          removeSubscriber(topicSubscriber);
+          addSubscriber(topicSubscriber);
+          found = true;
+        }
+      }
+      if (!found) {
+        logger.atWarning().log("No subscriber found for topic %s", topic);
+        throw new ResourceNotFoundException("No subscriber found for topic " + topic);
+      }
+    } else {
+      logger.atWarning().log(
+          "Only streams support the replay functionality, please enable stream support to use this");
+      throw new PreconditionFailedException("Stream support must be enabled to use replay functionality");
+    }
+  }
+
+  public void getOffsetsForTopic(String topic) throws ResourceNotFoundException, PreconditionFailedException {
+    if (properties.getSection(Stream.class).enabled) {
+      List<Long> offsets = new ArrayList<>();
+      boolean found = false;
+      StreamSubscriberSession streamSession = (StreamSubscriberSession) session;
+      for (TopicSubscriber topicSubscriber : consumerTags.keySet()) {
+        if (topicSubscriber.topic().equals(topic)) {
+          offsets.add(streamSession.getOffset(consumerTags.get(topicSubscriber)));
+          found = true;
+        }
+      }
+      if (!found) {
+        logger.atWarning().log("No subscriber found for topic %s", topic);
+        throw new ResourceNotFoundException("No subscriber found for topic " + topic);
+      }
+    } else {
+      logger.atWarning().log(
+          "Only streams support the replay functionality, please enable stream support to use this");
+      throw new PreconditionFailedException("Stream support must be enabled to use replay functionality");
+    }
   }
 }

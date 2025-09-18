@@ -114,6 +114,10 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
     consumers.reset(consumerId, offset);
   }
 
+  public void getOffset(String consumerId) {
+    consumers.getOffset(consumerId);
+  }
+
   private class Consumers {
     private volatile Map<String, ConsumerPair> consumersMap = new ConcurrentHashMap<>();
 
@@ -133,6 +137,16 @@ public final class StreamSubscriberSession extends StreamSession implements Subs
           consumer.store(offset);
         }
       }
+    }
+
+    long getOffset(String consumerId) {
+      com.rabbitmq.stream.Consumer consumer = consumersMap.get(consumerId).consumer;
+      if (consumer != null) {
+        synchronized (consumer) {
+          return consumer.storedOffset();
+        }
+      }
+      return -1;
     }
 
     boolean closeConsumer(String consumerId) {
