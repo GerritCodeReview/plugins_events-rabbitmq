@@ -48,6 +48,7 @@ import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisher;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GerritEventPublisherFactory;
 import com.googlesource.gerrit.plugins.rabbitmq.message.GsonProvider;
 import com.googlesource.gerrit.plugins.rabbitmq.message.Publisher;
+import com.googlesource.gerrit.plugins.rabbitmq.rest.RestModule;
 import com.googlesource.gerrit.plugins.rabbitmq.session.PublisherSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.SubscriberSession;
 import com.googlesource.gerrit.plugins.rabbitmq.session.type.AMQPPublisherSession;
@@ -116,6 +117,7 @@ class Module extends AbstractModule {
         new FactoryModuleBuilder()
             .implement(EventWorker.class, UserEventWorker.class)
             .build(EventWorkerFactory.class));
+    install(new RestModule());
     bind(SubscriberSession.Factory.class)
         .to(SubscriberSessionFactoryImpl.class)
         .in(Singleton.class);
@@ -133,7 +135,8 @@ class Module extends AbstractModule {
       install(rabbitMqBrokerApiModule);
     } else {
       logger.atInfo().log(
-          "The RabbitMqBrokerApi is disabled, set enableBrokerApi to true if you want to enable it");
+          "The RabbitMqBrokerApi is disabled, set enableBrokerApi to true if you want to enable"
+              + " it");
     }
   }
 
