@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69ec3e7b_eb0a6a7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-09-19T07:43:55Z",
+      "side": 1,
+      "message": "endpoint(s) ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "ca4781c434854d6ac1b40257f34b271e58cc3bb0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b619d3fe_196862da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-09-19T07:43:55Z",
+      "side": 1,
+      "message": "offset",
+      "range": {
+        "startLine": 7,
+        "startChar": 55,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "ca4781c434854d6ac1b40257f34b271e58cc3bb0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "343bfac0_8b27ee61",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/RabbitMqRestModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-09-19T07:43:55Z",
+      "side": 1,
+      "message": "Not a very useful comment.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 2
+      },
+      "revId": "ca4781c434854d6ac1b40257f34b271e58cc3bb0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b295c79_64213022",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/ReplayEventsAtOffsetEndpoint.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1071857
+      },
+      "writtenOn": "2025-09-19T07:43:55Z",
+      "side": 1,
+      "message": "Brand new file, this comment makes no sense.",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "ca4781c434854d6ac1b40257f34b271e58cc3bb0",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
