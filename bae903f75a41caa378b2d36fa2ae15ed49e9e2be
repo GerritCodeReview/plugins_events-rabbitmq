@@ -85,6 +85,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69af6693_6f51db7b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T11:58:07Z",
+      "side": 1,
+      "message": "I am confusing myself. The entry.getValue() does not return a consumerTag, it returns a internal id that is a UUID that we have generated in the plugin.The AMQP queue implementation does return a real consumerTag from RabbitMQ, but the Stream implementation does not because the stream lib used does not provide a way get one AFAICT.\nAnyhow, we do not expect more than one offset per topic in an ordinary multi-site setup, so maybe it is not that bad to just return a list?\nI change back to a list for now.",
+      "parentUuid": "9b64e9a6_4d54d407",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65bc4657_bd9304b3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
         "patchSetId": 12
