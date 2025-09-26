@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03820e1b_f1a56370",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3e268b_4f99bc04",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 74
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "320f5a89_a325f897",
@@ -41,6 +65,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b64e9a6_4d54d407",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Initially did not thought a key would give any useful info. But consumer tag seems to be shown i RabbitMQ web UI, so using consumer tag as key makes some sense. All the offsets returned will have the same topic so Topic as key does not work.",
+      "parentUuid": "320f5a89_a325f897",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65bc4657_bd9304b3",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "I don\u0027t think we need to log this, at least not as Warning.\nThis is basically caused by a user requesting a non-existing topic.",
+      "range": {
+        "startLine": 206,
+        "startChar": 8,
+        "endLine": 206,
+        "endChar": 74
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "265b000d_98900731",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65bc4657_bd9304b3",
       "range": {
         "startLine": 206,
         "startChar": 8,
@@ -87,6 +153,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2258c325_76a71432",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16f92f87_a0d23aff",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 25
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13c89815_60f41171",
@@ -100,6 +190,30 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "As per \"fail-fast\":\n```suggestion\n    if (!properties.getSection(Stream.class).enabled) {\n      logger.atWarning().log(\n          \"Only streams support the replay functionality, please enable stream support to use\"\n              + \" this\");\n      throw new PreconditionFailedException(\n          \"Stream support must be enabled to use replay functionality\");\n    } else {\n      List\u003cLong\u003e offsets \u003d new ArrayList\u003c\u003e();\n      boolean found \u003d false;\n      StreamSubscriberSession streamSession \u003d (StreamSubscriberSession) session;\n      // No need for copying since we\u0027re only reading, not modifying\n      for (Map.Entry\u003cTopicSubscriber, String\u003e entry : consumerTags.entrySet()) {\n        if (entry.getKey().topic().equals(topic)) {\n          offsets.add(streamSession.getCurrentOffset(entry.getValue()));\n          found \u003d true;\n        }\n      }\n      if (!found) {\n        logger.atWarning().log(\"No subscriber found for topic %s\", topic);\n        throw new ResourceNotFoundException(\"No subscriber found for topic \" + topic);\n      }\n      return offsets;\n    }\n```",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 5
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74f15b37_e7bc4b4e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13c89815_60f41171",
       "range": {
         "startLine": 194,
         "startChar": 0,
@@ -133,6 +247,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e587aaff_fcb3a310",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/GetOffsetsForTopic.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baffce47_6dea9d97",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "169f4360_ca5846ae",
@@ -146,6 +284,30 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "Is it really a 400 if the caller wants the offsets for a topic and the topic resource exists but there are no offsets? Isn\u0027t returning an empty list more correct?\nEither that or a 500 ISE if a topic should always have offsets.",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "351ec723_3dd9f587",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/ReplayEventsAtOffset.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "As the user send the input to the endpoint in the HTTP body, it is possible for the user to request offsets for a topic that does not exist. So it is more a bad request from the user than something the server fail to do, if they provide a non-existing topic.",
+      "parentUuid": "169f4360_ca5846ae",
       "range": {
         "startLine": 71,
         "startChar": 18,
@@ -173,6 +335,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "843c7569_b1ac5834",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/ReplayEventsAtOffset.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0eaacce_d407eb03",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc56612d_b751d555",
@@ -186,6 +366,30 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "```suggestion\n    logger.atFine().log(\n```",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 17
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24a463e1_6774208a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/ReplayEventsAtOffset.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc56612d_b751d555",
       "range": {
         "startLine": 89,
         "startChar": 13,
@@ -236,6 +440,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f239f72_f1a046ab",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Will happen often so I make this Finest instead.",
+      "parentUuid": "b14b14b0_e14a1018",
+      "range": {
+        "startLine": 148,
+        "startChar": 17,
+        "endLine": 148,
+        "endChar": 21
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26f32011_3a6cadfa",
@@ -253,6 +481,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdc06fba_08b81731",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Also made it Severe because it should not really happen.",
+      "parentUuid": "26f32011_3a6cadfa",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3582f8ce_ca08a404",
@@ -266,6 +512,30 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "This feels moot, \"we can confirm that we replayed messages in the topic that your requested.\"?",
+      "range": {
+        "startLine": 62,
+        "startChar": 3,
+        "endLine": 62,
+        "endChar": 28
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c04aae6_7b89555a",
+        "filename": "src/main/resources/Documentation/rest-api-replay-events.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3582f8ce_ca08a404",
       "range": {
         "startLine": 62,
         "startChar": 3,
@@ -301,6 +571,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c009c791_53a6569e",
+        "filename": "src/main/resources/Documentation/rest-api-replay-events.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "I changed it to return the offset we set. In the absolute case it will return the input offset but in relative case it will return the calculated offset.\nI do not understand what you mean by nbr_of_events. Number of events we will replay?",
+      "parentUuid": "d746a9f3_a445b901",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "330cebc3_e61a3243",
         "filename": "src/main/resources/Documentation/rest-api-replay-events.md",
         "patchSetId": 12
@@ -312,6 +606,24 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "nit: very long line",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30367d61_3829f0aa",
+        "filename": "src/main/resources/Documentation/rest-api-replay-events.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330cebc3_e61a3243",
       "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -333,6 +645,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38f6d0a7_7cb05e45",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ebb193_3f474a1c",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e75a659c_617c72a9",
@@ -346,6 +676,24 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "nit: very long line.",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "259a38a8_ac7fb742",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75a659c_617c72a9",
       "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -373,6 +721,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e5915e7_ee271b57",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9428d506_f5de5019",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32cf0094_1ebc9720",
@@ -386,6 +758,24 @@
       "writtenOn": "2025-09-25T17:12:41Z",
       "side": 1,
       "message": "nit: very long line.",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbea0623_91aced41",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-09-26T09:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32cf0094_1ebc9720",
       "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
