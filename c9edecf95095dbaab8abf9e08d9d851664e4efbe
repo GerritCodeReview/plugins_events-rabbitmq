@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f7f0afa_91363853",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-02T09:08:11Z",
+      "side": 1,
+      "message": "If not something really unexpected happens. The wait should be very minimal, likely sub ms, so I felt this was ok. So I stick with it if no one have a good reason it should not be like this.",
+      "parentUuid": "62119ec7_e1b770e1",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e290f7c0_9e1cf552",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-10-01T09:57:16Z",
       "side": 1,
       "message": "I think it would be nice if we could make this more detailed, but I think it means a pretty significant change and is probably better as an improvement. The only additional information we have directly available are the UUIDs and those aren\u0027t super useful. Feel free to just ack this and move along.\n\n```\n{\n  \"topic\": \"gerrit\",\n  \"consumers\": [\n    {\n      \"consumerId\": \"uuid-1\",\n      \"consumerName\": \"consumer.gerrit.instance-1\", \n      \"currentOffset\": 162,\n      \"lastUpdated\": \"2025-10-01T10:30:00Z\",\n    },\n    {\n      \"consumerId\": \"uuid-2\", \n      \"consumerName\": \"consumer.gerrit.instance-2\",\n      \"currentOffset\": 158,\n      \"lastUpdated\": \"2025-10-01T10:29:55Z\", \n    }\n  ],\n  \"streamInfo\": {\n    \"totalMessages\": 180,\n    \"maxOffset\": 179,\n  }\n}\n```",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "855d9c2d_18752bf3",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-02T09:08:11Z",
+      "side": 1,
+      "message": "As I said in a comment response to Sven consumerID is just an UUID generated internally to keep track of things, so it does not say much. consumerName is just consumerPrefix + topic, so it should be the same for all entries if there is several entries. In a ordinary multi-site setup only one entry should be returned.\nlastUpdated could be useful and should probably not require much extra code. Will try to implement it.\n\nGetting the streamInfo data would be a bigger change and unsure how useful it would be. This data should be accessible from RabbitMQ directly.",
+      "parentUuid": "e290f7c0_9e1cf552",
       "range": {
         "startLine": 41,
         "startChar": 0,
