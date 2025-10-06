@@ -103,6 +103,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0bc8f74_065dd112",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-10-06T14:08:29Z",
+      "side": 1,
+      "message": "But a List\u003cint\u003e offers no information, `[11, 23]` means that somewhere there\u0027s an offset that is `11` and somewhere an offset that is `23`, which offset should you replay from?",
+      "parentUuid": "69af6693_6f51db7b",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65bc4657_bd9304b3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
         "patchSetId": 12
@@ -326,6 +344,30 @@
       "side": 1,
       "message": "As the user send the input to the endpoint in the HTTP body, it is possible for the user to request offsets for a topic that does not exist. So it is more a bad request from the user than something the server fail to do, if they provide a non-existing topic.",
       "parentUuid": "169f4360_ca5846ae",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ed42372_4a60cf42",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/ReplayEventsAtOffset.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-10-06T14:08:29Z",
+      "side": 1,
+      "message": "If you want to replay the events of a certain topic and the topic doesn\u0027t exist it should be a 404. If the topic exists and no offsets can be  found for it it should either return an empty list (if that is a valid state) otherwise 500.\n\nLooking at this closer I feel that this endpoint should be `/config/server/events-rabbitmq~topics/{topic-name}/replay-events` as your issuing a command to a resource:\n\n```\ncurl -X POST --user admin:secret \\\n  -H \"Content-Type: application/json\" \\\n  -d \u0027{\"offset\": -50}\u0027 \\\n  http://host:port/a/config/server/events-rabbitmq~topics/{topic-name}/replay-events\n```",
+      "parentUuid": "351ec723_3dd9f587",
       "range": {
         "startLine": 71,
         "startChar": 18,
@@ -601,6 +643,30 @@
       "side": 1,
       "message": "I changed it to return the offset we set. In the absolute case it will return the input offset but in relative case it will return the calculated offset.\nI do not understand what you mean by nbr_of_events. Number of events we will replay?",
       "parentUuid": "d746a9f3_a445b901",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fc8865d_5eb53356",
+        "filename": "src/main/resources/Documentation/rest-api-replay-events.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1014252
+      },
+      "writtenOn": "2025-10-06T14:08:29Z",
+      "side": 1,
+      "message": "Yes, isn\u0027t the relative offset number of events? -50 \u003d\u003d last 50 events.",
+      "parentUuid": "c009c791_53a6569e",
       "range": {
         "startLine": 63,
         "startChar": 3,
