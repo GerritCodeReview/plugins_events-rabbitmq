@@ -117,6 +117,30 @@
       },
       "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b411a533_80dd1d19",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-06T14:53:20Z",
+      "side": 1,
+      "message": "We have encountered situations when we got duplicate consumers when there should not be. Fortunately, it has not negatively affected our multi-site setup. One of the consumers is just inactive and the other consume like usually.",
+      "parentUuid": "dc4c3c48_75629b51",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }

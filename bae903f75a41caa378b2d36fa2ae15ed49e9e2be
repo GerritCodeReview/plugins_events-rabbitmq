@@ -121,6 +121,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "909ad565_a776a291",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-06T14:53:20Z",
+      "side": 1,
+      "message": "I agree that it gives little information that differentiate the consumers. A replay will replay all consumers that listen on the same topic(for relative we will replay from max(consumerOffsets) + input.offset for all consumers).",
+      "parentUuid": "c0bc8f74_065dd112",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65bc4657_bd9304b3",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
         "patchSetId": 12
@@ -667,6 +685,30 @@
       "side": 1,
       "message": "Yes, isn\u0027t the relative offset number of events? -50 \u003d\u003d last 50 events.",
       "parentUuid": "c009c791_53a6569e",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f709f284_107d878b",
+        "filename": "src/main/resources/Documentation/rest-api-replay-events.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-06T14:53:20Z",
+      "side": 1,
+      "message": "Yes, for relative offset it is but not for absolute. So I do not think it would make sense.",
+      "parentUuid": "9fc8865d_5eb53356",
       "range": {
         "startLine": 63,
         "startChar": 3,
