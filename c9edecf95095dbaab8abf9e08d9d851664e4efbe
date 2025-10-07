@@ -224,6 +224,30 @@
       },
       "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ee7a9c0_e5e1f878",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-07T14:47:44Z",
+      "side": 1,
+      "message": "I added the last_updated field",
+      "parentUuid": "25d852ad_41ff9c69",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }

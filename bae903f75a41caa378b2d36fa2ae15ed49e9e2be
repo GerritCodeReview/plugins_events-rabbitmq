@@ -396,6 +396,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d72d643d_99db1137",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/rest/ReplayEventsAtOffset.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-07T14:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed42372_4a60cf42",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0eaacce_d407eb03",
