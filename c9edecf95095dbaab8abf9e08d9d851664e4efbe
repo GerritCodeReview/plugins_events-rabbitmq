@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e4bb4a3_e17f1209",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-07T11:10:01Z",
+      "side": 1,
+      "message": "There is a bunch of offsets(current, stored, the one we replay from, ...).\nCurrently GET return the current offset for each consumer and the replay return the offset to play from(so if 3 is returned then the plugin will start to process 4(except in the case for the start of the stream, in that case if 0 is returned then 0 is processed(I will document that behavior))).\nIs those return values satisfactory?",
+      "parentUuid": "b4393d10_e8d7e3ad",
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62119ec7_e1b770e1",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 14
@@ -174,6 +192,30 @@
       "side": 1,
       "message": "I like Rikard\u0027s Idea of output since it gives the caller a lot more information to go on.\nIf not it will only ever be the offset of the consumer that is most behind that is interesting, as you would need to use that for replay to ensure all consumers are up-to-date, and in that case the response should just be the most outdated offset and not a list.",
       "parentUuid": "b411a533_80dd1d19",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25d852ad_41ff9c69",
+        "filename": "src/main/resources/Documentation/rest-api-topics-offsets-get.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-07T11:10:01Z",
+      "side": 1,
+      "message": "Here is some more background info that might clarify things: We name the consumers that we create consumerPrefix + topic. This is done to be able to store offsets consumed periodically in case of failure. The stream lib use the consumerName to be able to retrieve the stored offset. ConsumerPrefix is globally configured value which means that each time we try to add a consumer for a topic \"abc\" with the Broker API it will try to create consumer called consumerPrefix + \"abc\". This is why we only expect one consumer per topic and why the implementation should only work with one consumer per topic. There is documentation/comments for the Broker API that suggest that it should be able to serve arbitrary number of consumers per topic but we have not found a good solution for that.\n\nBecause of a bug we get several consumers per topic sometimes. The extra consumers is inactive so maybe you could call them ghost consumers. The active consumer is the interesting one and will likely have a higher offset for active streams but to be safe I feel like it is better to return all the offsets and replay all the consumers just in case.\n\nThe current stream lib is very limited when it comes to getting metrics. So I would say streamInfo is out of scope for this change at least.",
+      "parentUuid": "311c0a3b_10ec40da",
       "range": {
         "startLine": 41,
         "startChar": 0,
