@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7785b08e_28bfce0b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-31T12:16:34Z",
+      "side": 1,
+      "message": "I have now documented the special behavior with offset 0.",
+      "parentUuid": "3e4bb4a3_e17f1209",
+      "revId": "c9edecf95095dbaab8abf9e08d9d851664e4efbe",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62119ec7_e1b770e1",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 14
