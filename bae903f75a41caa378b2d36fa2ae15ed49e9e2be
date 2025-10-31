@@ -521,6 +521,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6985e17d_e6dd7b29",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-10-31T12:54:00Z",
+      "side": 1,
+      "message": "Reason it is this way, is because I tried to decouple the eventbroker BrokerApi logic(TopicSubscriber) from the more low level RabbitMQ logic. So the low level StreamSubscribersession is not directly dependent on TopicSubscriber. Does that make sense?",
+      "parentUuid": "6708e1a5_8ef52302",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b14b14b0_e14a1018",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/session/type/StreamSubscriberSession.java",
         "patchSetId": 12
