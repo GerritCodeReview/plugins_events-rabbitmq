@@ -137,6 +137,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2935dd0d_b1672eb7",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/rabbitmq/message/BrokerApiSubscribers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1135623
+      },
+      "writtenOn": "2025-11-07T08:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "909ad565_a776a291",
+      "revId": "bae903f75a41caa378b2d36fa2ae15ed49e9e2be",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65bc4657_bd9304b3",
